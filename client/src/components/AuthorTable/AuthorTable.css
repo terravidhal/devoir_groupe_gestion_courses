@@ -1,0 +1,11 @@
+.AuthorTable{
+   
+}
+.AuthorTable table{
+   width: 70%;
+   margin-top: 30px;
+}
+.AuthorTable tr > td.actions{
+   vertical-align: middle;
+}
+
