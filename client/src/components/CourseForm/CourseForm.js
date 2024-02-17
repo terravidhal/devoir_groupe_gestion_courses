@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './CourseForm.css';
 import { useNavigate } from 'react-router-dom'
 import Button from '../Button/Button';
+import StudentSelector from '../StudentSelector/StudentSelector';
 
 
 
@@ -15,6 +16,7 @@ const CourseForm = (props) => {
           initialDayOfWeek,
           initialTime,
           initialStudents,
+          initialAvailableStudents,
           requestPostorPatch,  // requestPostorPatch (lifting state)
           setErrors, // setErrors
           errors ,
@@ -28,36 +30,38 @@ const CourseForm = (props) => {
   const [instructorId, setInstructorId] = useState(initialInstructorId);
   const [dayOfWeek, setDayOfWeek] = useState(initialDayOfWeek);
   const [time, setTime] = useState(initialTime);
-  const [students, setStudents] = useState(initialStudents);
 //  
-const [selectedStudents, setSelectedStudents] = useState([]);
+const [selectedStudents, setSelectedStudents] = useState(initialStudents);// initialStudents => []
+const [availableStudents, setavailableStudents] = useState(initialAvailableStudents);// initialAvailableStudents => []
 
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState(false); // state button submit
   
+
+  // get all users by role students
+useEffect(() => {
+  axios
+    .get("http://localhost:8000/api/users/students",{withCredentials: true})
+    .then((res) => setavailableStudents(res.data))
+    .catch((err) => console.log(err));
+}, []); // important!  //selectedStudents
   
+// Fonctions de gestion de la sélection des étudiants
+  const handleStudentSelection = (student) => {
+    setSelectedStudents([...selectedStudents, student]);
+  };
+
+  const handleStudentRemoval = (student) => {
+    setSelectedStudents(selectedStudents.filter((s) => s._id !== student._id));
+  };
+
+
+
   useEffect(() => {
     SubmitButton();
   }, [name,level,description, 
     dayOfWeek, time
     ]);
-
-  /*  useEffect(() => {
-      axios.get("http://localhost:8000/api/Courses/" + courseId)
-          .then( res => {
-            setStudentsOfSpecificCoures(res.data);
-          })
-          .catch( err => console.log(err) );
-    }, [courseId]); */
-
-    // get all users
-  useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/users/students",{withCredentials: true})
-      .then((res) => setAllCourses(res.data.courses))
-      .catch((err) => console.log(err));
-  }, []); // important!  //allCourses
-
 
 
   const SubmitButton =  () =>{
@@ -77,7 +81,6 @@ const [selectedStudents, setSelectedStudents] = useState([]);
     };
 
 
-
   const onSubmitHandler =  async(e) => {
       e.preventDefault();
 
@@ -88,7 +91,7 @@ const [selectedStudents, setSelectedStudents] = useState([]);
         instructorId,
         dayOfWeek,
           time,
-          students,
+          selectedStudents,
       }); 
 
       console.log("errors:::::::", errors);
@@ -230,22 +233,15 @@ const handleTimeErrors = (e) =>{
                }
               </div>
 
-              {/* <div className='field'>
-               <label>Students :</label><br/>
-               <select name="" id="" value={students} onChange = {(e)=>setStudents(e.target.value)}>
-                   {studentsOfSpecificCoures.map((elt, index) => {
-                     return (
-                     <option key={index} value={elt.name}>{elt.name}</option>
-                           );
-                   })}
-               </select>
-              </div> */}
-
-               {/* <div className='field'>
-               <label>Students :</label><br/>
-               <input type="hidden" value={[]}  onChange = {(e)=>setStudents(e.target.value)}/>
-              </div> */}
-
+              <div className='field'>
+                 <label>Students:</label><br/>
+                <StudentSelector
+                  students={selectedStudents}
+                  onSelection={handleStudentSelection}
+                  onRemoval={handleStudentRemoval}
+                  availableStudents={ availableStudents}
+                />
+              </div>
 
             </div>
         </form>

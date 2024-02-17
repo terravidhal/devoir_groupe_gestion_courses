@@ -55,6 +55,7 @@ const CreatePage = () => {
           initialDayOfWeek=""
           initialTime={30}
           initialStudents={[]}
+          initialAvailableStudents={[]}
         errors={errors}
         create="create"
         update=""

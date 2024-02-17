@@ -73,7 +73,8 @@ const UpdatePage = (props) => {
         initialInstructorId={coursObj.instructor}
         initialDayOfWeek={coursObj.dayOfWeek}
         initialTime={coursObj.time}
-        initialStudents={coursObj.students}
+        initialStudents={coursObj.selectedStudents}
+        initialAvailableStudents={[]}
         errors={errors}
         create=""
         update="update"

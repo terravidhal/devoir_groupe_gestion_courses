@@ -43,7 +43,7 @@ module.exports = {
   verifyInstructor: async (req, res, next) => {
     try {
       const _id = req.params.id; // Récupérer l'ID du cours à partir des paramètres de la requête
-      const decoded = jwt.verify(req.cookies.usertoken, process.env.JWT_SECRET);
+      const decoded = jwt.verify(req.cookies.usertoken, process.env.JWT_SECRET); // La variable decoded contient l'objet JSON décodé du jeton JWT. Cet objet contient les informations de l'utilisateur, telles que son ID, son nom, son rôle
 
       // Trouver le cours
       const course = await Course.findById(_id);
@@ -51,8 +51,12 @@ module.exports = {
         return res.status(404).json({ message: "Cours non trouvé" });
       }
 
-      // Vérifier si l'utilisateur est l'instructeur du cours
-      if (course.instructor !== decoded._id) {
+
+      // Vérifier si l'utilisateur est l'instructeur du cours ou l'administrateur
+     /* if (course.instructor !== decoded._id ) {
+        return res.status(403).json({ message: "Vous n'êtes pas autorisé à modifier ce cours." });
+      }*/
+      if (decoded.role !== "admin" || course.instructor !== decoded._id ) {
         return res.status(403).json({ message: "Vous n'êtes pas autorisé à modifier ce cours." });
       }
 
@@ -64,3 +68,9 @@ module.exports = {
     }
   },
 };
+
+
+
+/**
+ * expliquer les differnts 'statuts'
+ */
