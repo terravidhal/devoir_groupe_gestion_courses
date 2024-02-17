@@ -111,7 +111,17 @@ module.exports = {
       );
   },
 
-  // V) DELETE ALL
+  // V) READ ALL Users By Role Student
+  findAllUsersByRoleStudent: (req, res) => {
+    UserModel.find({role: 'student'})
+      .then((allUsersByRoleStudent) => res.status(200).json(allUsersByRoleStudent))
+      .catch((err) =>
+        res.status(500).json({ message: "Something went wrong", error: err })
+      );
+  },
+
+
+  // VI) DELETE ALL
   deleteAllUsers: (req, res) => {
     UserModel.deleteMany({})
       .then((result) => res.status(200).json({ result }))
@@ -121,7 +131,7 @@ module.exports = {
   },
 
   /*AJOUT*/ 
-  // VI) UPDATE EXISTING USER
+  // VII) UPDATE EXISTING USER
 updateExistingUser: (req, res) => {
   const userId = req.params.id; // Obtenez l'ID de l'utilisateur à mettre à jour
   const updatedData = req.body; // Les nouvelles données à mettre à jour
@@ -139,7 +149,7 @@ updateExistingUser: (req, res) => {
 },
 
 
-// VII) CREATE USER
+// VIII) CREATE USER
 createUser: (req, res) => {
   const userData = req.body; // Les données de l'utilisateur à créer
 
@@ -153,7 +163,7 @@ createUser: (req, res) => {
 },
 
 
-// VIII) DELETE ONE SPECIFIC USER
+// IX) DELETE ONE SPECIFIC USER
 deleteOneSpecificUser: (req, res) => {
   const userId = req.params.id; // Obtenez l'ID de l'utilisateur à supprimer
 

@@ -3,12 +3,14 @@ import './CreatePage.css';
 import CourseForm from '../../components/CourseForm/CourseForm';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import Cookies from "universal-cookie";
 
 
 
 
 const CreatePage = () => {
-
+  const cookies = new Cookies();
+  const userObjsId = cookies.get("USER_OBJ")._id;
  
   const [errors, setErrors] = useState({}); 
   const navigate = useNavigate();
@@ -49,7 +51,7 @@ const CreatePage = () => {
         initialName=""
         initialLevel={1}
           initialDescription=""
-          initialInstructorId=""
+          initialInstructorId={userObjsId}
           initialDayOfWeek=""
           initialTime={30}
           initialStudents={[]}

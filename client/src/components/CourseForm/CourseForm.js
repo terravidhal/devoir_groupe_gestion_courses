@@ -5,9 +5,8 @@ import Button from '../Button/Button';
 
 
 
-
 const CourseForm = (props) => {
-
+  
     
   const { initialName, 
           initialLevel,
@@ -30,6 +29,9 @@ const CourseForm = (props) => {
   const [dayOfWeek, setDayOfWeek] = useState(initialDayOfWeek);
   const [time, setTime] = useState(initialTime);
   const [students, setStudents] = useState(initialStudents);
+//  
+const [selectedStudents, setSelectedStudents] = useState([]);
+
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState(false); // state button submit
   
@@ -39,6 +41,22 @@ const CourseForm = (props) => {
   }, [name,level,description, 
     dayOfWeek, time
     ]);
+
+  /*  useEffect(() => {
+      axios.get("http://localhost:8000/api/Courses/" + courseId)
+          .then( res => {
+            setStudentsOfSpecificCoures(res.data);
+          })
+          .catch( err => console.log(err) );
+    }, [courseId]); */
+
+    // get all users
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/users/students",{withCredentials: true})
+      .then((res) => setAllCourses(res.data.courses))
+      .catch((err) => console.log(err));
+  }, []); // important!  //allCourses
 
 
 
@@ -212,7 +230,7 @@ const handleTimeErrors = (e) =>{
                }
               </div>
 
-              <div className='field'>
+              {/* <div className='field'>
                <label>Students :</label><br/>
                <select name="" id="" value={students} onChange = {(e)=>setStudents(e.target.value)}>
                    {studentsOfSpecificCoures.map((elt, index) => {
@@ -221,7 +239,12 @@ const handleTimeErrors = (e) =>{
                            );
                    })}
                </select>
-              </div>
+              </div> */}
+
+               {/* <div className='field'>
+               <label>Students :</label><br/>
+               <input type="hidden" value={[]}  onChange = {(e)=>setStudents(e.target.value)}/>
+              </div> */}
 
 
             </div>

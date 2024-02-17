@@ -14,6 +14,7 @@ const {
   deleteOneSpecificUser,
   updateExistingUser,
   createUser,
+  findAllUsersByRoleStudent,
 } = require("../controllers/user.controller");
 
 //3) importing authenticate methods
@@ -27,10 +28,11 @@ module.exports = app => {
     app.post("/api/login", login);
     app.post("/api/logout", logout); 
     /*AJOUT*/ 
-    app.get("/users", verifyRole(["admin"]), findAllUsers);
-    app.post("/users", verifyRole(["admin"]), createUser);
-    app.patch("/users/:id", verifyRole(["admin"]), updateExistingUser);
-    app.delete("/users/:id", verifyRole(["admin"]), deleteOneSpecificUser);
+    app.get("/api//users",authenticate, verifyRole(["admin"]), findAllUsers);
+    app.get("/api//users/students",authenticate, verifyRole(["admin", "instructor"]), findAllUsersByRoleStudent);
+    app.post("/api//users",authenticate, verifyRole(["admin"]), createUser);
+    app.patch("/api//users/:id",authenticate, verifyRole(["admin"]), updateExistingUser);
+    app.delete("/api//users/:id",authenticate, verifyRole(["admin"]), deleteOneSpecificUser);
   //  app.delete("/", deleteAllUsers);
     // cette route necessite une authetification de l'utilisateur
    // app.get("/api/users", authenticate, findAllUsers);
