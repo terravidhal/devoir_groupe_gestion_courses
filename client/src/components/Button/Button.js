@@ -59,4 +59,4 @@ const Button = (props) => {
 
 
 
-export default DeleteButton;
+export default Button;

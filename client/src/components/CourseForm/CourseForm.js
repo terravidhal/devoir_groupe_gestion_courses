@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './CourseForm.css';
 import { useNavigate } from 'react-router-dom'
 import Button from '../Button/Button';
 import StudentSelector from '../StudentSelector/StudentSelector';
-
+import axios from 'axios';
 
 
 const CourseForm = (props) => {
@@ -27,11 +27,11 @@ const CourseForm = (props) => {
   const [name, setName] = useState(initialName);  // initialName = ""
   const [level, setLevel] = useState(initialLevel);  
   const [description, setDescription] = useState(initialDescription);
-  const [instructorId, setInstructorId] = useState(initialInstructorId);
+  const [instructor, setInstructor] = useState(initialInstructorId);
   const [dayOfWeek, setDayOfWeek] = useState(initialDayOfWeek);
   const [time, setTime] = useState(initialTime);
 //  
-const [selectedStudents, setSelectedStudents] = useState(initialStudents);// initialStudents => []
+const [students, setStudents] = useState(initialStudents);// initialStudents => []
 const [availableStudents, setavailableStudents] = useState(initialAvailableStudents);// initialAvailableStudents => []
 
   const navigate = useNavigate();
@@ -44,15 +44,15 @@ useEffect(() => {
     .get("http://localhost:8000/api/users/students",{withCredentials: true})
     .then((res) => setavailableStudents(res.data))
     .catch((err) => console.log(err));
-}, []); // important!  //selectedStudents
+}, []); // important!  //students
   
 // Fonctions de gestion de la sélection des étudiants
   const handleStudentSelection = (student) => {
-    setSelectedStudents([...selectedStudents, student]);
+    setStudents([...students, student]);
   };
 
   const handleStudentRemoval = (student) => {
-    setSelectedStudents(selectedStudents.filter((s) => s._id !== student._id));
+    setStudents(students.filter((s) => s._id !== student._id));
   };
 
 
@@ -88,10 +88,10 @@ useEffect(() => {
         name,
         level,
         description,
-        instructorId,
+        instructor,
         dayOfWeek,
           time,
-          selectedStudents,
+          students,
       }); 
 
       console.log("errors:::::::", errors);
@@ -170,35 +170,35 @@ const handleTimeErrors = (e) =>{
               <div className='field'>
                <label>Name of courses :</label><br/>
                <input type="text" value={name} onChange = {(e)=>handleNameErrors(e)}/>
-               { errors.name ? 
+               {/* { errors.name ? 
                       <p style={{color:"red",fontWeight:"bold"}}>{errors.name.message}</p>
                       : null
-               }
+               } */}
               </div>
 
               <div className='field'>
                <label>Level :</label><br/>
                <input type="number" value={level} onChange = {(e)=>handleLevelErrors(e)}/>
-               { errors.level ? 
+               {/* { errors.level ? 
                       <p style={{color:"red",fontWeight:"bold"}}>{errors.level.message}</p>
                       : null
-               }
+               } */}
               </div>
 
 
               <div className='field'>
                <label>Description :</label><br/>
                <input type="text" value={description} onChange = {(e)=>handleDescriptionErrors(e)}/>
-               { errors.description ? 
+               {/* { errors.description ? 
                       <p style={{color:"red",fontWeight:"bold"}}>{errors.description.message}</p>
                       : null
-               }
+               } */}
               </div>
 
 
               <div className='field'>
                <label>Instructor :</label><br/>
-               <input type="hidden" value={instructorId}  onChange = {(e)=>setInstructorId(e.target.value)}/>
+               <input type="hidden" value={instructor}  onChange = {(e)=>setInstructor(e.target.value)}/>
               </div>
 
 
@@ -216,28 +216,28 @@ const handleTimeErrors = (e) =>{
              
               <div className='field'>
                <label>DayOfWeek :</label><br/>
-               {/* <input type="text" value={dayOfWeek} onChange = {(e)=>handleDayOfWeekErrors(e)}/> */}
-               <input type="date" value={dayOfWeek} onChange = {(e)=>handleDayOfWeekErrors(e)}/>
-               { errors.dayOfWeek ? 
+               <input type="text" value={dayOfWeek} onChange = {(e)=>handleDayOfWeekErrors(e)}/>
+               {/* <input type="date" value={dayOfWeek} onChange = {(e)=>handleDayOfWeekErrors(e)}/> */}
+               {/* { errors.dayOfWeek ? 
                       <p style={{color:"red",fontWeight:"bold"}}>{errors.dayOfWeek.message}</p>
                       : null
-               }
+               } */}
               </div>
 
 
               <div className='field'>
                <label>Time :</label><br/>
                <input type="number" value={time} onChange = {(e)=>handleTimeErrors(e)}/>
-               { errors.time ? 
+               {/* { errors.time ? 
                       <p style={{color:"red",fontWeight:"bold"}}>{errors.time.message}</p>
                       : null
-               }
+               } */}
               </div>
 
               <div className='field'>
                  <label>Students:</label><br/>
                 <StudentSelector
-                  students={selectedStudents}
+                  students={students}
                   onSelection={handleStudentSelection}
                   onRemoval={handleStudentRemoval}
                   availableStudents={ availableStudents}

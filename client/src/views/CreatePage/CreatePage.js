@@ -23,7 +23,7 @@ const CreatePage = () => {
         "http://localhost:8000/api/courses", coursObj,{withCredentials: true} 
       )
       .then((res) => {
-        console.log(res.data.course);
+        console.log(res.data);
         setErrors({});
         navigate("/courses");
        // setAllCourses([...allCourses, res.data.course]); // pas necessaire

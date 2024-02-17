@@ -35,9 +35,9 @@ require("./config/mongoose.config");
 
 
 // 7) Importer des routes d’API et les incorporer à l’instance 'app'
-   // a) authors
-   const AllMyAuthorsRoutes = require("./routes/author.routes");
-   AllMyAuthorsRoutes(app);
+   // a) courses
+   const AllMyCoursesRoutes = require("./routes/course.routes");
+   AllMyCoursesRoutes(app);
    // b) user
    const AllMyUsersRoutes = require("./routes/user.routes");
    AllMyUsersRoutes(app);

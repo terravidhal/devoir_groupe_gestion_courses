@@ -69,7 +69,8 @@ module.exports.deleteAnExistingCourse = (req, res) => {
      const course = await Course.findById(courseId).populate('students');
  
      if (!course) {
-       return res.status(404).json({ message: 'Course not found' });
+       //return res.status(404).json({ message: 'Course not found' });
+       return res.status(400).json({ message: 'Course not found' });
      }
  
      // Extraire et renvoyer les données des étudiants inscrits
@@ -83,7 +84,8 @@ module.exports.deleteAnExistingCourse = (req, res) => {
      res.json({ students });
    } catch (err) {
      console.error(err);
-     res.status(500).json({ message: 'An error occurred' });
+    // res.status(500).json({ message: 'An error occurred' });
+     res.status(400).json({ message: 'An error occurred' });
    }
  };
      

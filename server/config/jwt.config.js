@@ -72,5 +72,5 @@ module.exports = {
 
 
 /**
- * expliquer les differnts 'statuts'
+ * expliquer les differnts 'statuts' rs.status(500)
  */
