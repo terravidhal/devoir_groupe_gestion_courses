@@ -216,7 +216,8 @@ const handleTimeErrors = (e) =>{
              
               <div className='field'>
                <label>DayOfWeek :</label><br/>
-               <input type="text" value={dayOfWeek} onChange = {(e)=>handleDayOfWeekErrors(e)}/>
+               {/* <input type="text" value={dayOfWeek} onChange = {(e)=>handleDayOfWeekErrors(e)}/> */}
+               <input type="date" value={dayOfWeek} onChange = {(e)=>handleDayOfWeekErrors(e)}/>
                { errors.dayOfWeek ? 
                       <p style={{color:"red",fontWeight:"bold"}}>{errors.dayOfWeek.message}</p>
                       : null

@@ -1,7 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import "./AuthorTable.css";
-import DeleteButton from "../DeleteButton/DeleteButton";
+import "./CourseTable.css";
 import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Table } from 'reactstrap';
@@ -9,28 +7,38 @@ import { Table } from 'reactstrap';
 
 
 
-const AuthorTable = (props) => {
-  const { allAuthors, deleteAuthor } = props;
+const CourseTable = (props) => {
+  const { allCourses } = props;
 
   return (
-    <div className="AuthorTable">
-      <Table striped>
-        <thead>
+    <div className="CourseTable">
+      <Table striped >
+         <thead>
           <tr>
-            <th>Author</th>
-            <th>Actions available</th>
+            <th>Name of Course</th>
+            <th>Level</th>
+            <th>Instructor</th>
+            <th>Day Of Week</th>
+            <th>Time</th>
+            <th>Options</th>
           </tr>
-        </thead>
+        </thead> 
         <tbody>
-        {allAuthors.map((elt, index) => {
+        {allCourses.map((elt, index) => {
             return (
               <tr className="" key={index}>
                 <td  className="actions">{elt.name}</td>
+                <td  className="actions">{elt.level}</td>
+                <td  className="actions">{elt.instructor}</td>
+                <td  className="actions">{elt.dayOfWeek}</td>
+                <td  className="actions">{elt.time}</td>
                 <td className="actions">
-                  <Link className="btn btn-primary"  to={"/authors/edit/" + elt._id}>
-                    Edit
+                  <Link className=""  to={"/courses/" + elt._id}>
+                    details
+                  </Link> |&nbsp;
+                  <Link className=""  to={"/courses/edit/" + elt._id}>
+                    edit
                   </Link>
-                  <DeleteButton authorId={elt._id} successCallback={() => deleteAuthor(elt._id)}/>
                 </td>
               </tr>
             );
@@ -41,8 +49,6 @@ const AuthorTable = (props) => {
   );
 };
 
-AuthorTable.propTypes = {};
 
-AuthorTable.defaultProps = {};
 
-export default AuthorTable;
+export default CourseTable;

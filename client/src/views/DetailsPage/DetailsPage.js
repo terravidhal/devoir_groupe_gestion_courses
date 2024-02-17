@@ -56,7 +56,15 @@ const DetailsPage = () => {
             <p><span className='infos'>instructor:</span> {OneCourse.instructor}</p>
             <p><span className='infos'>dayOfWeek:</span> {OneCourse.dayOfWeek}</p>
             <p><span className='infos'>Time:</span> {OneCourse.time} minutes</p>
-            <p><span className='infos'>students:</span> {OneCourse.students}</p>
+            <p><span className='infos'>students:</span> 
+               <ul>
+                  {OneCourse.students.map((elt) => (
+                    <li key={elt._id}>
+                      {elt.name}
+                    </li>
+                  ))}
+               </ul>
+            </p>
         </div>
       </div>
     </div>
