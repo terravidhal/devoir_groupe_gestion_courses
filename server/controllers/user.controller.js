@@ -111,12 +111,56 @@ module.exports = {
       );
   },
 
+  // find user by id
+  findOneSingleUser : (req, res) => {
+    UserModel.findOne({ _id: req.params.id })
+        .then(oneSingleUser => {
+          console.log("oneSingleUser",oneSingleUser);
+            res.json({ oneSingleUser })
+        })
+        .catch((err) => {
+             res.status(400).json(err) 
+        });
+  },
+
+
+  // find users by many ids
+findUsersByManyId: (req, res) => {
+//  const { ids } = req.body; // Récupère les IDs depuis le corps de la requête
+  const { ids } = req.params.id; // Récupère les IDs depuis le corps de la requête
+
+  // Vérifie si la liste d'IDs est vide
+  if (!ids || ids.length === 0) {
+    return res.status(400).json({ message: "Liste d'IDs vide." });
+  }
+
+  // Requête pour trouver les utilisateurs correspondants aux IDs
+  UserModel.find({ _id: { $in: ids } })
+    .then((users) => {
+      // Si aucun utilisateur n'est trouvé
+      if (!users || users.length === 0) {
+        return res.status(404).json({ message: "Aucun utilisateur trouvé." });
+      }
+
+      // Réponse avec les utilisateurs trouvés
+      res.json({ users });
+    })
+    .catch((err) => {
+      // Erreur lors de la requête
+      res.status(400).json(err);
+    });
+},
+
+
+
+
   // V) READ ALL Users By Role Student
   findAllUsersByRoleStudent: (req, res) => {
     UserModel.find({role: 'student'})
       .then((allUsersByRoleStudent) => res.status(200).json(allUsersByRoleStudent))
       .catch((err) =>
-        res.status(500).json({ message: "Something went wrong", error: err })
+       // res.status(500).json({ message: "Something went wrong", error: err })
+        res.status(400).json({ message: "Something went wrong" })
       );
   },
 

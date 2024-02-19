@@ -22,8 +22,10 @@ const UpdatePage = (props) => {
     axios
       .get("http://localhost:8000/api/courses/" + id,{withCredentials: true})
       .then((res) => {
-        setCoursObj(res.data.course);
+        console.log("u++++++++++",res.data.oneSingleCourse);
+        setCoursObj(res.data.oneSingleCourse);
         setLoaded(true); // data available => set "true"
+        console.log("k++++++++++",coursObj.name);
       })
       .catch((err) => console.log(err));
       
@@ -61,6 +63,9 @@ const UpdatePage = (props) => {
          <Link to={"/courses/" + id}>
          course details
           </Link>
+         <Link to="/courses">
+         home
+          </Link>
       </div>
       <h4>Update your {coursObj.name} recipe</h4>
       
@@ -79,7 +84,8 @@ const UpdatePage = (props) => {
         create=""
         update="update"
         deletes=""
-        setErrors = {setErrors} />
+        setErrors = {setErrors} 
+        />
        : null}
        </div>
     </div>

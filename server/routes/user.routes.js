@@ -11,6 +11,8 @@ const {
   login,
   logout,
   findAllUsers,
+  findOneSingleUser,
+  findUsersByManyId,
   deleteOneSpecificUser,
   updateExistingUser,
   createUser,
@@ -29,7 +31,10 @@ module.exports = app => {
     app.post("/api/logout", logout); 
     /*AJOUT*/ 
     app.get("/api/users",authenticate, verifyRole(["admin"]), findAllUsers);
-    app.get("/api/users/students",authenticate, verifyRole(["admin", "instructor"]), findAllUsersByRoleStudent);
+    app.get('/api/users/:id',authenticate, findOneSingleUser);
+    app.get('/api/usersMany/:id',authenticate, findUsersByManyId);
+  //  app.get("/api/users/students",authenticate, verifyRole(["admin", "instructor"]), findAllUsersByRoleStudent);
+    app.get("/api/users/students",authenticate, findAllUsersByRoleStudent);
     app.post("/api/users",authenticate, verifyRole(["admin"]), createUser); // si je creer une page pr ça
     app.patch("/api/users/:id",authenticate, verifyRole(["admin"]), updateExistingUser);//
     app.delete("/api/users/:id",authenticate, verifyRole(["admin"]), deleteOneSpecificUser);//

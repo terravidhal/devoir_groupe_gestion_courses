@@ -35,7 +35,7 @@ const Login = (props)=>{
         //console.log("res.data.user***************",res.data.user);
         cookies.set('USER_OBJ', res.data.user);
         await localStorage.setItem("USER_OBJ", JSON.stringify(res.data.user));
-        navigate("/authors");
+        navigate("/courses");
       })
       .catch((err)=>{
         console.log(err.response);

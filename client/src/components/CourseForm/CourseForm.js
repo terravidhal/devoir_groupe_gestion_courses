@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import './CourseForm.css';
 import { useNavigate } from 'react-router-dom'
 import Button from '../Button/Button';
-import StudentSelector from '../StudentSelector/StudentSelector';
 import axios from 'axios';
 
 
@@ -31,6 +30,7 @@ const CourseForm = (props) => {
   const [dayOfWeek, setDayOfWeek] = useState(initialDayOfWeek);
   const [time, setTime] = useState(initialTime);
 //  
+const [loaded, setLoaded] = useState(false); // check if the data is available
 const [students, setStudents] = useState(initialStudents);// initialStudents => []
 const [availableStudents, setavailableStudents] = useState(initialAvailableStudents);// initialAvailableStudents => []
 
@@ -42,17 +42,25 @@ const [availableStudents, setavailableStudents] = useState(initialAvailableStude
 useEffect(() => {
   axios
     .get("http://localhost:8000/api/users/students",{withCredentials: true})
-    .then((res) => setavailableStudents(res.data))
+    .then((res) => {
+      console.log('t+++++', res.data);
+      setavailableStudents(res.data);
+      setLoaded(true); // data available => set "true"
+    })
     .catch((err) => console.log(err));
 }, []); // important!  //students
   
 // Fonctions de gestion de la sélection des étudiants
-  const handleStudentSelection = (student) => {
-    setStudents([...students, student]);
+//add students
+  const handleStudentSelection = (e,studentId) => {
+    e.preventDefault();
+    setStudents([...students, studentId]);
   };
 
-  const handleStudentRemoval = (student) => {
-    setStudents(students.filter((s) => s._id !== student._id));
+  // remove students
+  const handleStudentRemoval = (e,studentId) => {
+    e.preventDefault();
+    setStudents(students.filter((s) => s !== studentId));
   };
 
 
@@ -90,8 +98,8 @@ useEffect(() => {
         description,
         instructor,
         dayOfWeek,
-          time,
-          students,
+        time,
+        students,
       }); 
 
       console.log("errors:::::::", errors);
@@ -236,12 +244,27 @@ const handleTimeErrors = (e) =>{
 
               <div className='field'>
                  <label>Students:</label><br/>
-                <StudentSelector
-                  students={students}
-                  onSelection={handleStudentSelection}
-                  onRemoval={handleStudentRemoval}
-                  availableStudents={ availableStudents}
-                />
+                 <ul>
+                    { availableStudents.map((elt) => (
+                      <li key={elt._id} >
+                        {elt.name}
+                        {/* {console.log('availableStudents****', availableStudents)}
+                        {console.log('students****', students)}
+                        {console.log('students****', students.some((elt2) => elt2=== elt._id))} */}
+                        
+                       {students.some((elt2) => elt2 === elt._id) ? (
+                          <button onClick={(e) => handleStudentRemoval(e,elt._id)}>Remove</button>
+                        ) : (
+                          <button onClick={(e) => handleStudentSelection(e,elt._id)}>Add</button>
+                        )} 
+                        {/* Cette partie vérifie si un étudiant ( s) dans le selectedStudents le tableau 
+                        a un _id qui correspond à celui de l'étudiant actuel _id.
+                        Le somela méthode renvoie true si au moins un élément du tableau remplit 
+                        la condition, et false sinon */}
+                      </li>
+                    )) 
+                   }
+                 </ul>
               </div>
 
             </div>

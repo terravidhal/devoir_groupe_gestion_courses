@@ -28,9 +28,14 @@ const HomePage = () => {
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/courses",{withCredentials: true})
-      .then((res) => setAllCourses(res.data.courses))
+      .then((res) => {
+        setAllCourses(res.data.allDaCourses);
+        console.log('r+++++++', res.data.allDaCourses)
+      })
       .catch((err) => console.log(err));
   }, []); // important!  //allCourses
+
+
 
 
 

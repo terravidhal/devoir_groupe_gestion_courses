@@ -29,7 +29,7 @@ const CreatePage = () => {
        // setAllCourses([...allCourses, res.data.course]); // pas necessaire
       })
       .catch(err=>{
-        console.log("err//////", err)
+        console.log("err//////", err.response.data.message)
         const errorResponse = err.response.data.errors; 
         // Set Errors
         setErrors(errorResponse);
@@ -40,7 +40,7 @@ const CreatePage = () => {
     <div className="CreatePage">
        <div className="page-top">
         <h1>Speedy Meals</h1>
-         <Link to="/">
+         <Link to="/courses">
            back to Home
           </Link>
       </div>

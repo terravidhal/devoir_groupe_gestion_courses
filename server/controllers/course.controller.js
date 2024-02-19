@@ -18,6 +18,7 @@ module.exports.findAllCourses = (req, res) => {
 module.exports.findOneSingleCourse = (req, res) => {
     Course.findOne({ _id: req.params.id })
         .then(oneSingleCourse => {
+          console.log("oneSingleCourse",oneSingleCourse);
             res.json({ oneSingleCourse })
         })
         .catch((err) => {

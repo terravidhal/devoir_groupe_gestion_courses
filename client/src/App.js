@@ -52,7 +52,7 @@ function App() {
            <Route path="/courses" element={<HomePage />} />
            <Route path="/courses/new" element={<CreatePage />} />
            <Route path="/courses/edit/:id" element={<UpdatePage />}/>
-           <Route path="/meals/:id" element={<DetailsPage />}/>
+           <Route path="/courses/:id" element={<DetailsPage />}/>
            {/* {!user ?
              <Route path="/register_page" element={<Register />} /> :
              <Route path="/register_page" element={<Navigate replace to="/courses"  />} />
