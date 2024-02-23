@@ -32,6 +32,9 @@ const InstructorTable = (props) => {
                   </Link> |&nbsp;
                   <Link className=""  to={"/instructors/edit/" + elt._id}>
                     edit
+                  </Link> |&nbsp;
+                  <Link className=""  to={"/instructors/edit/" + elt._id}>
+                    delete
                   </Link>
                 </td>
               </tr>

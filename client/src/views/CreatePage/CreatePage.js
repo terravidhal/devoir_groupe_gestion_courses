@@ -43,7 +43,7 @@ const CreatePage = () => {
            back to Home
           </Link>
       </div>
-        <h4>Add the next culinary masterpiece!</h4>
+        <h4>Add the courses!</h4>
       <div className="page-content"> 
       <CourseForm
         requestPostorPatch={createCourse}

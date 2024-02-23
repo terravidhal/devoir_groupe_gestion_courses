@@ -104,6 +104,7 @@ const CourseTable = (props) => {
             <th>Level</th>
             <th>Instructor</th>
             <th>Day Of Week</th>
+            <th>Link Meeting</th>
             <th>Time</th>
             <th>Students</th>
             <th>Options</th>
@@ -117,6 +118,7 @@ const CourseTable = (props) => {
                 <td  className="actions">{elt.level}</td>
                 <td  className="actions">{elt.instructor}</td>
                 <td  className="actions">{elt.dayOfWeek}</td>
+                <td  className="actions">{elt.linkMeeting}</td>
                 <td  className="actions">{elt.time}</td>
                 <td  className="actions">
                   {/* {elt.students} */}
@@ -152,6 +154,9 @@ const CourseTable = (props) => {
                   </Link> |&nbsp;
                   <Link className=""  to={"/courses/edit/" + elt._id}>
                     edit
+                  </Link> |&nbsp;
+                  <Link className=""  to={"/courses/delete/" + elt._id}>
+                    delete
                   </Link>
                 </td>
               </tr>

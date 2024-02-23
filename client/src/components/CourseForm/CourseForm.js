@@ -81,8 +81,6 @@ useEffect(() => {
       setIsActive(false);
     } else if (description.length < 10) {
       setIsActive(false);
-    } else if (dayOfWeek.length < 3 || dayOfWeek.length > 8) {
-      setIsActive(false);
     } else if (parseInt(time) < 30 || parseInt(time) > 240) {
       setIsActive(false);
     } else if (linkMeeting.length < 3) {
@@ -185,29 +183,29 @@ const handleTimeErrors = (e) =>{
               <div className='field'>
                <label>Name of courses :</label><br/>
                <input type="text" value={name} onChange = {(e)=>handleNameErrors(e)}/>
-               {/* { errors.name ? 
+               { errors.name ? 
                       <p style={{color:"red",fontWeight:"bold"}}>{errors.name.message}</p>
                       : null
-               } */}
+               }
               </div>
 
               <div className='field'>
                <label>Level :</label><br/>
                <input type="number" value={level} onChange = {(e)=>handleLevelErrors(e)}/>
-               {/* { errors.level ? 
+               { errors.level ? 
                       <p style={{color:"red",fontWeight:"bold"}}>{errors.level.message}</p>
                       : null
-               } */}
+               }
               </div>
 
 
               <div className='field'>
                <label>Description :</label><br/>
                <input type="text" value={description} onChange = {(e)=>handleDescriptionErrors(e)}/>
-               {/* { errors.description ? 
+               { errors.description ? 
                       <p style={{color:"red",fontWeight:"bold"}}>{errors.description.message}</p>
                       : null
-               } */}
+               }
               </div>
 
 
@@ -229,25 +227,29 @@ const handleTimeErrors = (e) =>{
               <div className='field'>
                <label>DayOfWeek :</label><br/>
                <input type="date" value={dayOfWeek} onChange = {(e)=>setDayOfWeek(e.target.value)}/>
+               { errors.dayOfWeek ? 
+                      <p style={{color:"red",fontWeight:"bold"}}>{errors.dayOfWeek.message}</p>
+                      : null
+               }
               </div>
 
               <div className='field'>
                <label>Link Meeting :</label><br/>
                <input type="text" value={linkMeeting} onChange = {(e)=>handleLinkMeetingErrors(e)}/>
-               {/* { errors.linkMeeting ? 
+               { errors.linkMeeting ? 
                       <p style={{color:"red",fontWeight:"bold"}}>{errors.linkMeeting.message}</p>
                       : null
-               } */}
+               }
               </div>
 
 
               <div className='field'>
                <label>Time :</label><br/>
                <input type="number" value={time} onChange = {(e)=>handleTimeErrors(e)}/>
-               {/* { errors.time ? 
+               { errors.time ? 
                       <p style={{color:"red",fontWeight:"bold"}}>{errors.time.message}</p>
                       : null
-               } */}
+               }
               </div>
 
               <div className='field'>

@@ -27,13 +27,16 @@ const StudentTable = (props) => {
             return (
               <tr className="" key={index}>
                 <td  className="actions">{elt.name}</td>
-                <td  className="actions">{elt.level}</td>
+                <td  className="actions">{elt.levelStudent}</td>
                 <td className="actions">
                   <Link className=""  to={"/students/" + elt._id}>
                     details
                   </Link> |&nbsp;
                   <Link className=""  to={"/students/edit/" + elt._id}>
                     edit
+                  </Link> |&nbsp;
+                  <Link className=""  to={"/students/delete/" + elt._id}>
+                    delete
                   </Link>
                 </td>
               </tr>

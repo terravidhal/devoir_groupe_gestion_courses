@@ -126,6 +126,12 @@ const HomePage = () => {
          <Link to="/courses/new">
          Add an course
           </Link>
+         <Link to="/courses/new">
+         Add an instructor
+          </Link>
+         <Link to="/courses/new">
+         Add an students
+          </Link>
       </div>
       <button onClick={logout}>logout</button>
       <h4>we have quotes by : </h4>
