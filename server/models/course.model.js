@@ -28,8 +28,11 @@ const CourseSchema = new mongoose.Schema(
      dayOfWeek: {
        type: String,
        required: true,
+     },
+     linkMeeting: {
+       type: String,
+       required: true,
        minlength: [3, "A dayOfWeek must be atleast three characters long"],
-       maxlength: [8, "The dayOfWeek must have a maximum of twenty characters"],
      },
      time: {
       type: Number,

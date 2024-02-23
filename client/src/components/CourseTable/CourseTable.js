@@ -10,52 +10,85 @@ import axios from "axios";
 
 const CourseTable = (props) => {
   const { allCourses } = props;
-  const [allUser, setAllUser] = useState([]);
+/*  const [allUser, setAllUser] = useState([]);
   const [loaded, setLoaded] = useState(false);
+  const [studentId, SetStudentId] = useState([]);  */
 
 
   // get all courses
+
+  /*
   useEffect(() => {
-    getallUser();
-  }, []); 
+    const getOneUser = (userId) => {
+      axios.get("http://localhost:8000/api/users/" + userId,{withCredentials: true})
+          .then( res => {
+            console.log("u++++++++++",res.data.oneSingleUser);
+            setAllUser([...allUser, res.data.oneSingleUser]);
+            setLoaded(true); // data available => set "true"
+            console.log("y++++++++++",allUser);
+          })
+          .catch( err => console.log(err) );
+    };
+  /*  studentId.forEach(element => {
+      
+      getOneUser(element);
+    });*/
+/*  }, []); */
 
 
+/*
+  // get all users by specific course
+  const getAllUserBySpecificCourse = (CourseId) => {
+    axios.get("http://localhost:8000/api/students/course/" + CourseId,{withCredentials: true})
+        .then( res => {
+          console.log("u++++++++++",res.data.students);
+          setAllUser([...allUser, res.data.students]);
+          setLoaded(true); // data available => set "true"
+          //console.log("y++++++++++",allUser.students);
+        })
+        .catch( err => console.log(err) );
+  }
 
   // get specific user
-  const getOneUser = (userId) => {
+  const getOneUser2 = (userId) => {
     axios.get("http://localhost:8000/api/users/" + userId,{withCredentials: true})
         .then( res => {
           console.log("u++++++++++",res.data.oneSingleUser);
-          setAllUser([...allUser, res.data.oneSingleUser]);
-          setLoaded(true); // data available => set "true"
+         // setAllUser([...allUser, res.data.oneSingleUser]);
+        //  setLoaded(true); // data available => set "true"
           //console.log("y++++++++++",allUser.students);
         })
         .catch( err => console.log(err) );
-  }
+  } */
 
-  // get Many user
-  const getManyUser = (userIdArray) => {
-    axios.get("http://localhost:8000/api/usersMany/" + userIdArray,{withCredentials: true})
-        .then( res => {
-          console.log("u++++++++++",res.data.users);
-          setAllUser([...allUser, res.data.users]);
-          setLoaded(true); // data available => set "true"
-          //console.log("y++++++++++",allUser.students);
-        })
-        .catch( err => console.log(err) );
-  }
+/*  const getOneUser = async (userId) => {
+    try {
+      const res = await axios.get("http://localhost:8000/api/users/" + userId, { withCredentials: true });
+      setAllUser([...allUser, res.data.oneSingleUser]);
+     console.log("u++++++++++",res.data.oneSingleUser);
+      return res.data.oneSingleUser;
+    } catch (error) {
+      console.error("Erreur lors de la récupération de l'utilisateur :", error);
+      return ""; // Retourne une valeur par défaut en cas d'erreur
+    }
+  }; */
 
-  // get all user
-  const getallUser = async() => {
-    const students = await allCourses.map((elt,index) => elt.students);
-    await console.log('humm', students);
-   // getManyUser(students)
-  // students ? students = students : students = [];
-    // students.forEach(userId => {
-    //   getOneUser(userId)
-    // });
+
+
+
+ 
+
+  // get all user 
+ /* const getallUser = () => {
+
+   oneStudent.forEach((elt) => {
+     console.log(elt);
+      getOneUser(elt);
+    });
     
-  }
+  } */
+
+
 
 
  
@@ -87,15 +120,31 @@ const CourseTable = (props) => {
                 <td  className="actions">{elt.time}</td>
                 <td  className="actions">
                   {/* {elt.students} */}
-                  <ul>
-                    { loaded === true ? 
-                     allUser.students.map((elt) => (
-                       <li key={elt._id}>
-                         {elt}
-                       </li>
-                     )) : null
+                 <ul>
+                    {/* { loaded === true ?
+                     allUser.map(async(elt,index) => {
+                       return(
+                        <li key={index}>
+                          { elt.name}
+                        </li>
+                       );
+                       }) : null
+                    }    */}
+                    { 
+                     elt.students.map((elt,index) => {
+                       return(
+
+                        <li key={index}>
+                          { elt}
+                        </li>
+                        
+                        // SetStudentId([...studentId, elt])
+                        
+                       );
+                       }) 
                     }   
-                  </ul>
+                  </ul> 
+                 
                   </td>
                 <td className="actions">
                   <Link className=""  to={"/courses/" + elt._id}>
@@ -117,3 +166,16 @@ const CourseTable = (props) => {
 
 
 export default CourseTable;
+
+
+
+
+
+
+
+
+
+
+
+
+

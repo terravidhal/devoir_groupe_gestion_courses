@@ -4,6 +4,8 @@ import CourseTable from '../../components/CourseTable/CourseTable';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from "universal-cookie";
+import StudentTable from '../../components/StudentTable/StudentTable';
+import InstructorTable from '../../components/InstructorTable/InstructorTable';
 
 
 
@@ -13,6 +15,8 @@ import Cookies from "universal-cookie";
 
 const HomePage = () => {
   const [allCourses, setAllCourses] = useState([]);
+  const [allStudents, setAllStudents] = useState([]);
+  const [allInstructors, setAllInstructors] = useState([]);
   const navigate = useNavigate();
   const cookies = new Cookies();
 
@@ -33,7 +37,30 @@ const HomePage = () => {
         console.log('r+++++++', res.data.allDaCourses)
       })
       .catch((err) => console.log(err));
-  }, []); // important!  //allCourses
+  }, []); 
+
+
+  // get all students
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/students",{withCredentials: true})
+      .then((res) => {
+        setAllStudents(res.data);
+        console.log('r+++++++', res.data)
+      })
+      .catch((err) => console.log(err));
+  }, []); 
+
+  // get all instructors
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/instructors",{withCredentials: true})
+      .then((res) => {
+        setAllInstructors(res.data);
+        console.log('r+++++++', res.data)
+      })
+      .catch((err) => console.log(err));
+  }, []); 
 
 
 
@@ -46,6 +73,28 @@ const HomePage = () => {
       .then((res) => {
         console.log(res.data.result);
         setAllCourses(allCourses.filter(course=> course._id !== courseId)); // pas necessaire
+      })
+      .catch((err) => console.log(err));
+  };
+
+  // delete One specific student
+  const deleteStudent = (studentId) => {
+    axios
+      .delete("http://localhost:8000/api/students/" + studentId,{},{withCredentials: true})
+      .then((res) => {
+        console.log(res.data.result);
+        setAllStudents(allStudents.filter(student=> student._id !== studentId)); // 
+      })
+      .catch((err) => console.log(err));
+  };
+
+  // delete One specific instructor
+  const deleteInstructor = (instructorId) => {
+    axios
+      .delete("http://localhost:8000/api/instructors/" + instructorId,{},{withCredentials: true})
+      .then((res) => {
+        console.log(res.data.result);
+        setAllInstructors(allInstructors.filter(instructor=> instructor._id !== instructorId)); // 
       })
       .catch((err) => console.log(err));
   };
@@ -81,6 +130,8 @@ const HomePage = () => {
       <button onClick={logout}>logout</button>
       <h4>we have quotes by : </h4>
       <CourseTable allCourses={allCourses} deleteCourse={deleteCourse} />
+      <StudentTable allStudents={allStudents} deleteStudent={deleteStudent} />
+      <InstructorTable allInstructors={allInstructors} deleteInstructor={deleteInstructor} />
     </div>
   );
 

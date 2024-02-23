@@ -1,5 +1,5 @@
 // ---------------------------------------------------
-// MODEL SETUP - User
+// MODEL SETUP - Instructor
 // ---------------------------------------------------
 
 // 1) Importing External Libraries
@@ -8,7 +8,7 @@ const bcrypt = require("bcrypt");
 
 
 // 2) Creating Schema for Model (blueprint)
-const UserSchema = new mongoose.Schema(
+const InstructorSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -29,8 +29,13 @@ const UserSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      default: "admin",
+      default: "instructor",
       required: true,
+    },
+    isInstructor: { 
+      type: Boolean, 
+      default: false, 
+      required: true 
     },
   },
   {
@@ -49,12 +54,12 @@ const UserSchema = new mongoose.Schema(
 // 3.1) Create a |virtual space" to hold confirmPassword value
 // 3.1)  Créer un espace |virtuel »(essentiellement des champs que nous ne voulons pas enregistrer dans MongoDB)
 // pour contenir la valeur confirmPassword
-UserSchema.virtual("confirmPassword")
+InstructorSchema.virtual("confirmPassword")
   .get(() => this._confirmPassword) // définir getter pour la propriété virtuelle « confirmPassword »
   .set((value) => (this._confirmPassword = value)); // définir le setter pour la propriété virtuelle « confirmPassword »
 
 // 3.2) Comparer les mots de passe mais NE PAS enregistrer confirmPassword dans la base de données
-UserSchema.pre("validate", function (next){ // "pre" -> avant de valider
+InstructorSchema.pre("validate", function (next){ // "pre" -> avant de valider
   if(this.confirmPassword !== this.password ){
     this.invalidate("confirmPassword", "Error: passwords didn't match. Please try again.");
   }
@@ -85,7 +90,7 @@ enregistré dans la base de données.
 
 // 3.3) Hacher le mot de passe avant de l’enregistrer dans la base de données > personne ne peut 
 //      accéder au mot de passe réel de l’utilisateur
-UserSchema.pre("save", function (next) {  // "pre" -> avant de valider
+InstructorSchema.pre("save", function (next) {  // "pre" -> avant de valider
   bcrypt.hash(this.password, 10)
     .then((hashedPassword) => {
       this.password = hashedPassword;
@@ -97,7 +102,7 @@ UserSchema.pre("save", function (next) {  // "pre" -> avant de valider
 
 
 // 5) Création d’un modèle à l’aide d’un schéma
-const UserModel = mongoose.model("User", UserSchema);
+const InstructorModel = mongoose.model("Instructor", InstructorSchema);
 
 // 6) Exportation du modèle
-module.exports = UserModel;
+module.exports = InstructorModel;

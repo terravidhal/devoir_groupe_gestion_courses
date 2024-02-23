@@ -17,6 +17,8 @@ import DetailsPage from "./views/DetailsPage/DetailsPage";
 import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
 import Cookies from "universal-cookie";
+import RegisterStudent from "./components/RegisterStudent/RegisterStudent";
+
 
 
 
@@ -48,6 +50,7 @@ function App() {
          <Routes>
            <Route path="/" element={<Navigate replace to="/register_page"  />} />  {/* redirection */}
            <Route path="/register_page" element={<Register />} />
+           <Route path="/register_student" element={<RegisterStudent />} />
            <Route path="/login_page" element={<Login />} />
            <Route path="/courses" element={<HomePage />} />
            <Route path="/courses/new" element={<CreatePage />} />

@@ -1,8 +1,8 @@
 import React,{ useState } from "react";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Cookies from "universal-cookie";
-
+import "./Login.css";
 
 
 
@@ -45,7 +45,16 @@ const Login = (props)=>{
   
   return(
     <div>
-      <h2>Login</h2>
+      <h2>Login All</h2>
+      <Link to="/register_page">
+             Register instructor
+      </Link>
+      <Link to="/register_student">
+             Register student
+      </Link>
+
+      
+
       <p className="error-text">{errorMessage? errorMessage : ""}</p>
       <form onSubmit={login}>
         <div>

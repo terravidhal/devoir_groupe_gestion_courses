@@ -75,6 +75,7 @@ const UpdatePage = (props) => {
         initialName={coursObj.name}
         initialLevel={coursObj.level}
         initialDescription={coursObj.description}
+        initialLinkMeeting={coursObj.linkMeeting}
         initialInstructorId={coursObj.instructor}
         initialDayOfWeek={coursObj.dayOfWeek}
         initialTime={coursObj.time}

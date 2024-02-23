@@ -41,6 +41,12 @@ require("./config/mongoose.config");
    // b) user
    const AllMyUsersRoutes = require("./routes/user.routes");
    AllMyUsersRoutes(app);
+   // c) Students
+   const AllMyStudentsRoutes = require("./routes/student.routes");
+   AllMyStudentsRoutes(app);
+   // c) Instructors
+   const AllMyInstructorsRoutes = require("./routes/instructor.routes");
+   AllMyInstructorsRoutes(app);
 
 
 // 8) Exécution de l’instance du serveur Express dans le port sélectionné

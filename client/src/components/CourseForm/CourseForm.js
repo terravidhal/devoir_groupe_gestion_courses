@@ -11,6 +11,7 @@ const CourseForm = (props) => {
   const { initialName, 
           initialLevel,
           initialDescription,
+          initialLinkMeeting,
           initialInstructorId,
           initialDayOfWeek,
           initialTime,
@@ -26,6 +27,7 @@ const CourseForm = (props) => {
   const [name, setName] = useState(initialName);  // initialName = ""
   const [level, setLevel] = useState(initialLevel);  
   const [description, setDescription] = useState(initialDescription);
+  const [linkMeeting, setLinkMeeting] = useState(initialLinkMeeting);
   const [instructor, setInstructor] = useState(initialInstructorId);
   const [dayOfWeek, setDayOfWeek] = useState(initialDayOfWeek);
   const [time, setTime] = useState(initialTime);
@@ -38,16 +40,16 @@ const [availableStudents, setavailableStudents] = useState(initialAvailableStude
   const [isActive, setIsActive] = useState(false); // state button submit
   
 
-  // get all users by role students
+  // get all  students
 useEffect(() => {
   axios
-    .get("http://localhost:8000/api/users/students",{withCredentials: true})
+    .get("http://localhost:8000/api/students",{withCredentials: true})
     .then((res) => {
       console.log('t+++++', res.data);
       setavailableStudents(res.data);
       setLoaded(true); // data available => set "true"
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log('err all users role students : ',err));
 }, []); // important!  //students
   
 // Fonctions de gestion de la sélection des étudiants
@@ -68,7 +70,7 @@ useEffect(() => {
   useEffect(() => {
     SubmitButton();
   }, [name,level,description, 
-    dayOfWeek, time
+    linkMeeting, time
     ]);
 
 
@@ -83,6 +85,8 @@ useEffect(() => {
       setIsActive(false);
     } else if (parseInt(time) < 30 || parseInt(time) > 240) {
       setIsActive(false);
+    } else if (linkMeeting.length < 3) {
+      setIsActive(false);  
     } else {
       setIsActive(true);
     }
@@ -100,6 +104,7 @@ useEffect(() => {
         dayOfWeek,
         time,
         students,
+        linkMeeting,
       }); 
 
       console.log("errors:::::::", errors);
@@ -140,17 +145,19 @@ useEffect(() => {
    }
  } 
 
-
- const handleDayOfWeekErrors = (e) =>{ 
-  setDayOfWeek(e.target.value);
- 
- if (3 > e.target.value.length || e.target.value.length > 8 ) {
-    setErrors({...errors,dayOfWeek:{ message: "Course day Of Week must be at least 3 characters long and no more than 8 characters long" }});
+  const handleLinkMeetingErrors = (e) =>{ 
+    setLinkMeeting(e.target.value);
+   
+   if (e.target.value.length < 3) {
+      setErrors({...errors,linkMeeting:{ message: "Link Meeting must be at least 3 characters long" }});
+   } 
+   else  {
+      setErrors({...errors,linkMeeting:{ message: "" }});
+   }
  } 
- else  {
-    setErrors({...errors,dayOfWeek:{ message: "" }});
- }
-} 
+
+
+
 
 
 
@@ -210,9 +217,6 @@ const handleTimeErrors = (e) =>{
               </div>
 
 
-
-
-
               <Button courseId="" create={create} update={update} 
                 deletes={deletes}
                 isActive={isActive}
@@ -224,10 +228,14 @@ const handleTimeErrors = (e) =>{
              
               <div className='field'>
                <label>DayOfWeek :</label><br/>
-               <input type="text" value={dayOfWeek} onChange = {(e)=>handleDayOfWeekErrors(e)}/>
-               {/* <input type="date" value={dayOfWeek} onChange = {(e)=>handleDayOfWeekErrors(e)}/> */}
-               {/* { errors.dayOfWeek ? 
-                      <p style={{color:"red",fontWeight:"bold"}}>{errors.dayOfWeek.message}</p>
+               <input type="date" value={dayOfWeek} onChange = {(e)=>setDayOfWeek(e.target.value)}/>
+              </div>
+
+              <div className='field'>
+               <label>Link Meeting :</label><br/>
+               <input type="text" value={linkMeeting} onChange = {(e)=>handleLinkMeetingErrors(e)}/>
+               {/* { errors.linkMeeting ? 
+                      <p style={{color:"red",fontWeight:"bold"}}>{errors.linkMeeting.message}</p>
                       : null
                } */}
               </div>

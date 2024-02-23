@@ -26,7 +26,6 @@ const CreatePage = () => {
         console.log(res.data);
         setErrors({});
         navigate("/courses");
-       // setAllCourses([...allCourses, res.data.course]); // pas necessaire
       })
       .catch(err=>{
         console.log("err//////", err.response.data.message)
@@ -51,6 +50,7 @@ const CreatePage = () => {
         initialName=""
         initialLevel={1}
           initialDescription=""
+          initialLinkMeeting=""
           initialInstructorId={userObjsId}
           initialDayOfWeek=""
           initialTime={30}

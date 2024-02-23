@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from 'react-router-dom';
-import "./Register.css";
+import "./RegisterStudent.css";
 
 
-const Register = (props)=>{
+const RegisterStudent = (props)=>{
     const [confirmReg, setConfirmReg] = useState("");
     const [errs, setErrs] = useState({});
     const navigate = useNavigate();
@@ -25,7 +25,7 @@ const Register = (props)=>{
   
     const register = e =>{
       e.preventDefault();
-      axios.post('http://localhost:8000/api/registerInstructor',
+      axios.post('http://localhost:8000/api/registerStudent',
       user,
       {
         withCredentials: true,
@@ -44,19 +44,19 @@ const Register = (props)=>{
       })
       .catch((err)=>{
        // console.log(err);
-       // setErrs(err.response.data.errors.errors);
-        console.log("+++++++++",err);
+        setErrs(err.response.data.errors.errors);
+        console.log("+++++++++",err.response.data.errors.errors);
       })
   };
   
   return(
     <div>
-      <h2>Register instuctor</h2>
+      <h2>Register Student</h2>
       <Link to="/login_page">
              login 
       </Link>
 
-     
+      
       
       {
         confirmReg?
@@ -106,4 +106,6 @@ const Register = (props)=>{
   );
   };
   
-  export default Register;
+  export default RegisterStudent;
+
+
