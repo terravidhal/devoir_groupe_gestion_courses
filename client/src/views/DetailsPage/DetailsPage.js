@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import './DetailsPage.css';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Button from '../../components/Button/Button';
 
 
 const DetailsPage = () => {
@@ -26,16 +25,6 @@ const DetailsPage = () => {
 
 
 
-  // delete One specific Course
-  const deleteCourse = (CourseId) => {
-    axios
-      .delete("http://localhost:8000/api/Courses/" + CourseId,{withCredentials: true})
-      .then((res) => {
-        console.log(res.data);
-        navigate("/Courses");
-      })
-      .catch((err) => console.log(err));
-  };
 
 
  
@@ -49,21 +38,22 @@ const DetailsPage = () => {
       </div>  
         
       <div className="page-top">
-        <h2>{OneCourse.name} recipe</h2>
-        <Button CourseId={OneCourse._id} create="" update="" 
-        deletes="delete" 
-        isActive={true}
-        successCallback={() => deleteCourse(OneCourse._id)}/>
-       <button onClick={() => deleteCourse(OneCourse._id)}>remove</button>
+        <h2>{OneCourse.name} courses</h2>
       </div>  
       <div className="page-content">
         <div className="fields">
             <p><span className='infos'>Level:</span>{OneCourse.level}</p>
+            <p><span className='infos'>field:</span>{OneCourse.field}</p>
             <p><span className='infos'>description:</span> {OneCourse.description}</p>
             <p><span className='infos'>instructor:</span> {OneCourse.instructor}</p>
             <p><span className='infos'>dayOfWeek:</span> {OneCourse.dayOfWeek}</p>
+            <p><span className='infos'>type Of Course:</span> {OneCourse.typeOfCourse}</p>
             <p><span className='infos'>link Meeting:</span> {OneCourse.linkMeeting}</p>
+            <p><span className='infos'>documents Link:</span> {OneCourse.documentsLink}</p>
+            <p><span className='infos'>start Time:</span> {OneCourse.startTime}</p>
+            <p><span className='infos'>end Time:</span> {OneCourse.endTime}</p>
             <p><span className='infos'>duration:</span> {OneCourse.duration} minutes</p>
+            <p><span className='infos'>status:</span> {OneCourse.status} minutes</p>
             <p><span className='infos'>students:</span> 
                <ul>
                   { loaded === true ? 

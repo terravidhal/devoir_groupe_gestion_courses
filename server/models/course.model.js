@@ -57,15 +57,9 @@ const CourseSchema = new mongoose.Schema(
     },
     linkMeeting: {
       type: String,
-      minlength: [3, "A linkMeeting must be at least three characters long"],
-      required: function () {
-        // La fonction renvoie true si typeOfCourse est 'online', sinon false
-        return this.typeOfCourse === 'online';
-      },
     },
     documentsLink: {
       type: String,
-      minlength: [3, "A documentsLink must be at least three characters long"],
     },
      startTime: {
       type: String,
@@ -84,10 +78,6 @@ const CourseSchema = new mongoose.Schema(
      students: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      $setOnInsert: {
-        type: mongoose.Schema.Types.ObjectId,
-        default: mongoose.Types.ObjectId
-      }
     }],
   },
   { timestamps: true }

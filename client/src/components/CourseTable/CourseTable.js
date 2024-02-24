@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Table } from 'reactstrap';
 import axios from "axios";
-
+import Button from '../../components/Button/Button';
 
 
 
 const CourseTable = (props) => {
-  const { allCourses } = props;
+  const { allCourses, deleteCourse } = props;
 /*  const [allUser, setAllUser] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [studentId, SetStudentId] = useState([]);  */
@@ -175,9 +175,11 @@ const CourseTable = (props) => {
                   <Link className=""  to={"/courses/edit/" + elt._id}>
                     edit
                   </Link> |&nbsp;
-                  <Link className=""  to={"/courses/delete/" + elt._id}>
-                    delete
-                  </Link>
+                  <Button CourseId={elt._id} create="" update="" 
+                   deletes="delete" 
+                   isActive={true}
+                   successCallback={() => deleteCourse(elt._id)}/>
+                  <button onClick={() => deleteCourse(elt._id)}>remove</button>
                 </td>
               </tr>
             );

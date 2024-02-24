@@ -69,7 +69,7 @@ const HomePage = () => {
   // delete One specific course
   const deleteCourse = (courseId) => {
     axios
-      .delete("http://localhost:8000/api/courses/" + courseId,{},{withCredentials: true})
+      .delete("http://localhost:8000/api/courses/" + courseId,{withCredentials: true})
       .then((res) => {
         console.log(res.data.result);
         setAllCourses(allCourses.filter(course=> course._id !== courseId)); // pas necessaire
@@ -80,7 +80,7 @@ const HomePage = () => {
   // delete One specific student
   const deleteStudent = (studentId) => {
     axios
-      .delete("http://localhost:8000/api/students/" + studentId,{},{withCredentials: true})
+      .delete("http://localhost:8000/api/students/" + studentId,{withCredentials: true})
       .then((res) => {
         console.log(res.data.result);
         setAllStudents(allStudents.filter(student=> student._id !== studentId)); // 
@@ -91,7 +91,7 @@ const HomePage = () => {
   // delete One specific instructor
   const deleteInstructor = (instructorId) => {
     axios
-      .delete("http://localhost:8000/api/instructors/" + instructorId,{},{withCredentials: true})
+      .delete("http://localhost:8000/api/instructors/" + instructorId,{withCredentials: true})
       .then((res) => {
         console.log(res.data.result);
         setAllInstructors(allInstructors.filter(instructor=> instructor._id !== instructorId)); // 

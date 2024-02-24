@@ -11,21 +11,13 @@ import axios from 'axios';
 const Button = (props) => {
     const { courseId, successCallback, create, update, deletes, isActive } = props;
   
-    const deleteCoursefunc = (e) => {
-      axios
-        .delete("http://localhost:8000/api/courses/" + courseId, {withCredentials: true})
-        .then((res) => {
-          successCallback(); // => console.log(res.data);
-        })
-        .catch((err) => console.log(err));
-    };
   
     return (
       <>
         { deletes === "delete" ?
            <button
           className="btn btn-danger Button"
-          onClick={deleteCoursefunc}
+          onClick={()=>successCallback()}
         >
           <i class="fa-solid fa-house"></i> &nbsp;Remove
            </button> 
