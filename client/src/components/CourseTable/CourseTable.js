@@ -102,10 +102,16 @@ const CourseTable = (props) => {
           <tr>
             <th>Name of Course</th>
             <th>Level</th>
+            <th>field</th>
             <th>Instructor</th>
             <th>Day Of Week</th>
+            <th>type Of Course</th>
             <th>Link Meeting</th>
-            <th>Time</th>
+            <th>documents Link</th>
+            <th>start Time</th>
+            <th>end Time</th>
+            <th>duration</th>
+            <th>Status</th>
             <th>Students</th>
             <th>Options</th>
           </tr>
@@ -116,10 +122,24 @@ const CourseTable = (props) => {
               <tr className="" key={index}>
                 <td  className="actions">{elt.name}</td>
                 <td  className="actions">{elt.level}</td>
+                <td  className="actions">{elt.field}</td>
                 <td  className="actions">{elt.instructor}</td>
                 <td  className="actions">{elt.dayOfWeek}</td>
+                <td  className="actions">{elt.typeOfCourse}</td>
                 <td  className="actions">{elt.linkMeeting}</td>
-                <td  className="actions">{elt.time}</td>
+                <td  className="actions">{elt.documentsLink}</td>
+                <td  className="actions">{elt.startTime}</td>
+                <td  className="actions">{elt.endTime}</td>
+                <td  className="actions">{elt.duration}</td>
+                <td  className="actions">
+                  <button
+                      className={`${
+                        elt.status === "pending"
+                          ? "red-not-playing-btn"
+                          : ""
+                      }`}
+                    > {elt.status}</button>
+                </td>
                 <td  className="actions">
                   {/* {elt.students} */}
                  <ul>

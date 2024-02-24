@@ -50,10 +50,15 @@ const CreatePage = () => {
         initialName=""
         initialLevel={1}
           initialDescription=""
+          initialTypeOfCourse="presential"
           initialLinkMeeting=""
+          initialDocumentsLink=""
           initialInstructorId={userObjsId}
+          initialStartTime=""
+          initialEndTime=""
           initialDayOfWeek=""
-          initialTime={30}
+          initialField="Web developement"
+          initialDuration={30}
           initialStudents={[]}
           initialAvailableStudents={[]}
         errors={errors}

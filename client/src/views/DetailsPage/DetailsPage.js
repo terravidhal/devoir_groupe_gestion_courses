@@ -63,7 +63,7 @@ const DetailsPage = () => {
             <p><span className='infos'>instructor:</span> {OneCourse.instructor}</p>
             <p><span className='infos'>dayOfWeek:</span> {OneCourse.dayOfWeek}</p>
             <p><span className='infos'>link Meeting:</span> {OneCourse.linkMeeting}</p>
-            <p><span className='infos'>Time:</span> {OneCourse.time} minutes</p>
+            <p><span className='infos'>duration:</span> {OneCourse.duration} minutes</p>
             <p><span className='infos'>students:</span> 
                <ul>
                   { loaded === true ? 

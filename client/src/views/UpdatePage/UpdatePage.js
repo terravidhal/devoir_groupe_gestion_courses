@@ -75,10 +75,15 @@ const UpdatePage = (props) => {
         initialName={coursObj.name}
         initialLevel={coursObj.level}
         initialDescription={coursObj.description}
-        initialLinkMeeting={coursObj.linkMeeting}
+        initialTypeOfCourse={coursObj.description}
+        initialLinkMeeting={coursObj.typeOfCourse}
+        initialDocumentsLink={coursObj.documentsLink}
         initialInstructorId={coursObj.instructor}
         initialDayOfWeek={coursObj.dayOfWeek}
-        initialTime={coursObj.time}
+        initialField={coursObj.field}
+        initialStartTime={coursObj.startTime}
+        initialEndTime={coursObj.endTime}
+        initialDuration={coursObj.duration}
         initialStudents={coursObj.students}
         initialAvailableStudents={[]}
         errors={errors}

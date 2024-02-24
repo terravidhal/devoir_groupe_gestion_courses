@@ -11,10 +11,15 @@ const CourseForm = (props) => {
   const { initialName, 
           initialLevel,
           initialDescription,
+          initialField,
           initialLinkMeeting,
+          initialTypeOfCourse,
+          initialDocumentsLink,
           initialInstructorId,
           initialDayOfWeek,
-          initialTime,
+          initialStartTime,
+          initialEndTime,
+          initialDuration,
           initialStudents,
           initialAvailableStudents,
           requestPostorPatch,  // requestPostorPatch (lifting state)
@@ -27,10 +32,15 @@ const CourseForm = (props) => {
   const [name, setName] = useState(initialName);  // initialName = ""
   const [level, setLevel] = useState(initialLevel);  
   const [description, setDescription] = useState(initialDescription);
+  const [field, setField] = useState(initialField);
   const [linkMeeting, setLinkMeeting] = useState(initialLinkMeeting);
+  const [typeOfCourse, setTypeOfCourse] = useState(initialTypeOfCourse);
+  const [documentsLink, setDocumentsLink] = useState(initialDocumentsLink);
   const [instructor, setInstructor] = useState(initialInstructorId);
   const [dayOfWeek, setDayOfWeek] = useState(initialDayOfWeek);
-  const [time, setTime] = useState(initialTime);
+  const [duration, setDuration] = useState(initialDuration);
+  const [startTime, setStartTime] = useState(initialStartTime);
+  const [endTime, setEndTime] = useState(initialEndTime);
 //  
 const [loaded, setLoaded] = useState(false); // check if the data is available
 const [students, setStudents] = useState(initialStudents);// initialStudents => []
@@ -70,7 +80,7 @@ useEffect(() => {
   useEffect(() => {
     SubmitButton();
   }, [name,level,description, 
-    linkMeeting, time
+     duration
     ]);
 
 
@@ -81,10 +91,8 @@ useEffect(() => {
       setIsActive(false);
     } else if (description.length < 10) {
       setIsActive(false);
-    } else if (parseInt(time) < 30 || parseInt(time) > 240) {
+    } else if (parseInt(duration) < 30 || parseInt(duration) > 240) {
       setIsActive(false);
-    } else if (linkMeeting.length < 3) {
-      setIsActive(false);  
     } else {
       setIsActive(true);
     }
@@ -100,9 +108,14 @@ useEffect(() => {
         description,
         instructor,
         dayOfWeek,
-        time,
+        duration,
         students,
         linkMeeting,
+        documentsLink,
+        field,
+        typeOfCourse,
+        startTime,
+        endTime,
       }); 
 
       console.log("errors:::::::", errors);
@@ -143,27 +156,18 @@ useEffect(() => {
    }
  } 
 
-  const handleLinkMeetingErrors = (e) =>{ 
-    setLinkMeeting(e.target.value);
-   
-   if (e.target.value.length < 3) {
-      setErrors({...errors,linkMeeting:{ message: "Link Meeting must be at least 3 characters long" }});
-   } 
-   else  {
-      setErrors({...errors,linkMeeting:{ message: "" }});
-   }
- } 
+  
 
 
 
 
 
 
-const handleTimeErrors = (e) =>{ 
-  setTime(e.target.value);
+const handleDurationErrors = (e) =>{ 
+  setDuration(e.target.value);
   
   if (30 > parseInt(e.target.value) || parseInt(e.target.value) > 240) {
-     setErrors({...errors,time:{ message: "Time must be a minimum of 30 minutes  and no more than 240 minuted long" }});
+     setErrors({...errors,time:{ message: "Duration must be a minimum of 30 minutes  and no more than 240 minuted long" }});
   } 
   else  {
      setErrors({...errors,time:{ message: "" }});
@@ -234,20 +238,68 @@ const handleTimeErrors = (e) =>{
               </div>
 
               <div className='field'>
+               <label>Type of course :</label><br/>
+               <select name="" id="" value={typeOfCourse} onChange = {(e)=>setTypeOfCourse(e.target.value)}>
+                   <option value="presential">presential</option>
+                   <option value="online">online</option>
+               </select>
+               { errors.typeOfCourse ? 
+                      <p style={{color:"red",fontWeight:"bold"}}>{errors.typeOfCourse.message}</p>
+                      : null
+               }
+              </div>
+
+              <div className='field'>
                <label>Link Meeting :</label><br/>
-               <input type="text" value={linkMeeting} onChange = {(e)=>handleLinkMeetingErrors(e)}/>
+               <input type="text" value={linkMeeting} onChange = {(e)=>setLinkMeeting(e.target.value)}/>
                { errors.linkMeeting ? 
                       <p style={{color:"red",fontWeight:"bold"}}>{errors.linkMeeting.message}</p>
                       : null
                }
               </div>
 
+              <div className='field'>
+               <label>Documents Link :</label><br/>
+               <input type="text" value={documentsLink} onChange = {(e)=>setDocumentsLink(e.target.value)}/>
+              </div>
 
               <div className='field'>
-               <label>Time :</label><br/>
-               <input type="number" value={time} onChange = {(e)=>handleTimeErrors(e)}/>
-               { errors.time ? 
-                      <p style={{color:"red",fontWeight:"bold"}}>{errors.time.message}</p>
+               <label>Field :</label><br/>
+               <select name="" id="" value={field} onChange = {(e)=>setField(e.target.value)}>
+                   <option value="Web developement">Web developement</option>
+                   <option value="data analyst">data analyst</option>
+                   <option value="ux designt">ux design</option>
+               </select>
+               { errors.field ? 
+                      <p style={{color:"red",fontWeight:"bold"}}>{errors.field.message}</p>
+                      : null
+               }
+              </div>
+
+
+              <div className='field'>
+               <label>start Time :</label><br/>
+               <input type="time" value={startTime} onChange = {(e)=>setStartTime(e.target.value)}/>
+               { errors.startTime ? 
+                      <p style={{color:"red",fontWeight:"bold"}}>{errors.startTime.message}</p>
+                      : null
+               }
+              </div>
+
+              <div className='field'>
+               <label>End Time :</label><br/>
+               <input type="time" value={endTime} onChange = {(e)=>setEndTime(e.target.value)}/>
+               { errors.endTime ? 
+                      <p style={{color:"red",fontWeight:"bold"}}>{errors.endTime.message}</p>
+                      : null
+               }
+              </div>
+
+              <div className='field'>
+               <label>Duration :</label><br/>
+               <input type="number" value={duration} onChange = {(e)=>handleDurationErrors(e)}/>
+               { errors.duration ? 
+                      <p style={{color:"red",fontWeight:"bold"}}>{errors.duration.message}</p>
                       : null
                }
               </div>

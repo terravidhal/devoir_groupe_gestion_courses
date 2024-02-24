@@ -15,6 +15,12 @@ const CourseSchema = new mongoose.Schema(
       min: [1, "level must be a minimum of 1"],
       max: [5, "level should be no more than 5"],
      },
+     field: {
+      type: String,
+      enum: ['Web developement', 'data analyst', 'ux design'],
+      default: "Web developement",
+      required: [true, "A field is required"],
+    },
      description: {
        type: String,
        required: [true, "A description is required"],
@@ -26,15 +32,50 @@ const CourseSchema = new mongoose.Schema(
        required: true,
      },
      dayOfWeek: {
-       type: String,
-       required: true,
+      type: String,
+      required: true,
+      validate: {
+        validator: function (value) {
+          const currentDate = new Date();
+          const selectedDate = new Date(value);
+          return selectedDate >= currentDate;
+        },
+        message: "La date doit être supérieure à la date actuelle",
+      },
+    },
+    status: {
+      type: String,
+      enum: ['pending', 'resolved'],
+      default: "pending",
+      required: [true, "status is required"],
+    },
+    typeOfCourse: {
+      type: String,
+      enum: ['presential', 'online'],
+      default: "presential",
+      required: [true, "typeOfCourse is required"],
+    },
+    linkMeeting: {
+      type: String,
+      minlength: [3, "A linkMeeting must be at least three characters long"],
+      required: function () {
+        // La fonction renvoie true si typeOfCourse est 'online', sinon false
+        return this.typeOfCourse === 'online';
+      },
+    },
+    documentsLink: {
+      type: String,
+      minlength: [3, "A documentsLink must be at least three characters long"],
+    },
+     startTime: {
+      type: String,
+      required: [true, "startTime is required"],
      },
-     linkMeeting: {
-       type: String,
-       required: true,
-       minlength: [3, "A dayOfWeek must be atleast three characters long"],
+     endTime: {
+      type: String,
+      required: [true, "endTime is required"],
      },
-     time: {
+     duration: {
       type: Number,
       required: [true, "A  time is required"],
       min: [30, " time must be a minimum of 30 minutes"],
@@ -53,3 +94,26 @@ const CourseSchema = new mongoose.Schema(
 const Course = mongoose.model('Course', CourseSchema);
  
 module.exports = Course;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

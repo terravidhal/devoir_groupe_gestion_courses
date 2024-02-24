@@ -36,7 +36,7 @@ const StudentSchema = new mongoose.Schema(
       type: String,
       enum: ['Web developement', 'data analyst', 'ux design'],
       default: "Web developement",
-      required: [true, "A level is required"],
+      required: [true, "A field Of Study is required"],
     },
     levelStudent: {
       type: Number,
