@@ -82,9 +82,13 @@ const CourseSchema = new mongoose.Schema(
       max: [240, " time should be no more than 240 minutes."],
      },
      students: [{
-       type: mongoose.Schema.Types.ObjectId,
-       ref: 'User',
-     }],
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      $setOnInsert: {
+        type: mongoose.Schema.Types.ObjectId,
+        default: mongoose.Types.ObjectId
+      }
+    }],
   },
   { timestamps: true }
 );
@@ -94,8 +98,6 @@ const CourseSchema = new mongoose.Schema(
 const Course = mongoose.model('Course', CourseSchema);
  
 module.exports = Course;
-
-
 
 
 

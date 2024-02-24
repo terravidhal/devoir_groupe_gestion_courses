@@ -1,5 +1,6 @@
 const Course = require('../models/course.model');
  
+const StudentModel = require("../models/student.model");
 
 
 module.exports.findAllCourses = (req, res) => {
@@ -34,6 +35,68 @@ module.exports.createNewCourse = (req, res) => {
         .catch((err) => {
             res.status(400).json(err) 
         });}
+
+
+        
+module.exports.createNewCourseWithMatchingStudents = async (req, res) => {
+  try {
+    // Validate input data (assuming you have a validation middleware)
+
+    const { name, field, level,
+      description,
+        instructor,
+        dayOfWeek,
+        duration,
+        students,
+        linkMeeting,
+        documentsLink,
+        typeOfCourse,
+        startTime,
+        endTime,
+     } = req.body;
+
+    // Find matching students efficiently
+    const matchingStudents = await StudentModel.find({
+      fieldOfStudy: field,
+      levelStudent: level
+    }, { _id: true }) // Select only IDs for performance
+
+    // Create the course with linked students
+    const newCourse = new Course({
+      name,
+      field,
+      level,
+      description,
+        instructor,
+        dayOfWeek,
+        duration,
+        students,
+        linkMeeting,
+        documentsLink,
+        typeOfCourse,
+        startTime,
+        endTime,
+      students: matchingStudents.map(({ _id }) => _id)
+    });
+
+    // Save the course and students
+    await newCourse.save();
+
+    res.status(201).json({
+      message: "Course created successfully",
+      course: newCourse
+    });
+  } catch (error) {
+    // Handle errors comprehensively (e.g., validation errors, database errors)
+    console.error(error);
+    res.status(error.statusCode || 500).json({
+      message: "Error creating course",
+      error: error.message || "An unexpected error occurred"
+    });
+  }
+};
+
+
  
 
 module.exports.updateExistingCourse = (req, res) => {

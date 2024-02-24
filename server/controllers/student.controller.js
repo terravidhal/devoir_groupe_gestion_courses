@@ -196,6 +196,23 @@ createStudent: (req, res) => {
 },
 
 
+
+/*
+findMatchingStudents : async (field, level) => {
+  try {
+    // Find matching students efficiently
+    const matchingStudents = await User.find({
+      fieldOfStudy: field,
+      levelStudent: level
+    }, { _id: true }); // Select only IDs for performance
+
+    return matchingStudents;
+  } catch (error) {
+    throw new Error(`Error finding matching students: ${error.message}`);
+  }
+},  */
+
+
 // IX) DELETE ONE SPECIFIC STUDENT
 deleteOneSpecificStudent: (req, res) => {
   const studentId = req.params.id; // Obtenez l'ID de l'utilisateur à supprimer
