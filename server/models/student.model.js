@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
 
+
 // 2) Creating Schema for Model (blueprint)
 const StudentSchema = new mongoose.Schema(
   {

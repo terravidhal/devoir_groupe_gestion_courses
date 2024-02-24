@@ -40,7 +40,7 @@ module.exports = {
 
 
    // II) LOGIN
-   login: (req, res) => {
+/*   login: (req, res) => {
     // Rechercher l’utilisateur qui correspond à l’adresse e-mail saisie par l’utilisateur
     UserModel.findOne({ email: req.body.email })
       .then((user) => {
@@ -90,7 +90,7 @@ module.exports = {
         res.status(400).json({ message: "Login Error" });
       });
   },
-
+*/
 
   // III) LOGOUT
   logout: (req, res) => {
