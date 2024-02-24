@@ -10,6 +10,7 @@ import "./Login.css";
 const Login = (props)=>{
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [userType, setUserType] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
     const cookies = new Cookies();
@@ -26,6 +27,7 @@ const Login = (props)=>{
       axios.post('http://localhost:8000/api/login',{
         email: email,
         password: password,
+        userType: userType,
       },
       {
         withCredentials: true,
@@ -34,7 +36,7 @@ const Login = (props)=>{
        // console.log("res***************",res);
         //console.log("res.data.user***************",res.data.user);
         cookies.set('USER_OBJ', res.data.user);
-        await localStorage.setItem("USER_OBJ", JSON.stringify(res.data.user));
+      //  await localStorage.setItem("USER_OBJ", JSON.stringify(res.data.user));
         navigate("/courses");
       })
       .catch((err)=>{
@@ -64,6 +66,13 @@ const Login = (props)=>{
         <div>
           <label>Password</label>
           <input type="password" name="password" value={password} onChange={(e)=> setPassword(e.target.value)}/>
+        </div>
+        <div>
+          <label>user Type</label>
+          <select name="userType" id="" value={userType} onChange = {(e)=>setUserType(e.target.value)}>
+               <option value="student">student</option>
+               <option value="instructor">instructor</option>
+          </select>
         </div>
         <button type="submit">Sign in</button>
       </form>

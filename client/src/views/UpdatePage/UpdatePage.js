@@ -91,6 +91,7 @@ const UpdatePage = (props) => {
         update="update"
         deletes=""
         setErrors = {setErrors} 
+        iscreatePage={false}
         />
        : null}
        </div>

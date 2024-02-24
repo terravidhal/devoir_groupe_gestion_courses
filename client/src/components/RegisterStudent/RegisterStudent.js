@@ -12,6 +12,8 @@ const RegisterStudent = (props)=>{
     const [user, setUser] = useState({
       name: "",
       email: "",
+      fieldOfStudy:"Web developement",
+      levelStudent: 1,
       password: "",
       confirmPassword:""
     })
@@ -35,6 +37,8 @@ const RegisterStudent = (props)=>{
         setUser({
           name:"",
           email:"",
+          fieldOfStudy:"",
+          levelStudent:"",
           password:"",
           confirmPassword:""
         })
@@ -81,6 +85,28 @@ const RegisterStudent = (props)=>{
             :null
           }
           <input type="email" name="email" value={user.email} onChange={(e)=> handleChange(e)}/>
+        </div>
+        <div>
+          <label>field Of Study</label>
+          {
+            errs.fieldOfStudy?
+            <span className="error-text">{errs.fieldOfStudy.message}</span>
+            :null
+          }
+          <select name="fieldOfStudy" id="" value={user.fieldOfStudy} onChange = {(e)=>handleChange(e)}>
+               <option value="Web developement">Web developement</option>
+               <option value="data analyst">data analyst</option>
+               <option value="ux design">ux design</option>
+          </select>
+        </div>
+        <div>
+          <label>level Student</label>
+          {
+            errs.levelStudent?
+            <span className="error-text">{errs.levelStudent.message}</span>
+            :null
+          }
+          <input type="number" name="levelStudent" value={user.levelStudent} onChange={(e)=> handleChange(e)}/>
         </div>
         <div>
           <label>Password</label>

@@ -26,7 +26,7 @@ const {
   
   module.exports = app => {
       app.post("/api/registerInstructor", register);  
-      app.post("/api/login", login);
+    //  app.post("/api/login", login);
       app.post("/api/logoutInstructor", logout); 
       /*AJOUT*/ 
       //  app.get("/api/instructors/instructors",authenticate, verifyRole(["admin", "instructor"]), findAllInstructorsByRoleInstructor);

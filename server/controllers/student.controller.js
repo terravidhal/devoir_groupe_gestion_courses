@@ -11,6 +11,8 @@ const jwt = require("jsonwebtoken");
 // 2) Importing Model
 const StudentModel = require("../models/student.model");
 
+const InstructorModel = require("../models/instructor.model");
+
 // 3) Exporting Controller functions
 module.exports = {
 
@@ -40,6 +42,7 @@ module.exports = {
 
 
    // II) LOGIN
+   /*
    login: (req, res) => {
     // Rechercher l’utilisateur qui correspond à l’adresse e-mail saisie par l’utilisateur
     StudentModel.findOne({ email: req.body.email })
@@ -89,7 +92,55 @@ module.exports = {
         // ERROR 4: findOne() failed (problem with promise)
         res.status(400).json({ message: "Login Error" });
       });
+  }, */
+
+   // II) LOGIN
+  
+  login: async (req, res) => {
+    const { email, password, userType } = req.body;
+  
+    let user;
+    switch (userType) {
+      case "student":
+        user = await StudentModel.findOne({ email });
+        break;
+      case "instructor":
+        user = await InstructorModel.findOne({ email });
+        break;
+      default:
+        return res.status(400).json({ message: "Invalid user type" });
+    }
+  
+    if (!user) {
+      return res.status(400).json({ message: "Incorrect email or password" });
+    }
+  
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+  
+    if (!isPasswordValid) {
+      return res.status(400).json({ message: "Incorrect email or password" });
+    }
+  
+    // Générer un jeton JWT et définir un cookie
+    const userInfo = {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      userType,
+    };
+    const token = jwt.sign(userInfo, process.env.JWT_SECRET);
+  
+    const cookieOptions = {
+      httpOnly: true,
+      expires: new Date(Date.now() + 900000000),
+    };
+  
+    res.cookie(`usertoken`, token, cookieOptions).json({
+      message: "Successfully logged in",
+      user: userInfo,
+    });
   },
+  
 
 
   // III) LOGOUT
@@ -155,63 +206,42 @@ findStudentsByManyId: (req, res) => {
 
 
   // VI) DELETE ALL
-  deleteAllStudents: (req, res) => {
+ /* deleteAllStudents: (req, res) => {
     StudentModel.deleteMany({})
       .then((result) => res.status(200).json({ result }))
       .catch((err) =>
         res.status(500).json({ message: "Something went wrong", error: err })
       );
-  },
+  },  */
 
   /*AJOUT*/ 
   // VII) UPDATE EXISTING STUDENT
-updateExistingStudent: (req, res) => {
-  const studentId = req.params.id; // Obtenez l'ID de l'utilisateur à mettre à jour
-  const updatedData = req.body; // Les nouvelles données à mettre à jour
 
-  StudentModel.findByIdAndUpdate(studentId, updatedData, { new: true })
-    .then((updatedStudent) => {
-      if (!updatedStudent) {
-        return res.status(404).json({ message: "Student not found" });
-      }
-      res.status(200).json(updatedStudent);
-    })
-    .catch((err) =>
-      res.status(500).json({ message: "Something went wrong", error: err })
-    );
-},
+updateExistingStudent : async (req, res) => {
+  const { id, name, email, fieldOfStudy, levelStudent, password } = req.body;
 
+  // Authentification et autorisation (à implémenter)
 
-// VIII) CREATE STUDENT
-createStudent: (req, res) => {
-  const studentData = req.body; // Les données de l'utilisateur à créer
+  // Validation des données (à implémenter)
 
-  StudentModel.create(studentData)
-    .then((newStudent) => {
-      res.status(201).json(newStudent);
-    })
-    .catch((err) =>
-      res.status(500).json({ message: "Something went wrong", error: err })
-    );
-},
-
-
-
-/*
-findMatchingStudents : async (field, level) => {
-  try {
-    // Find matching students efficiently
-    const matchingStudents = await User.find({
-      fieldOfStudy: field,
-      levelStudent: level
-    }, { _id: true }); // Select only IDs for performance
-
-    return matchingStudents;
-  } catch (error) {
-    throw new Error(`Error finding matching students: ${error.message}`);
+  const student = await StudentModel.findById(id);
+  if (!student) {
+    return res.status(404).json({ message: "Étudiant introuvable" });
   }
-},  */
 
+  student.name = name;
+  student.email = email;
+  student.fieldOfStudy = fieldOfStudy;
+  student.levelStudent = levelStudent;
+
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+  student.password = hashedPassword;
+
+  await student.save();
+
+  res.status(200).json({ message: "Étudiant mis à jour avec succès", student });
+},
 
 // IX) DELETE ONE SPECIFIC STUDENT
 deleteOneSpecificStudent: (req, res) => {
@@ -230,8 +260,6 @@ deleteOneSpecificStudent: (req, res) => {
 },
 
 }  
-
-
 
 
 

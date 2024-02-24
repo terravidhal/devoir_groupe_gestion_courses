@@ -29,6 +29,7 @@ const CourseForm = (props) => {
           create,
           update,
           deletes,
+          iscreatePage
         } = props;
   const [name, setName] = useState(initialName);  // initialName = ""
   const [level, setLevel] = useState(initialLevel);  
@@ -266,7 +267,7 @@ const handleDurationErrors = (e) =>{
                <select name="" id="" value={field} onChange = {(e)=>setField(e.target.value)}>
                    <option value="Web developement">Web developement</option>
                    <option value="data analyst">data analyst</option>
-                   <option value="ux designt">ux design</option>
+                   <option value="ux design">ux design</option>
                </select>
                {/* { errors.field ? 
                       <p style={{color:"red",fontWeight:"bold"}}>{errors.field.message}</p>
@@ -302,7 +303,10 @@ const handleDurationErrors = (e) =>{
                } */}
               </div>
 
-              <div className='field'>
+
+              {
+                iscreatePage === false ?
+                 <div className='field'>
                  <label>Students:</label><br/>
                  <ul>
                     { availableStudents.map((elt) => (
@@ -325,7 +329,10 @@ const handleDurationErrors = (e) =>{
                     )) 
                    }
                  </ul>
-              </div>
+                 </div>
+                 :
+                 null
+              }
 
             </div>
         </form>

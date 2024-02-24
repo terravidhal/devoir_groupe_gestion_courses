@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import './CreatePage.css';
-import CourseForm from '../../components/CourseForm/CourseForm';
+import './CreatePageStudent.css';
+import StudentForm from '../../components/StudentForm/StudentForm';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from "universal-cookie";
@@ -8,7 +8,7 @@ import Cookies from "universal-cookie";
 
 
 
-const CreatePage = () => {
+const CreatePageStudent = () => {
   const cookies = new Cookies();
   const userObjsId = cookies.get("USER_OBJ")._id;
  
@@ -16,16 +16,16 @@ const CreatePage = () => {
   const navigate = useNavigate();
 
 
-  // create one course
-  const createCourse = (coursObj) => {
+  // create one student
+  const createStudent = (studentObj) => {
     axios
       .post(
-        "http://localhost:8000/api/courses", coursObj,{withCredentials: true} 
+        "http://localhost:8000/api/students", studentObj,{withCredentials: true} 
       )
       .then((res) => {
         console.log(res.data);
         setErrors({});
-        navigate("/courses");
+        navigate("/students");
       })
       .catch(err=>{
         console.log("err//////", err.response.data.message)
@@ -36,21 +36,21 @@ const CreatePage = () => {
   };
 
   return (
-    <div className="CreatePage">
+    <div className="CreatePageStudent">
        <div className="page-top">
-        <h1>Speedy Meals</h1>
+        <h1>Speedy students</h1>
          <Link to="/courses">
            back to Home
           </Link>
       </div>
-        <h4>Add the courses!</h4>
+        <h4>Add the students!</h4>
       <div className="page-content"> 
-      <CourseForm
-        requestPostorPatch={createCourse}
+      <StudentForm
+        requestPostorPatch={createStudent}
         initialName=""
         initialLevel={1}
           initialDescription=""
-          initialTypeOfCourse="presential"
+          initialTypeOfStudent="presential"
           initialLinkMeeting=""
           initialDocumentsLink=""
           initialInstructorId={userObjsId}
@@ -75,4 +75,5 @@ const CreatePage = () => {
 };
 
 
-export default CreatePage;
+
+export default CreatePageStudent;
