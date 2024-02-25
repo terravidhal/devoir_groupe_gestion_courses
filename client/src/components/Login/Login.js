@@ -34,18 +34,25 @@ const Login = (props)=>{
        // console.log("res***************",res);
         console.log("res.data***************",res.data);
         if ( res.data.student) {
-          cookies.set('USER_OBJ', res.data.student);
-          await localStorage.setItem("USER_OBJ", JSON.stringify(res.data.student));
+          
+        //  cookies.set('USER_OBJ', res.data.student);
+        //  await localStorage.setItem("USER_OBJ", JSON.stringify(res.data.student));
            navigate("/student-dashboard");
            
-        } else if(res.data.instructor) {
-             cookies.set('USER_OBJ', res.data.instructor);
-             await localStorage.setItem("USER_OBJ", JSON.stringify(res.data.instructor));
+        } else if(res.data.instructorisInstructor === true) {
+            
+          //   cookies.set('USER_OBJ', res.data.instructor);
+          //   await localStorage.setItem("USER_OBJ", JSON.stringify(res.data.instructor));
               navigate("/instructor-dashboard");
 
+        } else if(res.data.instructor.isInstructor === false) {
+           //  cookies.set('USER_OBJ', res.data.instructor);
+          //   await localStorage.setItem("USER_OBJ", JSON.stringify(res.data.instructor));
+              navigate("/wait-verification");
+
         } else if(res.data.admin) {
-             cookies.set('USER_OBJ', res.data.admin);
-             await localStorage.setItem("USER_OBJ", JSON.stringify(res.data.admin));
+          //   cookies.set('USER_OBJ', res.data.admin);
+          //   await localStorage.setItem("USER_OBJ", JSON.stringify(res.data.admin));
               navigate("/courses");
         }else{
            console.log('null');
@@ -57,6 +64,8 @@ const Login = (props)=>{
         setErrorMessage(err.response.data.message);
       })
   };
+
+
   
   return(
     <div>

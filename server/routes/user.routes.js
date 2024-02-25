@@ -8,8 +8,6 @@
 // 2) Importing Controller Methods
 const {
   register,
-  login,
-  logout,
   findAllUsers,
   findOneSingleUser,
   findUsersByManyId,
@@ -27,8 +25,7 @@ const { verifyRole } = require('../config/jwt.config');
 
 module.exports = app => {
     app.post("/api/register", register);  
- //   app.post("/api/login", login);
-    app.post("/api/logout", logout); 
+    
     /*AJOUT*/ 
     //  app.get("/api/users/students",authenticate, verifyRole(["admin", "instructor"]), findAllUsersByRoleStudent);
     //app.post("/api/users",authenticate, verifyRole(["admin"]), createUser); // si je creer une page pr ça

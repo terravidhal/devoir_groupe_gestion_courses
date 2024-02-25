@@ -105,15 +105,15 @@ const HomePage = () => {
     axios.post('http://localhost:8000/api/logout',{},{withCredentials: true})
     .then((res)=>{
       //console.log("res", res);
-      console.log("is res data message",res.data.message);
-      cookies.remove("USER_OBJ");
-      localStorage.removeItem("USER_OBJ");
-      //setUser(null);
+      console.log("deconnexion",res.data.message);
+     // console.log("is res data message",res.data.message);
+     // cookies.remove("USER_OBJ");
+     // localStorage.removeItem("USER_OBJ");
       navigate("/login_page");
     })
     .catch((err)=>{
      // console.log("+++++++++++",err.response);
-      console.log("+++++++++++",err);
+      console.log("Erreur de déconnexion +++++++++++",err);
     })
 };
 

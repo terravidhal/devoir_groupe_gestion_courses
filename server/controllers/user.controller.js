@@ -39,68 +39,6 @@ module.exports = {
   },
 
 
-   // II) LOGIN
-/*   login: (req, res) => {
-    // Rechercher l’utilisateur qui correspond à l’adresse e-mail saisie par l’utilisateur
-    UserModel.findOne({ email: req.body.email })
-      .then((user) => {
-        if (user === null) {
-          // ERROR 1: email address is not in DB
-          res.status(400).json({ message: "Login Error" });
-        } else {
-          // Si un utilisateur valide avec une adresse e-mail est trouvé, vérifiez le mot de passe
-          bcrypt
-            .compare(req.body.password, user.password)
-            .then((isPasswordValid) => {
-              // Si le mot de passe est valide, créez un jeton et envoyez-le au client par un cookie
-              if (isPasswordValid) {
-                // i) Créer un jeton pour stocker des informations à l’aide de JWT
-                const userInfo = {
-                  _id: user._id,
-                  name: user.name,
-                  email: user.email,
-                };
-                console.log("userInfo: ", userInfo);
-                const userToken = jwt.sign(userInfo, process.env.JWT_SECRET); // "JWT_SECRET" clé defini dns le fichier .env
-
-                // ii) Créer un cookie dans la réponse HTTP et y attacher un jeton signé
-                const cookieOptions = {
-                  httpOnly: true, // cela fera en sorte que que les cookies sont essentiellement invisibles pour le JavaScript côté client et ne peuvent être lus que par le serveur
-                  expires: new Date(Date.now() + 900000000), // temps jusqu'à ce qu'il doive se connecter à nouveau
-                };
-                
-                // réponse
-                res
-                  .cookie("usertoken", userToken, cookieOptions)
-                  .status(200)
-                  .json({ message: "Successfully logged in", user: userInfo });
-              } else {
-                // ERROR 2: password does not match
-                res.status(400).json({ message: "Login Error" });
-              }
-            })
-            .catch((err) => {
-              // ERROR 3: bcrypt.compare() failed (problem with promise)
-              res.status(400).json({ message: "Login Error" });
-            });
-        }
-      })
-      .catch((err) => {
-        // ERROR 4: findOne() failed (problem with promise)
-        res.status(400).json({ message: "Login Error" });
-      });
-  },
-*/
-
-  // III) LOGOUT
-  logout: (req, res) => {
-    // clear the cookie from the response
-    res.clearCookie("usertoken");
-    res.status(200).json({
-      message: "You have successfully logged out of our system",
-    });
-  },
-
 
   // IV) READ ALL
   findAllUsers: (req, res) => {

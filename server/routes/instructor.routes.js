@@ -8,8 +8,6 @@
 // 2) Importing Controller Methods
 const {
     register,
-    login,
-    logout,
     findAllInstructors,
     findOneSingleInstructor,
     findInstructorsByManyId,
@@ -26,8 +24,7 @@ const {
   
   module.exports = app => {
       app.post("/api/registerInstructor", register);  
-    //  app.post("/api/login", login);
-      app.post("/api/logoutInstructor", logout); 
+      
       /*AJOUT*/ 
       //  app.get("/api/instructors/instructors",authenticate, verifyRole(["admin", "instructor"]), findAllInstructorsByRoleInstructor);
       // app.post("/api/instructors",authenticate, verifyRole(["admin"]), createInstructor); // si je creer une page pr ça
