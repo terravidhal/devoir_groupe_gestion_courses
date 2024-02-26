@@ -11,9 +11,9 @@ const jwt = require("jsonwebtoken");
 // 2) Importing Model
 const StudentModel = require("../models/student.model");
 
-const InstructorModel = require("../models/instructor.model");
+//const InstructorModel = require("../models/instructor.model");
 
-const UserModel = require("../models/user.model");
+//const UserModel = require("../models/user.model");
 
 // 3) Exporting Controller functions
 module.exports = {
@@ -41,7 +41,6 @@ module.exports = {
         res.status(500).json({ message: "Something went wrong", errors: err });
       });
   },
-
 
 
   // IV) READ ALL

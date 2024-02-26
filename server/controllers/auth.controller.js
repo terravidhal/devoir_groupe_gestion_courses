@@ -45,15 +45,16 @@ module.exports = {
 
       const cookieOptions = {
         httpOnly: true,
-        expires: new Date(Date.now() + 900000000),
+        expires: new Date(Date.now() + 7200000),
       };
 
       // Redirigez vers /student-dashboard avec le jeton dans le cookie
       res
-        .cookie('studentToken', studentToken, cookieOptions)
+        .cookie('usertoken', studentToken, cookieOptions)
         .json({
           message: "Successfully logged in",
           student: studentInfo,
+          studentToken: studentToken,
         });
 
       } else if (instructor) {
@@ -70,23 +71,24 @@ module.exports = {
          _id: instructor._id,
          name: instructor.name,
          email: instructor.email,
-         isInstructor: instructor.isInstructor,
          role: 'instructor', // Ajoutez le rôle de l'utilisateur (instructeur)
+         isInstructor: instructor.isInstructor,
        };
  
        const instructorToken = jwt.sign(instructorInfo, process.env.JWT_SECRET);
  
        const cookieOptions = {
          httpOnly: true,
-         expires: new Date(Date.now() + 900000000),
+         expires: new Date(Date.now() + 7200000),
        };
  
        // Redirigez vers /student-dashboard avec le jeton dans le cookie
        res
-         .cookie('instructortoken', instructorToken, cookieOptions)
+         .cookie('usertoken', instructorToken, cookieOptions)
          .json({
           message: "Successfully logged in",
           instructor: instructorInfo,
+          instructorToken: instructorToken
         });
 
       } else if (admin) {
@@ -110,15 +112,16 @@ module.exports = {
  
        const cookieOptions = {
          httpOnly: true,
-         expires: new Date(Date.now() + 900000000),
+         expires: new Date(Date.now() + 7200000), // expire dns 2h = 7200000 ms
        };
  
        // Redirigez vers /student-dashboard avec le jeton dans le cookie
        res
-         .cookie('admintoken', adminToken, cookieOptions)
+         .cookie('usertoken', adminToken, cookieOptions)
          .json({
           message: "Successfully logged in",
           admin: adminInfo,
+          adminToken: adminToken,
         });
 
       } else {
@@ -131,10 +134,7 @@ module.exports = {
   },
 
   logout: (req, res) => {
-    // clear the cookie from the response
-    res.clearCookie("studenttoken");
-    res.clearCookie("instructortoken");
-    res.clearCookie("admintoken");
+    res.clearCookie("usertoken");
     res.status(200).json({
       message: "You have successfully logged out of our system",
     });

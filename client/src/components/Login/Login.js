@@ -30,38 +30,40 @@ const Login = (props)=>{
       {
         withCredentials: true,
       })
-      .then(async(res)=>{
+      .then((res)=>{
        // console.log("res***************",res);
         console.log("res.data***************",res.data);
-        if ( res.data.student) {
+       // console.log("res.data2***************",res.data.instructor.isInstructor);
+       if ( res.data.student) {
           
         //  cookies.set('USER_OBJ', res.data.student);
         //  await localStorage.setItem("USER_OBJ", JSON.stringify(res.data.student));
            navigate("/student-dashboard");
-           
-        } else if(res.data.instructorisInstructor === true) {
-            
-          //   cookies.set('USER_OBJ', res.data.instructor);
-          //   await localStorage.setItem("USER_OBJ", JSON.stringify(res.data.instructor));
-              navigate("/instructor-dashboard");
 
-        } else if(res.data.instructor.isInstructor === false) {
-           //  cookies.set('USER_OBJ', res.data.instructor);
+        }else if (res.data.instructor) {
+         if (res.data.instructor.isInstructor === true) {
+           //   cookies.set('USER_OBJ', res.data.instructor);
           //   await localStorage.setItem("USER_OBJ", JSON.stringify(res.data.instructor));
-              navigate("/wait-verification");
+          navigate("/instructor-dashboard");
+         } else {
+          //  cookies.set('USER_OBJ', res.data.instructor);
+          //   await localStorage.setItem("USER_OBJ", JSON.stringify(res.data.instructor));
+           navigate("/wait-verification");
+         }   
 
         } else if(res.data.admin) {
           //   cookies.set('USER_OBJ', res.data.admin);
           //   await localStorage.setItem("USER_OBJ", JSON.stringify(res.data.admin));
               navigate("/courses");
         }else{
-           console.log('null');
-        }
+          console.error("Unexpected response:", res.data);
+          // Handle potential errors here
+        }   
        // navigate("/courses");
       })
       .catch((err)=>{
-        console.log(err.response);
-        setErrorMessage(err.response.data.message);
+        console.error("Error logging in:", err);
+        //setErrorMessage(err.response.data.message);
       })
   };
 
@@ -96,3 +98,6 @@ const Login = (props)=>{
   };
   
   export default Login;
+
+
+

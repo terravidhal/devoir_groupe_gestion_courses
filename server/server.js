@@ -47,6 +47,9 @@ require("./config/mongoose.config");
    // c) Instructors
    const AllMyInstructorsRoutes = require("./routes/instructor.routes");
    AllMyInstructorsRoutes(app);
+   // c) authentification
+   const AllMyAuthRoutes = require("./routes/auth.routes");
+  AllMyAuthRoutes(app);
 
 
 // 8) Exécution de l’instance du serveur Express dans le port sélectionné

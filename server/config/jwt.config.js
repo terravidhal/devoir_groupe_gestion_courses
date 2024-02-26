@@ -6,7 +6,7 @@
 const jwt = require("jsonwebtoken");
 
 // 1) Importing model course
- const Course = require('../models/course.model');
+// const Course = require('../models/course.model');
 
 /*
  // Définir les rôles et les permissions
@@ -62,6 +62,10 @@ module.exports = {
       }
     );
   },
+
+ 
+
+  
   /*
   verifyRole: (roles) => {
     return (req, res, next) => {

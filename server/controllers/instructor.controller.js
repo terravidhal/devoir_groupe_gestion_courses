@@ -11,7 +11,7 @@ const jwt = require("jsonwebtoken");
 // 2) Importing Model
 const InstructorModel = require("../models/instructor.model");
 
-const StudentModel = require("../models/student.model");
+//const StudentModel = require("../models/student.model");
 
 // 3) Exporting Controller functions
 module.exports = {
@@ -89,10 +89,6 @@ findInstructorsByManyId: (req, res) => {
       res.status(400).json(err);
     });
 },
-
-
-
-
 
 
 
