@@ -4,6 +4,8 @@ const StudentModel = require("../models/student.model");
 
 
 module.exports.findAllCourses = (req, res) => {
+  console.log('req.role', req.role);
+  console.log('req.Isinstrucor', req.isInstructor);
     Course.find()
         .sort({ name: 1 }) // Trie les auteurs par ordre alphabétique du nom d'utilisateur/ -1 implique ordre decroissant
         .then((allDaCourses) => {

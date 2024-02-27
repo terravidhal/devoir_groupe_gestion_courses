@@ -38,7 +38,8 @@ const Login = (props)=>{
           
         //  cookies.set('USER_OBJ', res.data.student);
         //  await localStorage.setItem("USER_OBJ", JSON.stringify(res.data.student));
-           navigate("/student-dashboard");
+          // navigate("/student-dashboard");
+           navigate("/courses");
 
         }else if (res.data.instructor) {
          if (res.data.instructor.isInstructor === true) {

@@ -10,6 +10,7 @@ import Button from '../../components/Button/Button';
 
 const CourseTable = (props) => {
   const { allCourses, deleteCourse } = props;
+
 /*  const [allUser, setAllUser] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [studentId, SetStudentId] = useState([]);  */
@@ -117,7 +118,7 @@ const CourseTable = (props) => {
           </tr>
         </thead> 
         <tbody>
-        {allCourses.map((elt, index) => {
+        {  allCourses.map((elt, index) => {
             return (
               <tr className="" key={index}>
                 <td  className="actions">{elt.name}</td>
@@ -183,12 +184,14 @@ const CourseTable = (props) => {
                 </td>
               </tr>
             );
-          })}
+          })} 
         </tbody>
       </Table>
     </div>
   );
 };
+
+
 
 
 

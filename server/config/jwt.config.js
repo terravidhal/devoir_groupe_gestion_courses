@@ -8,6 +8,12 @@ const jwt = require("jsonwebtoken");
 // 1) Importing model course
 // const Course = require('../models/course.model');
 
+const StudentModel = require("../models/student.model");
+
+const InstructorModel = require("../models/instructor.model");
+
+const UserModel = require("../models/user.model");
+
 /*
  // Définir les rôles et les permissions
 const roles = {
@@ -48,7 +54,7 @@ app.post("/api/courses", hasPermission("create:courses"), (req, res) => {
 
 // 2) Exporting a function for checking authentication
 module.exports = {
-  authenticate: (req, res, next) => {
+  authenticate1: (req, res, next) => {
     jwt.verify(
       req.cookies.usertoken,
       process.env.JWT_SECRET,
@@ -63,7 +69,164 @@ module.exports = {
     );
   },
 
- 
+  authenticate: (req, res, next) => {
+    jwt.verify( req.cookies.usertoken, process.env.JWT_SECRET, async(err, decodedToken) => {
+      const user = await UserModel.findOne({_id: decodedToken._id})
+      const student = await StudentModel.findOne({_id: decodedToken._id})
+      const instructor = await InstructorModel.findOne({_id: decodedToken._id})
+      console.log(" decodedToken._id", decodedToken._id);
+        if (err) {
+          res.status(401).json({ verified: false, message : 'please make you are logged in' });
+        } else {
+          if (user) {
+            console.log("user", user);
+            req.role = user.role;
+            console.log("You are authenticated!");
+            next();
+          }else if(student){
+            console.log("student", student);
+            req.role = student.role;
+            console.log("You are authenticated!");
+            next();
+          }else if(instructor){
+            console.log("instructor", instructor);
+            req.role = instructor.role;
+            req.isInstructor = instructor.isInstructor;
+            console.log("You are authenticated!");
+            next();
+          }else{
+            console.log("null");
+          }
+          //console.log("You are authenticated!");
+         // next();
+        }
+      }
+    );
+  },
+
+  authenticateNew: (...role) => {
+    return (req, res, next) =>{
+     jwt.verify( req.cookies.usertoken, process.env.JWT_SECRET, async(err, decodedToken) => {
+      const user = await UserModel.findOne({_id: decodedToken._id})
+      const student = await StudentModel.findOne({_id: decodedToken._id})
+      const instructor = await InstructorModel.findOne({_id: decodedToken._id})
+      console.log(" decodedToken._id", decodedToken._id);
+        if (err) {
+          res.status(401).json({ verified: false, message : 'please make you are logged in' });
+        } else {
+          if (user) {
+            if (!role.includes(user.role)) {
+              const error = res.status(401).json({ verified: false, message : 'you do not have permission to perform this action' });
+              next(error);
+            } else {
+              // Autoriser l'accès au prochain middleware
+              next();
+            }
+           // console.log("user", user);
+          //  req.role = user.role;
+           // console.log("You are authenticated!");
+           // next();
+          }else if(student){
+            if (!role.includes(student.role)) {
+              const error = res.status(401).json({ verified: false, message : 'you do not have permission to perform this action' });
+              next(error);
+            } else {
+              // Autoriser l'accès au prochain middleware
+              next();
+            }
+           // console.log("student", student);
+           // req.role = student.role;
+           // console.log("You are authenticated!");
+           // next();
+          }else if(instructor){
+            if (!role.includes(instructor.role)) {
+              const error = res.status(401).json({ verified: false, message : 'you do not have permission to perform this action' });
+              next(error);
+            } else {
+              // Autoriser l'accès au prochain middleware
+              next();
+            }
+          //  console.log("instructor", instructor);
+          //  req.role = instructor.role;
+           // req.isInstructor = instructor.isInstructor;
+          //  console.log("You are authenticated!");
+           // next();
+          }else{
+            console.log("null");
+          }
+          //console.log("You are authenticated!");
+         // next();
+        }
+      }
+     );
+    }
+  },
+
+  checkPermissions: (...role) => {
+    return (req, res, next) =>{
+      if (!role.includes(req.role)) {
+        //const error = res.status(401).json({ verified: false, message : 'you do not have permission to perform this action' });
+        const err = res.status(401).json({ verified: false, message : 'you do not have permission to perform this action' });
+        next(err);
+      } else {
+        // Autoriser l'accès au prochain middleware
+        next();
+      }
+    }
+  },
+
+  authenticate2: (req, res, next) => {
+    const tokenNames = ['studenttoken', 'instructortoken', 'usertoken'];
+    const validToken = tokenNames.find((tokenName) => req.cookies[tokenName]);
+  
+    if (!validToken) {
+      // No valid token found, return 401 unauthorized
+      return res.status(401).json({ verified: false });
+    }
+  
+    jwt.verify(
+      req.cookies[validToken],
+      process.env.JWT_SECRET,
+      (err, payload) => {
+        if (err) {
+          // Token verification failed, return 401 unauthorized
+          return res.status(401).json({ verified: false });
+        } else {
+          console.log("You are authenticated!");
+          // Attach the payload to the request object for access in other routes
+          req.user = payload;
+          next();
+        }
+      }
+    );
+  },
+
+ /**
+  * Dans le middleware modifié que vous avez fourni, la ligne req.user = payload;répond à deux objectifs principaux : 
+
+1. Joindre des informations utilisateur à l'objet de requête : 
+
+    Cette ligne attribue le vérifié payload(qui contient des informations utilisateur codées dans le JWT) au req.userpropriété de l’objet de requête.
+    En stockant la charge utile dans req.user, vous le rendez facilement accessible dans n'importe quel gestionnaire de route qui suit le middleware.
+    Cela élimine le besoin d'accéder et de vérifier à plusieurs reprises le jeton dans chaque route protégée, améliorant ainsi l'efficacité et la lisibilité du code.
+
+2. Simplification de l'accès aux informations des utilisateurs : 
+
+    Au lieu d'extraire manuellement les détails utilisateur spécifiques de la charge utile de chaque itinéraire, vous pouvez désormais y accéder directement via req.user.
+    Par exemple, si la charge utile inclut l'ID de l'utilisateur comme _id, vous pouvez le récupérer en utilisant req.user._id.
+    Cette approche favorise un code plus propre et plus concis dans vos itinéraires protégés.
+
+Note: 
+
+    Le payloadLa structure dépend de la façon dont vous avez défini les informations utilisateur dans votre jwt.signappeler pendant la connexion.
+    Assurez-vous d'inclure les détails utilisateur pertinents dans la charge utile pour faciliter l'accès à vos itinéraires.
+
+  */
+
+
+
+
+
 
   
   /*
