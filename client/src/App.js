@@ -18,6 +18,9 @@ import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
 import Cookies from "universal-cookie";
 import RegisterStudent from "./components/RegisterStudent/RegisterStudent";
+import CreatePageStudent from "./views/CreatePageStudent/CreatePageStudent";
+import DetailsPageStudent from "./views/DetailsPageStudent/DetailsPageStudent";
+import UpdatePageStudent from "./views/UpdatePageStudent/UpdatePageStudent";
 
 
 
@@ -52,10 +55,13 @@ function App() {
            <Route path="/register_page" element={<Register />} />
            <Route path="/register_student" element={<RegisterStudent />} />
            <Route path="/login_page" element={<Login />} />
-           <Route path="/courses" element={<HomePage />} />
+           <Route path="/admin-dashboard" element={<HomePage />} />
            <Route path="/courses/new" element={<CreatePage />} />
+           <Route path="/students/new" element={<CreatePageStudent />} />
            <Route path="/courses/edit/:id" element={<UpdatePage />}/>
+           <Route path="/students/edit/:id" element={<UpdatePageStudent />}/>
            <Route path="/courses/:id" element={<DetailsPage />}/>
+           <Route path="/students/:id" element={<DetailsPageStudent />}/>
            {/* {!user ?
              <Route path="/register_page" element={<Register />} /> :
              <Route path="/register_page" element={<Navigate replace to="/courses"  />} />

@@ -13,7 +13,7 @@ const DetailsPage = () => {
 
   
   useEffect(() => {
-    axios.get("http://localhost:8000/api/Courses/" + id,{withCredentials: true})
+    axios.get("http://localhost:8000/api/courses/" + id,{withCredentials: true})
         .then( res => {
           console.log("u++++++++++",res.data.oneSingleCourse);
           setOneCourse(res.data.oneSingleCourse);
@@ -32,7 +32,7 @@ const DetailsPage = () => {
     <div className="DetailsPage">
       <div className="page-top">
         <h1>Speedy Courses</h1>
-         <Link to="/courses">
+         <Link to="/admin-dashboard">
            back to Home
           </Link>
       </div>  

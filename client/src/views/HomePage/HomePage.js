@@ -107,7 +107,7 @@ const HomePage = () => {
       //console.log("res", res);
       console.log("deconnexion",res.data.message);
      // console.log("is res data message",res.data.message);
-     // cookies.remove("USER_OBJ");
+       cookies.remove("USER_OBJ");
      // localStorage.removeItem("USER_OBJ");
       navigate("/login_page");
     })
@@ -129,7 +129,7 @@ const HomePage = () => {
          <Link to="/courses/new">
          Add an instructor
           </Link>
-         <Link to="/courses/new">
+         <Link to="/students/new">
          Add an students
           </Link>
       </div>

@@ -25,7 +25,7 @@ const CreatePage = () => {
       .then((res) => {
         console.log(res.data);
         setErrors({});
-        navigate("/courses");
+        navigate("/admin-dashboard");
       })
       .catch(err=>{
         console.log("err//////", err.response.data.message)
@@ -39,8 +39,8 @@ const CreatePage = () => {
     <div className="CreatePage">
        <div className="page-top">
         <h1>Speedy Meals</h1>
-         <Link to="/courses">
-           back to Home
+         <Link to="/admin-dashboard">
+         admin-dashboard
           </Link>
       </div>
         <h4>Add the courses!</h4>

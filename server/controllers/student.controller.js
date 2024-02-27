@@ -19,7 +19,7 @@ const StudentModel = require("../models/student.model");
 module.exports = {
 
 
-  // I) REGISTER
+  // I) REGISTER avec connexion apres l'enregistrement
   register: (req, res) => {
     // i) Créer une instance d’utilisateur avec des informations transmises dans la requête body
     // (cela déclenche la création de notre champ virtuel)
@@ -41,6 +41,151 @@ module.exports = {
         res.status(500).json({ message: "Something went wrong", errors: err });
       });
   },
+
+
+  // I) Create function register sans connexion apres l'enregistrement
+  createStudent: (req, res) => {
+    // i) Créer une instance d’utilisateur avec des informations transmises dans la requête body
+    // (cela déclenche la création de notre champ virtuel)
+    const newStudent = new StudentModel(req.body);
+    // ii) Enregistrer dans la base de données instance newStudent
+    newStudent
+      .save()
+      .then((newStudent) => {
+        res
+          .status(201)
+          .json({ message: "Student successfully created", student: newStudent });
+      })
+      .catch((err) => {
+        if (err.name === "ValidationError") {
+          return res
+            .status(400)
+            .json({ message: "Validation Errors", errors: err });
+        }
+        res.status(500).json({ message: "Something went wrong", errors: err });
+      });
+  },
+
+  updateExistingStudent99: async (req, res) => {
+    const { id, name, email, fieldOfStudy, levelStudent, password } = req.body;
+  
+    // Authentification et autorisation (à implémenter)
+  
+    // Validation des données (à implémenter)
+  
+    const updatedStudent = await StudentModel.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        name: name,
+        email: email,
+        fieldOfStudy: fieldOfStudy,
+        levelStudent : levelStudent,
+       // password: await bcrypt.hash(password, 10),
+        password: password,
+      },
+      { new: true, runValidators: true }
+    );
+  
+    if (!updatedStudent) {
+      return res.status(404).json({ message: "Étudiant introuvable" });
+    }
+  
+    res.status(200).json({ message: "Étudiant mis à jour avec succès", student: updatedStudent });
+  },
+  
+
+
+  updateExistingStudent44: (req, res) => {
+    const { id, name, email, fieldOfStudy, levelStudent, password } = req.body;
+    
+  
+    // Authentification et autorisation (à implémenter)
+  
+    // Validation des données (à implémenter)
+  
+    StudentModel.findById(req.params.id)
+      .then((student) => {
+        if (!student) {
+          return res.status(404).json({ message: "Étudiant introuvable" });
+        }
+  
+        student.name = name;
+        student.email = email;
+        student.fieldOfStudy = fieldOfStudy;
+        student.levelStudent = levelStudent;
+  
+        const saltRounds = 10;
+      //  const hashedPassword = await bcrypt.hash(password, saltRounds);
+      //  student.password = hashedPassword;
+
+        const hashedPassword = bcrypt.hash(password, saltRounds)
+         .then(hash => {
+           // Utilise le hash ici
+           student.password = hash;
+           console.log('Hash :', hash);
+         })
+         .catch(err => {
+           // Gère les erreurs ici
+           console.error(err.message);
+         });
+  
+        student.save()
+          .then((updatedStudent) => {
+            res.status(200).json({ message: "Étudiant mis à jour avec succès", student: updatedStudent });
+          })
+          .catch((err) => {
+            if (err.name === "ValidationError") {
+              return res
+                .status(400)
+                .json({ message: "Validation Errors", errors: err });
+            }
+           // res.status(500).json({ message: "Une erreur s'est produite", errors: err });
+          });
+      })
+      .catch((err) => {
+        res.status(500).json({ message: "Une erreur s'est produite", errors: err });
+      });
+  },
+  
+
+
+
+
+
+
+
+
+
+
+   // VII) UPDATE EXISTING STUDENT
+
+updateExistingStudent : async (req, res) => {
+  const { id,name, email, fieldOfStudy, levelStudent, password } = req.body;
+  
+
+  // Authentification et autorisation (à implémenter)
+
+  // Validation des données (à implémenter)
+
+  const student = await StudentModel.findById(req.params.id);
+  if (!student) {
+    return res.status(404).json({ message: "Étudiant introuvable" });
+  }
+
+  student.name = name;
+  student.email = email;
+  student.fieldOfStudy = fieldOfStudy;
+  student.levelStudent = levelStudent;
+
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+ // student.password = hashedPassword;
+  student.password = password;
+
+  await student.save();
+
+  res.status(200).json({ message: "Étudiant mis à jour avec succès", student });
+},
 
 
   // IV) READ ALL
@@ -105,33 +250,7 @@ findStudentsByManyId: (req, res) => {
   },  */
 
   /*AJOUT*/ 
-  // VII) UPDATE EXISTING STUDENT
-
-updateExistingStudent : async (req, res) => {
-  const { id, name, email, fieldOfStudy, levelStudent, password } = req.body;
-
-  // Authentification et autorisation (à implémenter)
-
-  // Validation des données (à implémenter)
-
-  const student = await StudentModel.findById(id);
-  if (!student) {
-    return res.status(404).json({ message: "Étudiant introuvable" });
-  }
-
-  student.name = name;
-  student.email = email;
-  student.fieldOfStudy = fieldOfStudy;
-  student.levelStudent = levelStudent;
-
-  const saltRounds = 10;
-  const hashedPassword = await bcrypt.hash(password, saltRounds);
-  student.password = hashedPassword;
-
-  await student.save();
-
-  res.status(200).json({ message: "Étudiant mis à jour avec succès", student });
-},
+ 
 
 // IX) DELETE ONE SPECIFIC STUDENT
 deleteOneSpecificStudent: (req, res) => {

@@ -104,76 +104,22 @@ module.exports = {
     );
   },
 
-  authenticateNew: (...role) => {
-    return (req, res, next) =>{
-     jwt.verify( req.cookies.usertoken, process.env.JWT_SECRET, async(err, decodedToken) => {
-      const user = await UserModel.findOne({_id: decodedToken._id})
-      const student = await StudentModel.findOne({_id: decodedToken._id})
-      const instructor = await InstructorModel.findOne({_id: decodedToken._id})
-      console.log(" decodedToken._id", decodedToken._id);
-        if (err) {
-          res.status(401).json({ verified: false, message : 'please make you are logged in' });
-        } else {
-          if (user) {
-            if (!role.includes(user.role)) {
-              const error = res.status(401).json({ verified: false, message : 'you do not have permission to perform this action' });
-              next(error);
-            } else {
-              // Autoriser l'accès au prochain middleware
-              next();
-            }
-           // console.log("user", user);
-          //  req.role = user.role;
-           // console.log("You are authenticated!");
-           // next();
-          }else if(student){
-            if (!role.includes(student.role)) {
-              const error = res.status(401).json({ verified: false, message : 'you do not have permission to perform this action' });
-              next(error);
-            } else {
-              // Autoriser l'accès au prochain middleware
-              next();
-            }
-           // console.log("student", student);
-           // req.role = student.role;
-           // console.log("You are authenticated!");
-           // next();
-          }else if(instructor){
-            if (!role.includes(instructor.role)) {
-              const error = res.status(401).json({ verified: false, message : 'you do not have permission to perform this action' });
-              next(error);
-            } else {
-              // Autoriser l'accès au prochain middleware
-              next();
-            }
-          //  console.log("instructor", instructor);
-          //  req.role = instructor.role;
-           // req.isInstructor = instructor.isInstructor;
-          //  console.log("You are authenticated!");
-           // next();
-          }else{
-            console.log("null");
-          }
-          //console.log("You are authenticated!");
-         // next();
-        }
-      }
-     );
-    }
-  },
+  
 
   checkPermissions: (...role) => {
     return (req, res, next) =>{
       if (!role.includes(req.role)) {
         //const error = res.status(401).json({ verified: false, message : 'you do not have permission to perform this action' });
-        const err = res.status(401).json({ verified: false, message : 'you do not have permission to perform this action' });
-        next(err);
+        const error =  res.status(401).json({ verified: false, message : 'you do not have permission to perform this action' });
+        next(error);
+       //next('route');
       } else {
         // Autoriser l'accès au prochain middleware
         next();
       }
     }
   },
+
 
   authenticate2: (req, res, next) => {
     const tokenNames = ['studenttoken', 'instructortoken', 'usertoken'];

@@ -63,7 +63,7 @@ const UpdatePage = (props) => {
          <Link to={"/courses/" + id}>
          course details
           </Link>
-         <Link to="/courses">
+         <Link to="/admin-dashboard">
          home
           </Link>
       </div>

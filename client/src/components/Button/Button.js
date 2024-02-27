@@ -9,7 +9,7 @@ import axios from 'axios';
 
 
 const Button = (props) => {
-    const { courseId, successCallback, create, update, deletes, isActive } = props;
+    const { successCallback, create, update, deletes, isActive } = props;
   
   
     return (

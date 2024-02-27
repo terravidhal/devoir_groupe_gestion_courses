@@ -36,14 +36,13 @@ const Login = (props)=>{
        // console.log("res.data2***************",res.data.instructor.isInstructor);
        if ( res.data.student) {
           
-        //  cookies.set('USER_OBJ', res.data.student);
+          cookies.set('USER_OBJ', res.data.student);
         //  await localStorage.setItem("USER_OBJ", JSON.stringify(res.data.student));
-          // navigate("/student-dashboard");
-           navigate("/courses");
+           navigate("/student-dashboard");
 
         }else if (res.data.instructor) {
          if (res.data.instructor.isInstructor === true) {
-           //   cookies.set('USER_OBJ', res.data.instructor);
+              cookies.set('USER_OBJ', res.data.instructor);
           //   await localStorage.setItem("USER_OBJ", JSON.stringify(res.data.instructor));
           navigate("/instructor-dashboard");
          } else {
@@ -53,9 +52,9 @@ const Login = (props)=>{
          }   
 
         } else if(res.data.admin) {
-          //   cookies.set('USER_OBJ', res.data.admin);
+             cookies.set('USER_OBJ', res.data.admin);
           //   await localStorage.setItem("USER_OBJ", JSON.stringify(res.data.admin));
-              navigate("/courses");
+              navigate("/admin-dashboard");
         }else{
           console.error("Unexpected response:", res.data);
           // Handle potential errors here

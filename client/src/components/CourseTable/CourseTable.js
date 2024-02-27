@@ -176,7 +176,7 @@ const CourseTable = (props) => {
                   <Link className=""  to={"/courses/edit/" + elt._id}>
                     edit
                   </Link> |&nbsp;
-                  <Button CourseId={elt._id} create="" update="" 
+                  <Button  create="" update="" 
                    deletes="delete" 
                    isActive={true}
                    successCallback={() => deleteCourse(elt._id)}/>

@@ -29,11 +29,11 @@ const CourseSchema = new mongoose.Schema(
      instructor: {
        type: mongoose.Schema.Types.ObjectId,
        ref: 'User',
-       required: true,
+       required: [true, "A instructor is required"],
      },
      dayOfWeek: {
       type: String,
-      required: true,
+      required: [true, "A dayOfWeek is required"],
       validate: {
         validator: function (value) {
           const currentDate = new Date();

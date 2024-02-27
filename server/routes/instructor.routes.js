@@ -18,6 +18,9 @@ const {
   
   //3) importing authenticate methods
   const { authenticate } = require('../config/jwt.config');
+
+  //4) importing checkPermissions methods
+  const { checkPermissions } = require('../config/jwt.config');
   
   //4) importing verifyRole methods
   const { verifyRole } = require('../config/jwt.config');

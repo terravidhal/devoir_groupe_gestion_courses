@@ -18,7 +18,7 @@ const { verifyInstructor } = require('../config/jwt.config');
 module.exports = app => {
    // app.get('/api/courses',authenticate, verifyRole(["user", "admin", "instructor"]), CourseController.findAllCourses);  
    // app.patch('/api/courses/:id',authenticate, verifyInstructor,  CourseController.updateExistingCourse); 
-    app.get('/api/courses',authenticate, checkPermissions('admin'), CourseController.findAllCourses);  
+    app.get('/api/courses',authenticate, CourseController.findAllCourses);  
     app.get('/api/courses/:id',authenticate, CourseController.findOneSingleCourse);
     app.get('/api/students/course/:courseId',authenticate, CourseController.findAllStudentsBySpecificCourse);
     app.patch('/api/courses/:id',authenticate,   CourseController.updateExistingCourse); 
