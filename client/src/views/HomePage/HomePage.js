@@ -126,7 +126,7 @@ const HomePage = () => {
          <Link to="/courses/new">
          Add an course
           </Link>
-         <Link to="/courses/new">
+         <Link to="/instructors/new">
          Add an instructor
           </Link>
          <Link to="/students/new">

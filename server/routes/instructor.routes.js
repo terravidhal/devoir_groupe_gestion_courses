@@ -32,10 +32,10 @@ const {
       //  app.get("/api/instructors/instructors",authenticate, verifyRole(["admin", "instructor"]), findAllInstructorsByRoleInstructor);
       // app.post("/api/instructors",authenticate, verifyRole(["admin"]), createInstructor); // si je creer une page pr ça
 
+      app.post("/api/instructors",authenticate, createInstructor); // si je creer une page pr ça
       app.get("/api/instructors",authenticate, findAllInstructors);
       app.get('/api/instructors/:id',authenticate, findOneSingleInstructor);
       //app.get('/api/instructorsMany/:id',authenticate, findInstructorsByManyId);
-      app.post("/api/instructors",authenticate, createInstructor); // si je creer une page pr ça
       app.patch("/api/instructors/:id",authenticate, updateExistingInstructor);//
       app.delete("/api/instructors/:id",authenticate,  deleteOneSpecificInstructor);//
   }

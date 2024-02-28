@@ -41,6 +41,32 @@ module.exports = {
   },
 
 
+  // VIII) CREATE INSTRUCTOR
+createInstructor: (req, res) => {
+   // i) Créer une instance d’utilisateur avec des informations transmises dans la requête body
+    // (cela déclenche la création de notre champ virtuel)
+    const newInstructor = new InstructorModel(req.body);
+    // ii) Enregistrer dans la base de données instance newInstructor
+    newInstructor
+      .save()
+      .then((newInstructor) => {
+        res
+          .status(201)
+          .json({ message: "Instructor successfully created", instructor: newInstructor });
+      })
+      .catch((err) => {
+        if (err.name === "ValidationError") {
+          return res
+            .status(400)
+            .json({ message: "Validation Errors", errors: err });
+        }
+        res.status(500).json({ message: "Something went wrong", errors: err });
+      });
+},
+
+
+
+
   // IV) READ ALL
   findAllInstructors: (req, res) => {
     InstructorModel.find({})
@@ -120,18 +146,7 @@ updateExistingInstructor: (req, res) => {
 },
 
 
-// VIII) CREATE INSTRUCTOR
-createInstructor: (req, res) => {
-  const instructorData = req.body; // Les données de l'utilisateur à créer
 
-  InstructorModel.create(instructorData)
-    .then((newInstructor) => {
-      res.status(201).json(newInstructor);
-    })
-    .catch((err) =>
-      res.status(500).json({ message: "Something went wrong", error: err })
-    );
-},
 
 
 // IX) DELETE ONE SPECIFIC INSTRUCTOR

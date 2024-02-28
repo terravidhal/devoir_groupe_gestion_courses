@@ -21,6 +21,8 @@ import RegisterStudent from "./components/RegisterStudent/RegisterStudent";
 import CreatePageStudent from "./views/CreatePageStudent/CreatePageStudent";
 import DetailsPageStudent from "./views/DetailsPageStudent/DetailsPageStudent";
 import UpdatePageStudent from "./views/UpdatePageStudent/UpdatePageStudent";
+import CreatePageInstructor from "./views/CreatePageInstructor/CreatePageInstructor";
+import DetailsPageInsructor from "./views/DetailsPageInsructor/DetailsPageInsructor";
 
 
 
@@ -58,10 +60,12 @@ function App() {
            <Route path="/admin-dashboard" element={<HomePage />} />
            <Route path="/courses/new" element={<CreatePage />} />
            <Route path="/students/new" element={<CreatePageStudent />} />
+           <Route path="/instructors/new" element={<CreatePageInstructor />} />
            <Route path="/courses/edit/:id" element={<UpdatePage />}/>
            <Route path="/students/edit/:id" element={<UpdatePageStudent />}/>
            <Route path="/courses/:id" element={<DetailsPage />}/>
            <Route path="/students/:id" element={<DetailsPageStudent />}/>
+           <Route path="/instructors/:id" element={<DetailsPageInsructor />}/>
            {/* {!user ?
              <Route path="/register_page" element={<Register />} /> :
              <Route path="/register_page" element={<Navigate replace to="/courses"  />} />
