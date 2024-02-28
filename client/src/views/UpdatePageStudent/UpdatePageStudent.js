@@ -12,7 +12,7 @@ const UpdatePageStudent = (props) => {
   const { id } = useParams();
   const [loaded, setLoaded] = useState(false); // check if the data is available
   const navigate = useNavigate();
-  const [errors, setErrors] = useState({}); 
+ // const [errors, setErrors] = useState({}); 
 
 
   const [user, setUser] = useState({
@@ -39,8 +39,8 @@ const UpdatePageStudent = (props) => {
           email: res.data.oneSingleStudent.email,
           fieldOfStudy: res.data.oneSingleStudent.fieldOfStudy,
           levelStudent: res.data.oneSingleStudent.levelStudent,
-          password: "",
-          confirmPassword: ""
+          password: "default",
+          confirmPassword: "default"
         });
         setLoaded(true); // data available => set "true"
        // console.log("k++++++++++",user.name);
@@ -59,7 +59,7 @@ const UpdatePageStudent = (props) => {
     })
   }
 
-  const updateStudent = (e,user) =>{
+  const updateStudent = (e) =>{
     e.preventDefault();
     axios.patch('http://localhost:8000/api/students/'+ id,
     user,
@@ -82,8 +82,8 @@ const UpdatePageStudent = (props) => {
     })
     .catch((err)=>{
       console.log(err);
-     // setErrs(err.response.data.errors.errors);
-      //console.log("+++++++++",err.response.data.errors.errors);
+      setErrs(err.response.data.errors.errors);
+      console.log("+++++++++",err.response.data.errors.errors);
     })
 };
 
@@ -193,7 +193,7 @@ const UpdatePageStudent = (props) => {
     }
     <input type="password" name="confirmPassword" value={user.confirmPassword} onChange={(e)=> handleChange(e)}/>
   </div>
-  <button type="submit">Register Me</button>
+  <button type="submit">Update</button>
 </form> 
  : null }
 

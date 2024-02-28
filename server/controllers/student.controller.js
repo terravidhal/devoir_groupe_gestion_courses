@@ -66,7 +66,8 @@ module.exports = {
       });
   },
 
-  updateExistingStudent99: async (req, res) => {
+  /*
+  updateExistingStudent44: async (req, res) => {
     const { id, name, email, fieldOfStudy, levelStudent, password } = req.body;
   
     // Authentification et autorisation (à implémenter)
@@ -80,8 +81,7 @@ module.exports = {
         email: email,
         fieldOfStudy: fieldOfStudy,
         levelStudent : levelStudent,
-       // password: await bcrypt.hash(password, 10),
-        password: password,
+        password: await bcrypt.hash(password, 10),
       },
       { new: true, runValidators: true }
     );
@@ -91,10 +91,48 @@ module.exports = {
     }
   
     res.status(200).json({ message: "Étudiant mis à jour avec succès", student: updatedStudent });
-  },
+  }, */
   
 
 
+  updateExistingStudent: async(req, res) => {
+    const { id, name, email, fieldOfStudy, levelStudent, password } = req.body;
+  
+  
+    // Authentification et autorisation (à implémenter)
+  
+    // Validation des données (à implémenter)
+  
+    StudentModel.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        name: name,
+        email: email,
+        fieldOfStudy: fieldOfStudy,
+        levelStudent : levelStudent,
+        password: await bcrypt.hash(password, 10),
+      },
+      { new: true, runValidators: true }
+      )
+      .then((updatedStudent) => {
+          if (!updatedStudent) {
+            return res.status(404).json({ message: "Étudiant introuvable" });
+          }
+          res.status(200).json({ message: "Étudiant mis à jour avec succès", student: updatedStudent });
+        })
+        .catch((err) => {
+          if (err.name === "ValidationError") {
+            return res
+              .status(400)
+              .json({ message: "Validation Errors", errors: err });
+          }
+           res.status(500).json({ message: "Une erreur s'est produite", errors: err });
+        });
+  },
+
+
+
+/*
   updateExistingStudent44: (req, res) => {
     const { id, name, email, fieldOfStudy, levelStudent, password } = req.body;
     
@@ -145,7 +183,7 @@ module.exports = {
       .catch((err) => {
         res.status(500).json({ message: "Une erreur s'est produite", errors: err });
       });
-  },
+  },*/
   
 
 
@@ -158,8 +196,8 @@ module.exports = {
 
 
    // VII) UPDATE EXISTING STUDENT
-
-updateExistingStudent : async (req, res) => {
+/*
+updateExistingStudent44 : async (req, res) => {
   const { id,name, email, fieldOfStudy, levelStudent, password } = req.body;
   
 
@@ -185,10 +223,10 @@ updateExistingStudent : async (req, res) => {
   await student.save();
 
   res.status(200).json({ message: "Étudiant mis à jour avec succès", student });
-},
+}, */
 
 
-  // IV) READ ALL
+  // IV) READ ALl
   findAllStudents: (req, res) => {
     StudentModel.find({})
       .then((allStudents) => res.status(200).json(allStudents))
