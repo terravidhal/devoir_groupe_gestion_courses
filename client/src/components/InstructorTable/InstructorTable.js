@@ -4,12 +4,13 @@ import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Table } from 'reactstrap';
 import axios from "axios";
+import Button from "../Button/Button";
 
 
 
 
 const InstructorTable = (props) => {
-  const { allInstructors } = props;
+  const { allInstructors, deleteInstructor } = props;
 
 
   return (
@@ -33,9 +34,11 @@ const InstructorTable = (props) => {
                   <Link className=""  to={"/instructors/edit/" + elt._id}>
                     edit
                   </Link> |&nbsp;
-                  <Link className=""  to={"/instructors/edit/" + elt._id}>
-                    delete
-                  </Link>
+                  <Button  create="" update="" 
+                   deletes="delete" 
+                   isActive={true}
+                   successCallback={() => deleteInstructor(elt._id)}/>
+                  <button onClick={() => deleteInstructor(elt._id)}>remove</button>
                 </td>
               </tr>
             );

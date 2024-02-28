@@ -65,6 +65,39 @@ createInstructor: (req, res) => {
 },
 
 
+//update Instructor
+updateExistingInstructor: async(req, res) => {
+  const { id, name, email, password } = req.body;
+
+  // Authentification et autorisation (à implémenter)
+  // Validation des données (à implémenter)
+
+  InstructorModel.findOneAndUpdate(
+    { _id: req.params.id },
+    {
+      name: name,
+      email: email,
+      password: await bcrypt.hash(password, 10),
+    },
+    { new: true, runValidators: true }
+    )
+    .then((updatedInstructor) => {
+        if (!updatedInstructor) {
+          return res.status(404).json({ message: "instructeur introuvable" });
+        }
+        res.status(200).json({ message: "instructeur mis à jour avec succès", instructor: updatedInstructor });
+      })
+      .catch((err) => {
+        if (err.name === "ValidationError") {
+          return res
+            .status(400)
+            .json({ message: "Validation Errors", errors: err });
+        }
+         res.status(500).json({ message: "Une erreur s'est produite", errors: err });
+      });
+},
+
+
 
 
   // IV) READ ALL
@@ -88,6 +121,33 @@ createInstructor: (req, res) => {
         });
   },
 
+
+  // IX) DELETE ONE SPECIFIC INSTRUCTOR
+  deleteOneSpecificInstructor : (req, res) => {
+    InstructorModel.deleteOne({ _id: req.params.id })
+        .then(result => {
+            res.json({ result })
+        })
+        .catch((err) => {
+             res.status(400).json(err) 
+        });
+  },
+
+/*
+deleteOneSpecificInstructor2: (req, res) => {
+  const instructorId = req.params.id; // Obtenez l'ID de l'utilisateur à supprimer
+
+  InstructorModel.findByIdAndDelete(instructorId)
+    .then((deletedInstructor) => {
+      if (!deletedInstructor) {
+        return res.status(404).json({ message: "Instructor not found" });
+      }
+      res.status(200).json({ message: "Instructor deleted successfully" });
+    })
+    .catch((err) =>
+      res.status(500).json({ message: "Something went wrong", error: err })
+    );
+}, */
 
   // find instructors by many ids
 findInstructorsByManyId: (req, res) => {
@@ -128,42 +188,9 @@ findInstructorsByManyId: (req, res) => {
   },
 
   /*AJOUT*/ 
-  // VII) UPDATE EXISTING INSTRUCTOR
-updateExistingInstructor: (req, res) => {
-  const instructorId = req.params.id; // Obtenez l'ID de l'utilisateur à mettre à jour
-  const updatedData = req.body; // Les nouvelles données à mettre à jour
-
-  InstructorModel.findByIdAndUpdate(instructorId, updatedData, { new: true })
-    .then((updatedInstructor) => {
-      if (!updatedInstructor) {
-        return res.status(404).json({ message: "Instructor not found" });
-      }
-      res.status(200).json(updatedInstructor);
-    })
-    .catch((err) =>
-      res.status(500).json({ message: "Something went wrong", error: err })
-    );
-},
 
 
 
-
-
-// IX) DELETE ONE SPECIFIC INSTRUCTOR
-deleteOneSpecificInstructor: (req, res) => {
-  const instructorId = req.params.id; // Obtenez l'ID de l'utilisateur à supprimer
-
-  InstructorModel.findByIdAndDelete(instructorId)
-    .then((deletedInstructor) => {
-      if (!deletedInstructor) {
-        return res.status(404).json({ message: "Instructor not found" });
-      }
-      res.status(200).json({ message: "Instructor deleted successfully" });
-    })
-    .catch((err) =>
-      res.status(500).json({ message: "Something went wrong", error: err })
-    );
-},
 
 }  
 

@@ -5,14 +5,11 @@ import axios from 'axios';
 
 
 
-
-
 const UpdatePageStudent = (props) => {
 
   const { id } = useParams();
   const [loaded, setLoaded] = useState(false); // check if the data is available
   const navigate = useNavigate();
- // const [errors, setErrors] = useState({}); 
 
 
   const [user, setUser] = useState({
@@ -89,30 +86,6 @@ const UpdatePageStudent = (props) => {
 
 
   
-
-
-
-  // update one specific student
-  /*
-  const updateStudent2 = (studentObj) => {
-    axios
-      .patch(
-        "http://localhost:8000/api/students/" + id,
-
-        studentObj,{withCredentials: true} 
-      )
-      .then((res) => {
-       // console.log(res.data.student);
-        setErrors({});
-        navigate("/students");
-      })
-      .catch(err=>{
-        console.log("err//////", err)
-        const errorResponse = err.response.data.errors; 
-        // Set Errors
-        setErrors(errorResponse);
-      }) 
-  };  */
 
 
 

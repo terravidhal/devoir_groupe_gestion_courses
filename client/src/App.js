@@ -23,6 +23,7 @@ import DetailsPageStudent from "./views/DetailsPageStudent/DetailsPageStudent";
 import UpdatePageStudent from "./views/UpdatePageStudent/UpdatePageStudent";
 import CreatePageInstructor from "./views/CreatePageInstructor/CreatePageInstructor";
 import DetailsPageInsructor from "./views/DetailsPageInsructor/DetailsPageInsructor";
+import UpdatePageInsructor from "./views/UpdatePageInsructor/UpdatePageInsructor";
 
 
 
@@ -63,6 +64,7 @@ function App() {
            <Route path="/instructors/new" element={<CreatePageInstructor />} />
            <Route path="/courses/edit/:id" element={<UpdatePage />}/>
            <Route path="/students/edit/:id" element={<UpdatePageStudent />}/>
+           <Route path="/instructors/edit/:id" element={<UpdatePageInsructor />}/>
            <Route path="/courses/:id" element={<DetailsPage />}/>
            <Route path="/students/:id" element={<DetailsPageStudent />}/>
            <Route path="/instructors/:id" element={<DetailsPageInsructor />}/>
