@@ -28,8 +28,8 @@ const CreatePage = () => {
         navigate("/admin-dashboard");
       })
       .catch(err=>{
-        console.log("err//////", err.response.data.message)
-        const errorResponse = err.response.data.errors; 
+        console.log("err//////", err.response.data.error)
+        const errorResponse = err.response.data.error; 
         // Set Errors
         setErrors(errorResponse);
       }) 

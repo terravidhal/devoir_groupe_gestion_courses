@@ -90,7 +90,7 @@ module.exports.createNewCourseWithMatchingStudents = async (req, res) => {
     });
   } catch (error) {
     // Handle errors comprehensively (e.g., validation errors, database errors)
-    console.error(error);
+    console.error("error backend",error);
    /* res.status(error.statusCode || 500).json({
       message: "Error creating course",
       error: error.message || "An unexpected error occurred"

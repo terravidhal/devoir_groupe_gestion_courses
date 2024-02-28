@@ -308,6 +308,7 @@ const handleDurationErrors = (e) =>{
                 iscreatePage === false ?
                  <div className='field'>
                  <label>Students:</label><br/>
+                 {loaded === true ? 
                  <ul>
                     { availableStudents.map((elt) => (
                       <li key={elt._id} >
@@ -329,6 +330,7 @@ const handleDurationErrors = (e) =>{
                     )) 
                    }
                  </ul>
+                 : null }
                  </div>
                  :
                  null
