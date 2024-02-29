@@ -40,7 +40,7 @@ const CourseSchema = new mongoose.Schema(
           const selectedDate = new Date(value);
           return selectedDate >= currentDate;
         },
-        message: "La date doit être supérieure à la date actuelle",
+        message: "La date doit être supérieure ou égale à la date actuelle",
       },
     },
     status: {

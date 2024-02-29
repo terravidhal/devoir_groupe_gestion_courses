@@ -57,6 +57,7 @@ const [availableStudents, setavailableStudents] = useState(initialAvailableStude
   const [isActive, setIsActive] = useState(false); // state button submit
   
 
+
   // get all  students
 useEffect(() => {
   axios
@@ -86,7 +87,6 @@ useEffect(() => {
 
   useEffect(() => {
     SubmitButton();
-    console.log("errors2",errors2);
   }, [name,level,description, 
      duration, 
     ]);
@@ -100,6 +100,8 @@ useEffect(() => {
     } else if (description.length < 10) {
       setIsActive(false);
     } else if (parseInt(duration) < 30 || parseInt(duration) > 240) {
+      setIsActive(false);
+    } else if (new Date(dayOfWeek) < new Date() ) {
       setIsActive(false);
     } else {
       setIsActive(true);
@@ -164,6 +166,19 @@ useEffect(() => {
    }
  } 
 
+  const handleDayOfWeekErrors = (e) =>{ 
+    setDayOfWeek(e.target.value);
+    const currentDate = new Date();
+    const selectedDate = new Date(e.target.value); 
+   
+   if (selectedDate < currentDate) {
+      setErrors({...errors,dayOfWeek:{ message: "DayOfWeek must be at least 10 characters long" }});
+   } 
+   else  {
+      setErrors({...errors,dayOfWeek:{ message: "" }});
+   }
+ } 
+
   
 
 
@@ -172,10 +187,10 @@ const handleDurationErrors = (e) =>{
   setDuration(e.target.value);
   
   if (30 > parseInt(e.target.value) || parseInt(e.target.value) > 240) {
-     setErrors({...errors,time:{ message: "Duration must be a minimum of 30 minutes  and no more than 240 minuted long" }});
+     setErrors({...errors,duration:{ message: "Duration must be a minimum of 30 minutes  and no more than 240 minuted long" }});
   } 
   else  {
-     setErrors({...errors,time:{ message: "" }});
+     setErrors({...errors,duration:{ message: "" }});
   }
 }
 
@@ -247,7 +262,8 @@ const handleDurationErrors = (e) =>{
              
               <div className='field'>
                <label>DayOfWeek :</label><br/>
-               <input type="date" value={dayOfWeek} onChange = {(e)=>setDayOfWeek(e.target.value)}/>
+               {/* <input type="date" value={dayOfWeek} onChange = {(e)=>setDayOfWeek(e.target.value)}/> */}
+               <input type="date" value={dayOfWeek} onChange = {(e)=>handleDayOfWeekErrors(e)}/>
                { errors.dayOfWeek ? 
                       <p style={{color:"red",fontWeight:"bold"}}>{errors.dayOfWeek.message}</p>
                       : null
@@ -269,10 +285,6 @@ const handleDurationErrors = (e) =>{
               <div className='field'>
                <label>Link Meeting :</label><br/>
                <input type="text" value={linkMeeting} onChange = {(e)=>setLinkMeeting(e.target.value)}/>
-               { errors.linkMeeting ? 
-                      <p style={{color:"red",fontWeight:"bold"}}>{errors.linkMeeting.message}</p>
-                      : null
-               }
               </div>
 
               <div className='field'>
