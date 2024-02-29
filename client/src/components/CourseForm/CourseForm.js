@@ -26,6 +26,7 @@ const CourseForm = (props) => {
           requestPostorPatch,  // requestPostorPatch (lifting state)
           setErrors, // setErrors
           errors ,
+          errors2 ,
           create,
           update,
           deletes,
@@ -81,6 +82,7 @@ useEffect(() => {
 
   useEffect(() => {
     SubmitButton();
+    console.log("errors2",errors2);
   }, [name,level,description, 
      duration, 
     ]);
@@ -183,6 +185,10 @@ const handleDurationErrors = (e) =>{
         <form onSubmit={onSubmitHandler}>
             <div className="form-left">
 
+               { errors2.errors? 
+                      <p style={{color:"red",fontWeight:"bold"}}>{errors2.errors}</p>
+                      : null
+               } 
               <div className='field'>
                <label>Name of courses :</label><br/>
                <input type="text" value={name} onChange = {(e)=>handleNameErrors(e)}/>

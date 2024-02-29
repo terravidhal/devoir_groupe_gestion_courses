@@ -13,6 +13,7 @@ const CreatePage = () => {
   const userObjsId = cookies.get("USER_OBJ")._id;
  
   const [errors, setErrors] = useState({}); 
+  const [errors2, setErrors2] = useState({}); 
   const navigate = useNavigate();
 
 
@@ -31,7 +32,8 @@ const CreatePage = () => {
         console.log("err//////", err.response.data.error)
         const errorResponse = err.response.data.error; 
         // Set Errors
-        setErrors(errorResponse);
+        setErrors2({errors:errorResponse});
+        setErrors({errors:errorResponse});
       }) 
   };
 
@@ -62,6 +64,7 @@ const CreatePage = () => {
           initialStudents={[]}
           initialAvailableStudents={[]}
         errors={errors}
+        errors2={errors2}
         create="create"
         update=""
         deletes=""
