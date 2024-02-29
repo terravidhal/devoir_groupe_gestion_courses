@@ -5,10 +5,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Table } from 'reactstrap';
 import axios from "axios";
 import Button from '../../components/Button/Button';
-
+import Cookies from "universal-cookie";
 
 
 const CourseTable = (props) => {
+  const cookies = new Cookies();
+  const userObjsId = cookies.get("USER_OBJ")._id;
+
   const { allCourses, deleteCourse } = props;
  
  /* const [allStudents, setAllStudents] = useState([]);
@@ -121,7 +124,17 @@ const CourseTable = (props) => {
                 <td  className="actions">{elt.name}</td>
                 <td  className="actions">{elt.level}</td>
                 <td  className="actions">{elt.field}</td>
-                <td  className="actions">{elt.instructor}</td>
+                <td  className="actions">
+                  { userObjsId === elt.instructor ? "Me" :
+                     <Link className=""  to={"/instructorByCourse/" + elt.instructor}>
+                       view instructor create courses
+                     </Link>
+                  }
+                  {/* {elt.instructor}
+                  <Link className=""  to={"/instructorByCourse/" + elt.instructor}>
+                       view instructor create courses
+                  </Link>&nbsp; */}
+                  </td>
                 <td  className="actions">{elt.dayOfWeek}</td>
                 <td  className="actions">{elt.typeOfCourse}</td>
                 <td  className="actions">{elt.linkMeeting}</td>
@@ -139,35 +152,10 @@ const CourseTable = (props) => {
                     > {elt.status}</button>
                 </td>
                 <td  className="actions">
-                  {/* {elt.students} */}
                  <ul>
                     <Link className=""  to={"/studentsByCourse/" + elt._id}>
                        view students register
                      </Link>&nbsp;
-                    {/* { loaded === true ?
-                     StudByCourse.map((elt,index) => {
-                       return(
-                        <li key={index}>
-                          { elt.name}
-                        </li>
-                       );
-                       }) : null
-                    }    */}
-                    {/* { 
-                     elt.students.map((elt,index) => {
-                       return(
-
-                        // <li key={index}>
-                        //   { elt}
-                        // </li>
-
-                        <li key={index}>
-                          { recupStudentId(elt) }
-                        </li>
-                        
-                       );
-                       }) 
-                    }    */}
                   </ul> 
                  
                   </td>

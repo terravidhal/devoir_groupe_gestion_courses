@@ -21,6 +21,7 @@ module.exports = app => {
     app.get('/api/courses',authenticate, CourseController.findAllCourses);  
     app.get('/api/courses/:id',authenticate, CourseController.findOneSingleCourse);
     app.get('/api/students/course/:courseId',authenticate, CourseController.findAllStudentsBySpecificCourse);
+  //  app.get('/api/instructor/course/:courseId',authenticate, CourseController.findInstructorBySpecificCourse);
     app.patch('/api/courses/:id',authenticate,   CourseController.updateExistingCourse); 
  //   app.post('/api/courses',authenticate,   CourseController.createNewCourse);
     app.post('/api/courses',authenticate,   CourseController.createNewCourseWithMatchingStudents);

@@ -125,7 +125,29 @@ module.exports.deleteAnExistingCourse = (req, res) => {
              res.status(400).json(err) 
         });}
 
-
+        /*
+module.exports.findInstructorBySpecificCourse = async (req, res) => {
+          const { courseId } = req.params; // En supposant que vous obteniez l'ID du cours à partir du paramètre URL
+        
+          try {
+            // Trouver le cours avec des étudiants peuplés
+            const course = await Course.findById(courseId).populate('instructor');
+        
+            if (!course) {
+              //return res.status(404).json({ message: 'Course not found' });
+              return res.status(400).json({ message: 'Course not found' });
+            }
+        
+            // Extraire et renvoyer les données des étudiants inscrits
+            const instructor = course.instructor;
+        
+            res.json({ instructor: instructor });
+          } catch (err) {
+            console.error(err);
+           // res.status(500).json({ message: 'An error occurred' });
+            res.status(400).json({ message: 'An error occurred' });
+          }
+        }; */
        
 
  module.exports.findAllStudentsBySpecificCourse = async (req, res) => {

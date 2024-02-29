@@ -25,6 +25,7 @@ import CreatePageInstructor from "./views/CreatePageInstructor/CreatePageInstruc
 import DetailsPageInsructor from "./views/DetailsPageInsructor/DetailsPageInsructor";
 import UpdatePageInsructor from "./views/UpdatePageInsructor/UpdatePageInsructor";
 import StudentsByCourse from "./components/StudentsByCourse/StudentsByCourse";
+import InstructorByCourse from "./components/InstructorByCourse/InstructorByCourse";
 
 
 
@@ -61,6 +62,7 @@ function App() {
            <Route path="/login_page" element={<Login />} />
            <Route path="/admin-dashboard" element={<HomePage />} />
            <Route path="/studentsByCourse/:id" element={<StudentsByCourse />} />
+           <Route path="/instructorByCourse/:id" element={<InstructorByCourse />} />
            <Route path="/courses/new" element={<CreatePage />} />
            <Route path="/students/new" element={<CreatePageStudent />} />
            <Route path="/instructors/new" element={<CreatePageInstructor />} />
