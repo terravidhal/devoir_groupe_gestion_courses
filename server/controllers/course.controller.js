@@ -145,6 +145,9 @@ module.exports.deleteAnExistingCourse = (req, res) => {
        return {
          _id: student._id,
          name: student.name, // Ou d'autres propriétés étudiantes souhaitées
+         email: student.email, 
+         fieldOfStudy: student.fieldOfStudy, 
+         levelStudent: student.levelStudent, 
        };
      });
  

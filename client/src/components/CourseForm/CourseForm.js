@@ -17,6 +17,8 @@ const CourseForm = (props) => {
           initialTypeOfCourse,
           initialDocumentsLink,
           initialInstructorId,
+          initialadminId,
+          initialInstructId,
           initialDayOfWeek,
           initialStartTime,
           initialEndTime,
@@ -40,6 +42,8 @@ const CourseForm = (props) => {
   const [typeOfCourse, setTypeOfCourse] = useState(initialTypeOfCourse);
   const [documentsLink, setDocumentsLink] = useState(initialDocumentsLink);
   const [instructor, setInstructor] = useState(initialInstructorId);
+  const [adminId, setAdminId] = useState(initialadminId);
+  const [instructId, setInstructId] = useState(initialInstructId);
   const [dayOfWeek, setDayOfWeek] = useState(initialDayOfWeek);
   const [duration, setDuration] = useState(initialDuration);
   const [startTime, setStartTime] = useState(initialStartTime);
@@ -221,6 +225,14 @@ const handleDurationErrors = (e) =>{
               <div className='field'>
                <label>Instructor :</label><br/>
                <input type="hidden" value={instructor}  onChange = {(e)=>setInstructor(e.target.value)}/>
+               {
+                iscreatePage === false ?
+               <select name="" id="" value={instructor} onChange = {(e)=>setInstructor(e.target.value)}>
+                 <option value={adminId}>Me</option>
+                   {
+                    adminId !== instructId ?
+                   <option value={instructId}>Instructor</option> : null }
+               </select> : null }
               </div>
 
 

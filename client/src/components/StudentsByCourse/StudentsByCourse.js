@@ -49,7 +49,10 @@ const StudentsByCourse = () => {
           { loaded === true ? 
               StudByCourse.map((elt,index) => (
                 <li key={index}>
-                   <p><span className='infos'>name:</span>{elt.name}</p>
+                   <p><span className='infos'>name:</span>&nbsp;{elt.name}</p>
+                   <p><span className='infos'>email:</span>&nbsp;{elt.email}</p>
+                   <p><span className='infos'>fieldOfStudy:</span>&nbsp;{elt.fieldOfStudy}</p>
+                   <p><span className='infos'>levelStudent:</span>&nbsp;{elt.levelStudent}</p>
                 </li>
               )) : null
           } 

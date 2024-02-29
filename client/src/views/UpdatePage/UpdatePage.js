@@ -3,12 +3,14 @@ import './UpdatePage.css';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import CourseForm from '../../components/CourseForm/CourseForm';
-
+import Cookies from "universal-cookie";
 
 
 
 
 const UpdatePage = (props) => {
+  const cookies = new Cookies();
+  const userObjsId = cookies.get("USER_OBJ")._id;
 
   const { id } = useParams();
   const [coursObj, setCoursObj] = useState({});
@@ -81,6 +83,8 @@ const UpdatePage = (props) => {
         initialLinkMeeting={coursObj.LinkMeeting}
         initialDocumentsLink={coursObj.documentsLink}
         initialInstructorId={coursObj.instructor}
+        initialadminId={userObjsId}
+        initialInstructId={coursObj.instructor}
         initialDayOfWeek={coursObj.dayOfWeek}
         initialField={coursObj.field}
         initialStartTime={coursObj.startTime}

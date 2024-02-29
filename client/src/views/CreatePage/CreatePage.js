@@ -56,6 +56,8 @@ const CreatePage = () => {
           initialLinkMeeting=""
           initialDocumentsLink=""
           initialInstructorId={userObjsId}
+          initialadminId={userObjsId}
+          initialInstructId={userObjsId}
           initialStartTime=""
           initialEndTime=""
           initialDayOfWeek=""
