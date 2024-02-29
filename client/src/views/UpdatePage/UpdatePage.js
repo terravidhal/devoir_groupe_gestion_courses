@@ -15,6 +15,7 @@ const UpdatePage = (props) => {
   const [loaded, setLoaded] = useState(false); // check if the data is available
   const navigate = useNavigate();
   const [errors, setErrors] = useState({}); 
+  const [errors2, setErrors2] = useState({}); 
 
 
   //get  data one specific course
@@ -44,12 +45,13 @@ const UpdatePage = (props) => {
       .then((res) => {
        // console.log(res.data.course);
         setErrors({});
-        navigate("/courses");
+        navigate("/admin-dashboard");
       })
       .catch(err=>{
         console.log("err//////", err)
         const errorResponse = err.response.data.errors; 
         // Set Errors
+        setErrors2({errors:errorResponse});
         setErrors(errorResponse);
       }) 
   };
@@ -87,6 +89,7 @@ const UpdatePage = (props) => {
         initialStudents={coursObj.students}
         initialAvailableStudents={[]}
         errors={errors}
+        errors2={errors2}
         create=""
         update="update"
         deletes=""

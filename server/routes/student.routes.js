@@ -37,7 +37,7 @@ const {
       app.post("/api/students",authenticate, createStudent);
       app.get("/api/students",authenticate, findAllStudents);
       app.get('/api/students/:id',authenticate, findOneSingleStudent);
-      //app.get('/api/studentsMany/:id',authenticate, findStudentsByManyId);
+      app.get('/api/studentsMany/:id',authenticate, findStudentsByManyId);
     //  app.post("/api/students",authenticate, createStudent); // n'existe pas son create c7 son register
       app.patch("/api/students/:id",authenticate, updateExistingStudent);//  // si je creer une page pr ça
       app.delete("/api/students/:id",authenticate,  deleteOneSpecificStudent);//

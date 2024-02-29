@@ -127,7 +127,7 @@ const UpdatePageInsructor = (props)=>{
           }
           <input type="password" name="confirmPassword" value={user.confirmPassword} onChange={(e)=> handleChange(e)}/>
         </div>
-        <button type="submit">Register Me</button>
+        <button type="submit">Update</button>
       </form>  : null }
     </div>
   );

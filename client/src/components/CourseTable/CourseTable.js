@@ -10,31 +10,28 @@ import Button from '../../components/Button/Button';
 
 const CourseTable = (props) => {
   const { allCourses, deleteCourse } = props;
-
-/*  const [allUser, setAllUser] = useState([]);
-  const [loaded, setLoaded] = useState(false);
+ 
+ /* const [allStudents, setAllStudents] = useState([]);
+  const [loaded, setLoaded] = useState(false);  
   const [studentId, SetStudentId] = useState([]);  */
 
 
-  // get all courses
+  // get all students by many Ids
 
   /*
   useEffect(() => {
-    const getOneUser = (userId) => {
-      axios.get("http://localhost:8000/api/users/" + userId,{withCredentials: true})
+    const getManyUser = () => {
+      axios.get("http://localhost:8000/api/studentsMany/" + studentId,{withCredentials: true})
           .then( res => {
-            console.log("u++++++++++",res.data.oneSingleUser);
-            setAllUser([...allUser, res.data.oneSingleUser]);
+            console.log("u++++++++++",res.data.students);
+            setAllStudents([...allStudents, res.data.students]);
             setLoaded(true); // data available => set "true"
-            console.log("y++++++++++",allUser);
+            console.log("y++++++++++",allStudents);
           })
           .catch( err => console.log(err) );
     };
-  /*  studentId.forEach(element => {
-      
-      getOneUser(element);
-    });*/
-/*  }, []); */
+    getManyUser();
+  }, []); */
 
 
 /*
@@ -144,8 +141,11 @@ const CourseTable = (props) => {
                 <td  className="actions">
                   {/* {elt.students} */}
                  <ul>
+                    <Link className=""  to={"/studentsByCourse/" + elt._id}>
+                       view students register
+                     </Link>&nbsp;
                     {/* { loaded === true ?
-                     allUser.map(async(elt,index) => {
+                     StudByCourse.map((elt,index) => {
                        return(
                         <li key={index}>
                           { elt.name}
@@ -153,19 +153,21 @@ const CourseTable = (props) => {
                        );
                        }) : null
                     }    */}
-                    { 
+                    {/* { 
                      elt.students.map((elt,index) => {
                        return(
 
+                        // <li key={index}>
+                        //   { elt}
+                        // </li>
+
                         <li key={index}>
-                          { elt}
+                          { recupStudentId(elt) }
                         </li>
-                        
-                        // SetStudentId([...studentId, elt])
                         
                        );
                        }) 
-                    }   
+                    }    */}
                   </ul> 
                  
                   </td>

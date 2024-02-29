@@ -28,7 +28,7 @@ const CourseSchema = new mongoose.Schema(
      },
      instructor: {
        type: mongoose.Schema.Types.ObjectId,
-       ref: 'User',
+       ref: 'Instructor',
        required: [true, "A instructor is required"],
      },
      dayOfWeek: {
@@ -77,7 +77,7 @@ const CourseSchema = new mongoose.Schema(
      },
      students: [{
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'Student',
     }],
   },
   { timestamps: true }

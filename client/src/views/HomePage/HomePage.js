@@ -20,6 +20,7 @@ const HomePage = () => {
   const navigate = useNavigate();
   const cookies = new Cookies();
 
+
 /**
  * IMPORTANT : MAINTENANT QUE NOUS UTILISONS DES COOKIES 
  * POUR L'AUTHENTIFICATION ET L'AUTORISATION, NOUS ASSURERONS 

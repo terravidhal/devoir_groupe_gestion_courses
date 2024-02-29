@@ -24,6 +24,7 @@ import UpdatePageStudent from "./views/UpdatePageStudent/UpdatePageStudent";
 import CreatePageInstructor from "./views/CreatePageInstructor/CreatePageInstructor";
 import DetailsPageInsructor from "./views/DetailsPageInsructor/DetailsPageInsructor";
 import UpdatePageInsructor from "./views/UpdatePageInsructor/UpdatePageInsructor";
+import StudentsByCourse from "./components/StudentsByCourse/StudentsByCourse";
 
 
 
@@ -59,6 +60,7 @@ function App() {
            <Route path="/register_student" element={<RegisterStudent />} />
            <Route path="/login_page" element={<Login />} />
            <Route path="/admin-dashboard" element={<HomePage />} />
+           <Route path="/studentsByCourse/:id" element={<StudentsByCourse />} />
            <Route path="/courses/new" element={<CreatePage />} />
            <Route path="/students/new" element={<CreatePageStudent />} />
            <Route path="/instructors/new" element={<CreatePageInstructor />} />
