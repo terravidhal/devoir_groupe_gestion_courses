@@ -36,8 +36,8 @@ const CourseSchema = new mongoose.Schema(
       required: [true, "A dayOfWeek is required"],
       validate: {
         validator: function (value) {
-          const currentDate = new Date();
-          const selectedDate = new Date(value);
+          const currentDate = new Date().getMonth();
+          const selectedDate = new Date(value).getMonth();
           return selectedDate >= currentDate;
         },
         message: "La date doit être supérieure ou égale à la date actuelle",

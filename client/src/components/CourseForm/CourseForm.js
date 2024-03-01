@@ -87,8 +87,11 @@ useEffect(() => {
 
   useEffect(() => {
     SubmitButton();
+    console.log('dayOfWeek', dayOfWeek);
+    console.log('new date dayOfWeek', new Date(dayOfWeek).getMonth());
+    console.log('new date', new Date().getMonth());
   }, [name,level,description, 
-     duration, 
+     duration, dayOfWeek
     ]);
 
 
@@ -101,7 +104,7 @@ useEffect(() => {
       setIsActive(false);
     } else if (parseInt(duration) < 30 || parseInt(duration) > 240) {
       setIsActive(false);
-    } else if (new Date(dayOfWeek) < new Date() ) {
+    } else if (new Date(dayOfWeek).getMonth() < new Date().getMonth() || dayOfWeek === '' ) {
       setIsActive(false);
     } else {
       setIsActive(true);
@@ -171,7 +174,7 @@ useEffect(() => {
     const currentDate = new Date();
     const selectedDate = new Date(e.target.value); 
    
-   if (selectedDate < currentDate) {
+   if (selectedDate.getMonth() < currentDate.getMonth()) {
       setErrors({...errors,dayOfWeek:{ message: "DayOfWeek must be at least 10 characters long" }});
    } 
    else  {
