@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import './DetailsPage.css';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Cookies from "universal-cookie";
 
 
 const DetailsPage = () => {
+  const cookies = new Cookies();
+  const userObjsRole = cookies.get("USER_OBJ").role;
 
   const [OneCourse, setOneCourse] = useState({})
   const {id} = useParams(); 
@@ -32,9 +35,15 @@ const DetailsPage = () => {
     <div className="DetailsPage">
       <div className="page-top">
         <h1>Speedy Courses</h1>
-         <Link to="/admin-dashboard">
-           back to Home
-          </Link>
+        {
+          userObjsRole === 'admin' ?
+            <Link to="/admin-dashboard">
+              back to Home
+             </Link> :
+             <Link to="/instructor-dashboard">
+             back to Home
+            </Link>
+        }
       </div>  
         
       <div className="page-top">
@@ -54,17 +63,6 @@ const DetailsPage = () => {
             <p><span className='infos'>end Time:</span> {OneCourse.endTime}</p>
             <p><span className='infos'>duration:</span> {OneCourse.duration} minutes</p>
             <p><span className='infos'>status:</span> {OneCourse.status} minutes</p>
-            <p><span className='infos'>students:</span> 
-               <ul>
-                  { loaded === true ? 
-                  OneCourse.students.map((id) => (
-                    <li key={id}>
-                      {id}
-                    </li>
-                  )) : null
-                } 
-               </ul>
-            </p>
         </div>
       </div>
     </div>

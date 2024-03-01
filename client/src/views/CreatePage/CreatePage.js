@@ -11,6 +11,7 @@ import Cookies from "universal-cookie";
 const CreatePage = () => {
   const cookies = new Cookies();
   const userObjsId = cookies.get("USER_OBJ")._id;
+  const userObjsRole = cookies.get("USER_OBJ").role;
  
   const [errors, setErrors] = useState({}); 
   const [errors2, setErrors2] = useState({}); 
@@ -26,7 +27,11 @@ const CreatePage = () => {
       .then((res) => {
         console.log(res.data);
         setErrors({});
-        navigate("/admin-dashboard");
+        if (userObjsRole === 'admin') {
+          navigate("/admin-dashboard");
+        } else {
+          navigate("/instructor-dashboard");
+        }
       })
       .catch(err=>{
         console.log("err//////", err.response.data.error)
@@ -40,10 +45,16 @@ const CreatePage = () => {
   return (
     <div className="CreatePage">
        <div className="page-top">
-        <h1>Speedy Meals</h1>
-         <Link to="/admin-dashboard">
-         admin-dashboard
-          </Link>
+        <h1>create courses</h1>
+        {
+          userObjsRole === 'admin' ?
+            <Link to="/admin-dashboard">
+              back to Home
+             </Link> :
+             <Link to="/instructor-dashboard">
+             back to Home
+            </Link>
+        }
       </div>
         <h4>Add the courses!</h4>
       <div className="page-content"> 

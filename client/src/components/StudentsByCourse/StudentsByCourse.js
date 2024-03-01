@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import './StudentsByCourse.css';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import Cookies from "universal-cookie";
 
 const StudentsByCourse = () => {
+  const cookies = new Cookies();
+  const userObjsRole = cookies.get("USER_OBJ").role;
 
   const [StudByCourse, setStudByCourse] = useState([]);
   const {id} = useParams(); 
@@ -36,9 +38,15 @@ const StudentsByCourse = () => {
     <div className="StudentsByCourse">
       <div className="page-top">
         <h1>Students by course</h1>
-         <Link to="/admin-dashboard">
-           back to Home
-          </Link>
+        {
+          userObjsRole === 'admin' ?
+            <Link to="/admin-dashboard">
+              back to Home
+             </Link> :
+             <Link to="/instructor-dashboard">
+             back to Home
+            </Link>
+        }
       </div>  
         
       <div className="page-top">

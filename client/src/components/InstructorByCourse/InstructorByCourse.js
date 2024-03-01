@@ -20,25 +20,11 @@ const InstructorByCourse = () => {
           console.log("u++++++++++",res);
           setInstructByCourse(res.data.oneSingleInstructor);
           setLoaded(true); // data available => set "true"
-          console.log("y++++++++++",InstructByCourse);
         })
         .catch( err => console.log(err) );
   }, [id]); 
   
-  /*
-  useEffect(() => {
-    axios.get("http://localhost:8000/api/instructor/course/" + id,{withCredentials: true})
-        .then( res => {
-          console.log("u++++++++++",res);
-          console.log("p++++++++++",res.data.instructor);
-          setInstructByCourse(res.data.instructor)
-          setLoaded(true); // data available => set "true"
-          console.log("y++++++++++InstructByCourse",InstructByCourse);
-        })
-        .catch( err => console.log(err) );
-  }, [id]); */
-
-
+  
 
 
 

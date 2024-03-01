@@ -11,6 +11,7 @@ import Cookies from "universal-cookie";
 const UpdatePage = (props) => {
   const cookies = new Cookies();
   const userObjsId = cookies.get("USER_OBJ")._id;
+  const userObjsRole = cookies.get("USER_OBJ").role;
 
   const { id } = useParams();
   const [coursObj, setCoursObj] = useState({});
@@ -47,7 +48,11 @@ const UpdatePage = (props) => {
       .then((res) => {
        // console.log(res.data.course);
         setErrors({});
-        navigate("/admin-dashboard");
+        if (userObjsRole === 'admin') {
+          navigate("/admin-dashboard");
+        } else {
+          navigate("/instructor-dashboard");
+        }
       })
       .catch(err=>{
         console.log("err//////", err)
@@ -64,12 +69,18 @@ const UpdatePage = (props) => {
     <div className="UpdatePage">
       <div className="page-top">
         <h1>Speedy courses</h1>
-         <Link to={"/courses/" + id}>
+         {/* <Link to={"/courses/" + id}>
          course details
-          </Link>
-         <Link to="/admin-dashboard">
-         home
-          </Link>
+          </Link> */}
+        {
+          userObjsRole === 'admin' ?
+            <Link to="/admin-dashboard">
+              back to Home
+             </Link> :
+             <Link to="/instructor-dashboard">
+             back to Home
+            </Link>
+        }
       </div>
       <h4>Update your {coursObj.name} recipe</h4>
       

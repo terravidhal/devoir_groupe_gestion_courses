@@ -1,19 +1,17 @@
 import React, {useState, useEffect} from 'react';
-import CourseTable from '../../components/CourseTable/CourseTable';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from "universal-cookie";
 import './InstructorDashboard.css';
+import CourseTableInstructor from '../CourseTableInstructor/CourseTableInstructor';
 
 
 
 const InstructorDashboard = () => {
   const [allCourses, setAllCourses] = useState([]);
-  const [allStudents, setAllStudents] = useState([]);
-  const [allInstructors, setAllInstructors] = useState([]);
   const navigate = useNavigate();
   const cookies = new Cookies();
-
+  const userObjsId = cookies.get("USER_OBJ")._id;
 
 /**
  * IMPORTANT : MAINTENANT QUE NOUS UTILISONS DES COOKIES 
@@ -23,13 +21,15 @@ const InstructorDashboard = () => {
  * MIDDLEWARE VÉRIFIE QUI EST CONNECTÉ. 
   */  
  
-  // get all courses
+  
+
+  // get all courses by Instructor
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/courses",{withCredentials: true})
+      .get("http://localhost:8000/api/courses/instructor/" + userObjsId,{withCredentials: true})
       .then((res) => {
-        setAllCourses(res.data.allDaCourses);
-        console.log('r+++++++', res.data.allDaCourses)
+        setAllCourses(res.data.coursesByInstructor);
+        console.log('r+++++++', res.data.coursesByInstructor)
       })
       .catch((err) => console.log(err));
   }, []); 
@@ -77,7 +77,7 @@ const InstructorDashboard = () => {
       </div>
       <button onClick={logout}>logout</button>
       <h4>we have quotes by : </h4>
-      <CourseTable allCourses={allCourses} deleteCourse={deleteCourse} />
+      <CourseTableInstructor allCourses={allCourses} deleteCourse={deleteCourse} />
     </div>
   );
 
