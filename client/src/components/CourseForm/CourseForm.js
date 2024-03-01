@@ -87,11 +87,12 @@ useEffect(() => {
 
   useEffect(() => {
     SubmitButton();
-    console.log('dayOfWeek', dayOfWeek);
-    console.log('new date dayOfWeek', new Date(dayOfWeek).getMonth());
-    console.log('new date', new Date().getMonth());
+    console.log('startTime v', startTime);
+    console.log('endTime v', endTime);
+    console.log('startTime', new Date(0, 0, 0, parseInt(startTime.split(":")[0]), parseInt(startTime.split(":")[1])).getHours());
+    console.log('endTime', new Date(0, 0, 0, parseInt(endTime.split(":")[0]), parseInt(endTime.split(":")[1])).getHours());
   }, [name,level,description, 
-     duration, dayOfWeek
+     duration, dayOfWeek, startTime,endTime
     ]);
 
 
@@ -106,6 +107,10 @@ useEffect(() => {
       setIsActive(false);
     } else if (new Date(dayOfWeek).getMonth() < new Date().getMonth() || dayOfWeek === '' ) {
       setIsActive(false);
+    } else if (new Date(0, 0, 0, parseInt(startTime.split(":")[0]), parseInt(startTime.split(":")[1]))  < new Date(0, 0, 0, parseInt("08:00".split(":")[0]), parseInt("08:00".split(":")[1])) || startTime === '') {
+      setIsActive(false);  
+    } else if (new Date(0, 0, 0, parseInt(endTime.split(":")[0]), parseInt(endTime.split(":")[1]))  > new Date(0, 0, 0, parseInt("18:00".split(":")[0]), parseInt("18:00".split(":")[1])) || endTime === '') {
+      setIsActive(false);  
     } else {
       setIsActive(true);
     }
@@ -175,10 +180,46 @@ useEffect(() => {
     const selectedDate = new Date(e.target.value); 
    
    if (selectedDate.getMonth() < currentDate.getMonth()) {
-      setErrors({...errors,dayOfWeek:{ message: "DayOfWeek must be at least 10 characters long" }});
+      setErrors({...errors,dayOfWeek:{ message: "La date doit être supérieure ou égale à la date actuelle" }});
    } 
    else  {
       setErrors({...errors,dayOfWeek:{ message: "" }});
+   }
+ } 
+
+  const handleStartTimeErrors = (e) =>{ 
+    setStartTime(e.target.value); 
+
+    const heure1 = "08:00";
+    const heure2 = e.target.value;
+    const currentTime = new Date(0, 0, 0, parseInt(heure1.split(":")[0]), parseInt(heure1.split(":")[1]));
+    const selectedTime = new Date(0, 0, 0, parseInt(heure2.split(":")[0]), parseInt(heure2.split(":")[1]));
+
+  //  const currentTime = Date.parse("08:00");
+   // const selectedTime = Date.parse(e.target.value);
+   
+   if (selectedTime < currentTime) {
+      setErrors({...errors,startTime:{ message: "startTime doit être supérieure ou égale à 08:00" }});
+   } 
+   else  {
+      setErrors({...errors,startTime:{ message: "" }});
+   }
+ } 
+
+  const handleEndTimeErrors = (e) =>{ 
+    setEndTime(e.target.value); 
+    const heure1 = "18:00";
+    const heure2 = e.target.value;
+    const currentTime = new Date(0, 0, 0, parseInt(heure1.split(":")[0]), parseInt(heure1.split(":")[1]));
+    const selectedTime = new Date(0, 0, 0, parseInt(heure2.split(":")[0]), parseInt(heure2.split(":")[1]));
+
+ 
+   
+   if (selectedTime > currentTime) {
+      setErrors({...errors,endTime:{ message: "endTime doit être inférieure ou égale à 18:00" }});
+   } 
+   else  {
+      setErrors({...errors,endTime:{ message: "" }});
    }
  } 
 
@@ -311,7 +352,8 @@ const handleDurationErrors = (e) =>{
 
               <div className='field'>
                <label>start Time :</label><br/>
-               <input type="time" value={startTime} onChange = {(e)=>setStartTime(e.target.value)}/>
+               {/* <input type="time" value={startTime} onChange = {(e)=>setStartTime(e.target.value)}/> */}
+               <input type="time" value={startTime} onChange = {(e)=>handleStartTimeErrors(e)}/>
                { errors.startTime ? 
                       <p style={{color:"red",fontWeight:"bold"}}>{errors.startTime.message}</p>
                       : null
@@ -320,7 +362,8 @@ const handleDurationErrors = (e) =>{
 
               <div className='field'>
                <label>End Time :</label><br/>
-               <input type="time" value={endTime} onChange = {(e)=>setEndTime(e.target.value)}/>
+               {/* <input type="time" value={endTime} onChange = {(e)=>setEndTime(e.target.value)}/> */}
+               <input type="time" value={endTime} onChange = {(e)=>handleEndTimeErrors(e)}/>
                { errors.endTime ? 
                       <p style={{color:"red",fontWeight:"bold"}}>{errors.endTime.message}</p>
                       : null
