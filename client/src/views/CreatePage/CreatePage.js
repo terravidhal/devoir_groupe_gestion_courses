@@ -83,6 +83,7 @@ const CreatePage = () => {
         deletes=""
         setErrors = {setErrors}
         iscreatePage={true}
+        userObjsRole={userObjsRole}
       />
       </div> 
     </div>

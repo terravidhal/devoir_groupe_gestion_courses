@@ -32,7 +32,8 @@ const CourseForm = (props) => {
           create,
           update,
           deletes,
-          iscreatePage
+          iscreatePage,
+          userObjsRole
         } = props;
   const [name, setName] = useState(initialName);  // initialName = ""
   const [level, setLevel] = useState(initialLevel);  
@@ -288,9 +289,9 @@ const handleDurationErrors = (e) =>{
                 iscreatePage === false ?
                <select name="" id="" value={instructor} onChange = {(e)=>setInstructor(e.target.value)}>
                  <option value={adminId}>Me</option>
-                   {
-                    adminId !== instructId ?
-                   <option value={instructId}>Instructor</option> : null }
+                    {
+                    userObjsRole === 'admin' && adminId !== instructId ?
+                   <option value={instructId}>Instructor</option> : null } 
                </select> : null }
               </div>
 

@@ -103,6 +103,7 @@ const UpdatePage = (props) => {
         initialDuration={coursObj.duration}
         initialStudents={coursObj.students}
         initialAvailableStudents={[]}
+        userObjsRole={userObjsRole}
         errors={errors}
         errors2={errors2}
         create=""
