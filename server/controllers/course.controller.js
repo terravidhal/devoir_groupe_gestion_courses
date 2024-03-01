@@ -31,6 +31,21 @@ module.exports.findAllCoursesByInstructor = (req, res) => {
 };
 
 
+// find all courses by specific student
+module.exports.findAllCoursesByStudent = (req, res) => {
+  const studentId = req.params.id; // Supposons que l'id de l'instructeur est passé en tant que paramètre
+
+  Course.find({ students: studentId })
+      .sort({ name: 1 }) // Trie les cours par ordre alphabétique du nom
+      .then((coursesByStudent) => {
+          res.json({ coursesByStudent });
+      })
+      .catch((err) => {
+          res.status(400).json(err);
+      });
+}; //////
+
+
  
 module.exports.findOneSingleCourse = (req, res) => {
     Course.findOne({ _id: req.params.id })

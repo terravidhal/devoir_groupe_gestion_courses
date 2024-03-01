@@ -2,9 +2,13 @@ import React, { useEffect, useState } from 'react';
 import './InstructorByCourse.css';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Cookies from "universal-cookie";
+
 
 
 const InstructorByCourse = () => {
+  const cookies = new Cookies();
+  const userObjsRole = cookies.get("USER_OBJ").role;
 
   const [InstructByCourse, setInstructByCourse] = useState({});
   const {id} = useParams(); 
@@ -33,9 +37,21 @@ const InstructorByCourse = () => {
     <div className="StudentsByCourse">
       <div className="page-top">
         <h1>Students by course</h1>
-         <Link to="/admin-dashboard">
-           back to Home
-          </Link>
+        {
+            userObjsRole === 'admin' ? (
+                <Link to="/admin-dashboard">
+                    back to Home
+                </Link>
+            ) : userObjsRole === 'student' ? (
+                <Link to="/student-dashboard">
+                    back to Home
+                </Link>
+            ) : (
+                <Link to="/instructor-dashboard">
+                    back to Home
+                </Link>
+            )
+        }
       </div>  
         
       <div className="page-top">
@@ -44,8 +60,8 @@ const InstructorByCourse = () => {
       <div className="page-content">
           { loaded === true ? 
           <div className="fields">
-               <p><span className='infos'>name:</span>&nbsp;{InstructByCourse.name}</p>
-               <p><span className='infos'>email:</span>&nbsp;{InstructByCourse.email}</p>
+               {/* <p><span className='infos'>name:</span>&nbsp;{InstructByCourse.name}</p>
+               <p><span className='infos'>email:</span>&nbsp;{InstructByCourse.email}</p> */}
           </div>
           : null }
       </div>

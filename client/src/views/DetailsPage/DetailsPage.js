@@ -36,13 +36,19 @@ const DetailsPage = () => {
       <div className="page-top">
         <h1>Speedy Courses</h1>
         {
-          userObjsRole === 'admin' ?
-            <Link to="/admin-dashboard">
-              back to Home
-             </Link> :
-             <Link to="/instructor-dashboard">
-             back to Home
-            </Link>
+            userObjsRole === 'admin' ? (
+                <Link to="/admin-dashboard">
+                    back to Home
+                </Link>
+            ) : userObjsRole === 'student' ? (
+                <Link to="/student-dashboard">
+                    back to Home
+                </Link>
+            ) : (
+                <Link to="/instructor-dashboard">
+                    back to Home
+                </Link>
+            )
         }
       </div>  
         
@@ -54,7 +60,6 @@ const DetailsPage = () => {
             <p><span className='infos'>Level:</span>{OneCourse.level}</p>
             <p><span className='infos'>field:</span>{OneCourse.field}</p>
             <p><span className='infos'>description:</span> {OneCourse.description}</p>
-            <p><span className='infos'>instructor:</span> {OneCourse.instructor}</p>
             <p><span className='infos'>dayOfWeek:</span> {OneCourse.dayOfWeek}</p>
             <p><span className='infos'>type Of Course:</span> {OneCourse.typeOfCourse}</p>
             <p><span className='infos'>link Meeting:</span> {OneCourse.linkMeeting}</p>
