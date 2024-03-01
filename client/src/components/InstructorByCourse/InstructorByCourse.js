@@ -17,12 +17,24 @@ const InstructorByCourse = () => {
 
   
   
-
+/*
   useEffect(() => {
     axios.get("http://localhost:8000/api/instructors/" + id,{withCredentials: true})
         .then( res => {
           console.log("u++++++++++",res);
           setInstructByCourse(res.data.oneSingleInstructor);
+          setLoaded(true); // data available => set "true"
+        })
+        .catch( err => console.log(err) );
+  }, [id]); */
+
+
+  
+  useEffect(() => {
+    axios.get("http://localhost:8000/api/instructorOruser/" + id,{withCredentials: true})
+        .then( res => {
+          console.log("u++++++++++",res.data.result);
+          setInstructByCourse(res.data.result);
           setLoaded(true); // data available => set "true"
         })
         .catch( err => console.log(err) );
@@ -60,8 +72,8 @@ const InstructorByCourse = () => {
       <div className="page-content">
           { loaded === true ? 
           <div className="fields">
-               {/* <p><span className='infos'>name:</span>&nbsp;{InstructByCourse.name}</p>
-               <p><span className='infos'>email:</span>&nbsp;{InstructByCourse.email}</p> */}
+               <p><span className='infos'>name:</span>&nbsp;{InstructByCourse.name}</p>
+               <p><span className='infos'>email:</span>&nbsp;{InstructByCourse.email}</p>
           </div>
           : null }
       </div>

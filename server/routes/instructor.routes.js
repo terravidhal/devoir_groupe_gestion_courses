@@ -11,6 +11,7 @@ const {
     findAllInstructors,
     findOneSingleInstructor,
     findInstructorsByManyId,
+    findSingleEntity,
     deleteOneSpecificInstructor,
     updateExistingInstructor,
     createInstructor,
@@ -35,6 +36,7 @@ const {
       app.post("/api/instructors",authenticate, createInstructor); // si je creer une page pr ça
       app.get("/api/instructors",authenticate, findAllInstructors);
       app.get('/api/instructors/:id',authenticate, findOneSingleInstructor);
+      app.get('/api/instructorOruser/:id',authenticate, findSingleEntity);
       //app.get('/api/instructorsMany/:id',authenticate, findInstructorsByManyId);
       app.patch("/api/instructors/:id",authenticate, updateExistingInstructor);//
       app.delete("/api/instructors/:id",authenticate,  deleteOneSpecificInstructor);//

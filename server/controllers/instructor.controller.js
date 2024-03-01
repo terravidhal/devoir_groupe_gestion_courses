@@ -10,6 +10,7 @@ const jwt = require("jsonwebtoken");
 
 // 2) Importing Model
 const InstructorModel = require("../models/instructor.model");
+const UserModel = require("../models/user.model");
 
 //const StudentModel = require("../models/student.model");
 
@@ -122,6 +123,56 @@ updateExistingInstructor: async(req, res) => {
              res.status(400).json(err) 
         });
   },
+
+  // find instructor by id or find user by id
+
+  findOneSingleInstructorOrUser : async (req, res) => {
+    const { id } = req.params;
+    const entityType = req.params.entityType; // "instructor" ou "user"
+  
+    const models = {
+      instructor: InstructorModel,
+      user: UserModel,
+    };
+  
+    const model = models[entityType];
+    if (!model) return res.status(400).json({ error: "Invalid entity type" });
+  
+    try {
+      const entity = await model.findOne({ _id: id });
+      if (!entity) return res.status(404).json({ error: "Entity not found" });
+      res.json({ entity });
+    } catch (err) {
+      res.status(400).json({ error: err.message });
+    }
+  },
+
+
+   findSingleEntity : async (req, res) => {
+    const { id } = req.params;
+    const instructor = await InstructorModel.findOne({ _id: id });
+    const user = await UserModel.findOne({ _id: id });
+  
+    if (instructor) {
+      try {
+        if (!instructor) return res.status(404).json({ error: "Instructor not found" });
+        return res.json({ result: instructor });
+      } catch (err) {
+        return res.status(400).json({ error: err.message });
+      }
+    } else if (user) {
+      try {
+        if (!user) return res.status(404).json({ error: "User not found" });
+        return res.json({ result: user });
+      } catch (err) {
+        return res.status(400).json({ error: err.message });
+      }
+    } else {
+      return res.status(400).json({ error: "Invalid entity type" });
+    }
+  },
+  
+  
 
 
   // IX) DELETE ONE SPECIFIC INSTRUCTOR
