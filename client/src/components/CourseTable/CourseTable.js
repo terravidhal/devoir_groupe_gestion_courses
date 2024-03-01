@@ -14,85 +14,27 @@ const CourseTable = (props) => {
 
   const { allCourses, deleteCourse } = props;
  
- /* const [allStudents, setAllStudents] = useState([]);
-  const [loaded, setLoaded] = useState(false);  
-  const [studentId, SetStudentId] = useState([]);  */
-
-
-  // get all students by many Ids
-
-  /*
-  useEffect(() => {
-    const getManyUser = () => {
-      axios.get("http://localhost:8000/api/studentsMany/" + studentId,{withCredentials: true})
-          .then( res => {
-            console.log("u++++++++++",res.data.students);
-            setAllStudents([...allStudents, res.data.students]);
-            setLoaded(true); // data available => set "true"
-            console.log("y++++++++++",allStudents);
-          })
-          .catch( err => console.log(err) );
-    };
-    getManyUser();
-  }, []); */
-
-
 /*
-  // get all users by specific course
-  const getAllUserBySpecificCourse = (CourseId) => {
-    axios.get("http://localhost:8000/api/students/course/" + CourseId,{withCredentials: true})
-        .then( res => {
-          console.log("u++++++++++",res.data.students);
-          setAllUser([...allUser, res.data.students]);
-          setLoaded(true); // data available => set "true"
-          //console.log("y++++++++++",allUser.students);
-        })
-        .catch( err => console.log(err) );
-  }
-
-  // get specific user
-  const getOneUser2 = (userId) => {
-    axios.get("http://localhost:8000/api/users/" + userId,{withCredentials: true})
-        .then( res => {
-          console.log("u++++++++++",res.data.oneSingleUser);
-         // setAllUser([...allUser, res.data.oneSingleUser]);
-        //  setLoaded(true); // data available => set "true"
-          //console.log("y++++++++++",allUser.students);
-        })
-        .catch( err => console.log(err) );
-  } */
-
-/*  const getOneUser = async (userId) => {
-    try {
-      const res = await axios.get("http://localhost:8000/api/users/" + userId, { withCredentials: true });
-      setAllUser([...allUser, res.data.oneSingleUser]);
-     console.log("u++++++++++",res.data.oneSingleUser);
-      return res.data.oneSingleUser;
-    } catch (error) {
-      console.error("Erreur lors de la récupération de l'utilisateur :", error);
-      return ""; // Retourne une valeur par défaut en cas d'erreur
-    }
-  }; */
+  const [stat, setStat] = useState("Pending");
+    // check status day of week
+    const CheckDayOfWeekErrors = (date) =>{ 
+      const currentDate = new Date();
+      const selectedDate = new Date(date); 
+     
+     if (selectedDate.getDay() < currentDate.getDay()) {
+           setStat("Obsolete");
+           console.log("selectedDate.getDay()",selectedDate.getDay());
+           console.log("currentDate.getDay()",currentDate.getDay());
+           console.log(stat);
+          } 
+          else{
+            console.log("selectedDate.getDay()",selectedDate);
+            console.log("currentDate.getDay()",currentDate);
+            console.log(stat);
+     }
+   } */
 
 
-
-
- 
-
-  // get all user 
- /* const getallUser = () => {
-
-   oneStudent.forEach((elt) => {
-     console.log(elt);
-      getOneUser(elt);
-    });
-    
-  } */
-
-
-
-
- 
 
 
 
@@ -135,7 +77,10 @@ const CourseTable = (props) => {
                        view instructor create courses
                   </Link>&nbsp; */}
                   </td>
-                <td  className="actions">{elt.dayOfWeek}</td>
+                <td  className="actions">
+                  {elt.dayOfWeek}
+                  {/* {CheckDayOfWeekErrors(elt.dayOfWeek)} */}
+                </td>
                 <td  className="actions">{elt.typeOfCourse}</td>
                 <td  className="actions">{elt.linkMeeting}</td>
                 <td  className="actions">{elt.documentsLink}</td>
@@ -151,6 +96,15 @@ const CourseTable = (props) => {
                       }`}
                     > {elt.status}</button>
                 </td>
+                {/* <td  className="actions">
+                  <button
+                      className={`${
+                        stat === "pending"
+                          ? "red-not-playing-btn"
+                          : ""
+                      }`}
+                    > {stat}</button>
+                </td> */}
                 <td  className="actions">
                  <ul>
                     <Link className=""  to={"/studentsByCourse/" + elt._id}>

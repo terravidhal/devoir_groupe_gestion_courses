@@ -14,6 +14,7 @@ const UpdatePageInsructor = (props)=>{
     const [user, setUser] = useState({
       name: "",
       email: "",
+      isInstructor: "false",
       password: "",
       confirmPassword:""
     })
@@ -35,6 +36,7 @@ const UpdatePageInsructor = (props)=>{
         setUser({
           name: res.data.oneSingleInstructor.name,
           email: res.data.oneSingleInstructor.email,
+          isInstructor: res.data.oneSingleInstructor.isInstructor,
           password: "default",
           confirmPassword: "default"
         });
@@ -58,6 +60,7 @@ const UpdatePageInsructor = (props)=>{
         setUser({
           name:"",
           email:"",
+          isInstructor:"false",
           password:"",
           confirmPassword:""
         })
@@ -108,6 +111,18 @@ const UpdatePageInsructor = (props)=>{
             :null
           }
           <input type="email" name="email" value={user.email} onChange={(e)=> handleChange(e)}/>
+        </div>
+        <div>
+          <label>isInstructor</label>
+          {
+            errs.isInstructor?
+            <span className="error-text">{errs.isInstructor.message}</span>
+            :null
+          }
+          <select name="isInstructor" id="" value={user.isInstructor} onChange = {(e)=>handleChange(e)}>
+               <option value="false">false</option>
+               <option value="true">true</option>
+          </select>
         </div>
         <div>
           <label>Password</label>

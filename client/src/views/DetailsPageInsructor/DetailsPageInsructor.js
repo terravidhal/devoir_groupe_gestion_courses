@@ -44,6 +44,7 @@ const DetailsPageInsructor = () => {
         <div className="fields">
             <p><span className='infos'>name:</span>{OneInstructor.name}</p>
             <p><span className='infos'>email:</span>{OneInstructor.email}</p>
+            <p><span className='infos'>isInstructor:</span>{OneInstructor.isInstructor}</p>
             <p><span className='infos'>password:</span> {OneInstructor.password}</p>
         </div>
       </div>

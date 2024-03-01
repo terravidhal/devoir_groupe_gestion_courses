@@ -26,6 +26,8 @@ import DetailsPageInsructor from "./views/DetailsPageInsructor/DetailsPageInsruc
 import UpdatePageInsructor from "./views/UpdatePageInsructor/UpdatePageInsructor";
 import StudentsByCourse from "./components/StudentsByCourse/StudentsByCourse";
 import InstructorByCourse from "./components/InstructorByCourse/InstructorByCourse";
+import InstructorDashboard from "./components/InstructorDashboard/InstructorDashboard";
+import WaitVerification from "./components/WaitVerification/WaitVerification";
 
 
 
@@ -61,6 +63,8 @@ function App() {
            <Route path="/register_student" element={<RegisterStudent />} />
            <Route path="/login_page" element={<Login />} />
            <Route path="/admin-dashboard" element={<HomePage />} />
+           <Route path="/wait-verification" element={<WaitVerification />} />
+           <Route path="/instructor-dashboard" element={<InstructorDashboard />} />
            <Route path="/studentsByCourse/:id" element={<StudentsByCourse />} />
            <Route path="/instructorByCourse/:id" element={<InstructorByCourse />} />
            <Route path="/courses/new" element={<CreatePage />} />

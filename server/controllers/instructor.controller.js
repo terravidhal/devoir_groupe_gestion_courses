@@ -22,6 +22,7 @@ module.exports = {
     // i) Créer une instance d’utilisateur avec des informations transmises dans la requête body
     // (cela déclenche la création de notre champ virtuel)
     const newInstructor = new InstructorModel(req.body);
+
     // ii) Enregistrer dans la base de données instance newInstructor
     newInstructor
       .save()
@@ -67,7 +68,7 @@ createInstructor: (req, res) => {
 
 //update Instructor
 updateExistingInstructor: async(req, res) => {
-  const { id, name, email, password } = req.body;
+  const { id, name, email, isInstructor, password } = req.body;
 
   // Authentification et autorisation (à implémenter)
   // Validation des données (à implémenter)
@@ -77,6 +78,7 @@ updateExistingInstructor: async(req, res) => {
     {
       name: name,
       email: email,
+      isInstructor: isInstructor,
       password: await bcrypt.hash(password, 10),
     },
     { new: true, runValidators: true }

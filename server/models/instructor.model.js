@@ -33,9 +33,10 @@ const InstructorSchema = new mongoose.Schema(
       required: true,
     },
     isInstructor: { 
-      type: Boolean, 
-      default: false, 
-      required: true 
+      type: String, 
+      enum: ['false', 'true'],
+      default: 'false', 
+      required:[true, "isInstructor is required"],
     },
   },
   {
