@@ -14,29 +14,6 @@ const CourseTableInstructor = (props) => {
 
   const { allCourses, deleteCourse } = props;
  
-/*
-  const [stat, setStat] = useState("Pending");
-    // check status day of week
-    const CheckDayOfWeekErrors = (date) =>{ 
-      const currentDate = new Date();
-      const selectedDate = new Date(date); 
-     
-     if (selectedDate.getDay() < currentDate.getDay()) {
-           setStat("Obsolete");
-           console.log("selectedDate.getDay()",selectedDate.getDay());
-           console.log("currentDate.getDay()",currentDate.getDay());
-           console.log(stat);
-          } 
-          else{
-            console.log("selectedDate.getDay()",selectedDate);
-            console.log("currentDate.getDay()",currentDate);
-            console.log(stat);
-     }
-   } */
-
-
-
-
 
   return (
     <div className="CourseTableInstructor">
@@ -89,20 +66,11 @@ const CourseTableInstructor = (props) => {
                       <button
                           className={`${
                             elt.status === "pending"
-                              ? "red-not-playing-btn"
-                              : ""
+                              ? "blue-btn"
+                              : "red-btn"
                           }`}
                         > {elt.status}</button>
                     </td>
-                    {/* <td  className="actions">
-                      <button
-                          className={`${
-                            stat === "pending"
-                              ? "red-not-playing-btn"
-                              : ""
-                          }`}
-                        > {stat}</button>
-                    </td> */}
                     <td  className="actions">
                      <ul>
                         <Link className=""  to={"/studentsByCourse/" + elt._id}>

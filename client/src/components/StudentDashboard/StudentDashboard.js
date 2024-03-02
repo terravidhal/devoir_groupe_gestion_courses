@@ -24,6 +24,7 @@ const StudentDashboard = () => {
   
 
   // get all courses by student
+  /*
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/courses/student/" + userObjsId,{withCredentials: true})
@@ -32,7 +33,44 @@ const StudentDashboard = () => {
         console.log('r+++++++', res.data.coursesByStudent)
       })
       .catch((err) => console.log(err));
+  }, []); */
+
+
+   // check and update courses status
+   useEffect(() => {
+    const GetAllCoursesByStudent = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/api/courses/student/"+ userObjsId, { withCredentials: true });
+        const courses = response.data.coursesByStudent;
+
+        // Call the new function to update statuses
+        const updatedCourses = updateCourseStatuses(courses); 
+
+        setAllCourses(updatedCourses);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    GetAllCoursesByStudent();
   }, []); 
+
+
+
+  //update courses
+  const updateCourseStatuses = (courses) => {
+    return courses.map((course) => {
+      const currentDate = new Date().getDay(); // Get current day of the week
+      const courseDate = new Date(course.dayOfWeek).getDay(); // Get day of the week from course
+  
+      // Update status if current date is past the course's day
+      if (currentDate > courseDate) {
+        course.status = 'resolved';
+      }
+  
+      return course;
+    });
+  }
 
 
  
