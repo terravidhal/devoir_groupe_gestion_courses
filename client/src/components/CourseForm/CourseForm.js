@@ -88,10 +88,6 @@ useEffect(() => {
 
   useEffect(() => {
     SubmitButton();
-    console.log('startTime v', startTime);
-    console.log('endTime v', endTime);
-    console.log('startTime', new Date(0, 0, 0, parseInt(startTime.split(":")[0]), parseInt(startTime.split(":")[1])).getHours());
-    console.log('endTime', new Date(0, 0, 0, parseInt(endTime.split(":")[0]), parseInt(endTime.split(":")[1])).getHours());
   }, [name,level,description, 
      duration, dayOfWeek, startTime,endTime
     ]);
@@ -180,7 +176,7 @@ useEffect(() => {
     const currentDate = new Date();
     const selectedDate = new Date(e.target.value); 
    
-   if (selectedDate.getMonth() < currentDate.getMonth()) {
+   if (selectedDate.getDay() < currentDate.getDay()) {
       setErrors({...errors,dayOfWeek:{ message: "La date doit être supérieure ou égale à la date actuelle" }});
    } 
    else  {

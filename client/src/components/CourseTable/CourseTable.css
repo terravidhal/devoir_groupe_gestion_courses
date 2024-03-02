@@ -21,4 +21,12 @@
 .CourseTable tr > td.actions{
    vertical-align: middle;
 }
+.CourseTable button.blue-btn{
+   background-color: rgb(34, 34, 239);
+   color: white;
+}
+.CourseTable button.red-btn{
+   background-color: rgb(182, 182, 70);
+   color: white;
+}
 

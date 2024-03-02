@@ -34,7 +34,7 @@ const CourseTable = (props) => {
      }
    } */
 
-
+  
 
 
 
@@ -91,20 +91,11 @@ const CourseTable = (props) => {
                   <button
                       className={`${
                         elt.status === "pending"
-                          ? "red-not-playing-btn"
-                          : ""
+                          ? "blue-btn"
+                          : "red-btn"
                       }`}
                     > {elt.status}</button>
                 </td>
-                {/* <td  className="actions">
-                  <button
-                      className={`${
-                        stat === "pending"
-                          ? "red-not-playing-btn"
-                          : ""
-                      }`}
-                    > {stat}</button>
-                </td> */}
                 <td  className="actions">
                  <ul>
                     <Link className=""  to={"/studentsByCourse/" + elt._id}>

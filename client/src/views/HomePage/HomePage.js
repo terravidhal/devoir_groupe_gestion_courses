@@ -30,7 +30,7 @@ const HomePage = () => {
   */  
  
   // get all courses
-  useEffect(() => {
+/*  useEffect(() => {
     axios
       .get("http://localhost:8000/api/courses",{withCredentials: true})
       .then((res) => {
@@ -38,7 +38,44 @@ const HomePage = () => {
         console.log('r+++++++', res.data.allDaCourses)
       })
       .catch((err) => console.log(err));
+  }, []); */
+
+
+  // check and update courses status
+  useEffect(() => {
+    const GetAllCourses = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/api/courses", { withCredentials: true });
+        const courses = response.data.allDaCourses;
+
+        // Call the new function to update statuses
+        const updatedCourses = updateCourseStatuses(courses); 
+
+        setAllCourses(updatedCourses);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    GetAllCourses();
   }, []); 
+
+
+
+  //update courses
+  const updateCourseStatuses = (courses) => {
+    return courses.map((course) => {
+      const currentDate = new Date().getDay(); // Get current day of the week
+      const courseDate = new Date(course.dayOfWeek).getDay(); // Get day of the week from course
+  
+      // Update status if current date is past the course's day
+      if (currentDate > courseDate) {
+        course.status = 'resolved';
+      }
+  
+      return course;
+    });
+  }
 
 
   // get all students
