@@ -88,6 +88,9 @@ useEffect(() => {
 
   useEffect(() => {
     SubmitButton();
+    console.log('new Date(dayOfWeek).getDay()', new Date(dayOfWeek).getTime());
+    console.log('new Date().getDay()', new Date().getTime());
+    console.log('dayOfWeek', dayOfWeek);
   }, [name,level,description, 
      duration, dayOfWeek, startTime,endTime
     ]);
@@ -102,7 +105,7 @@ useEffect(() => {
       setIsActive(false);
     } else if (parseInt(duration) < 30 || parseInt(duration) > 240) {
       setIsActive(false);
-    } else if (new Date(dayOfWeek).getMonth() < new Date().getMonth() || dayOfWeek === '' ) {
+    } else if (new Date(dayOfWeek).getDay() < new Date().getDay() || dayOfWeek === '' ) {
       setIsActive(false);
     } else if (new Date(0, 0, 0, parseInt(startTime.split(":")[0]), parseInt(startTime.split(":")[1]))  < new Date(0, 0, 0, parseInt("08:00".split(":")[0]), parseInt("08:00".split(":")[1])) || startTime === '') {
       setIsActive(false);  

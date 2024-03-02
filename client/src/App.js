@@ -39,13 +39,17 @@ import StudentDashboard from "./components/StudentDashboard/StudentDashboard";
 function App() {
   const cookies = new Cookies();
   const userObjs = cookies.get("USER_OBJ");
+  const userObjRole = cookies.get("USER_OBJ")?.role || '';
+  const userObjIsInstructor = cookies.get("USER_OBJ")?.isInstructor || '';
+  console.log("userObjRole+++++++++", userObjRole);
+  console.log("userObjIsInstructor+++++++++", userObjIsInstructor);
   
-  const userObj = JSON.parse(localStorage.getItem("USER_OBJ"));
-  console.log("cookies+++++++++", userObj);
+ // const userObj = JSON.parse(localStorage.getItem("USER_OBJ"));
+ // console.log("cookies+++++++++", userObj);
  
- const userInfo = userObj ? userObj : null;
+ //const userInfo = userObj ? userObj : null;
  // State Hooks
- const [user, setUser] = useState(userInfo);
+// const [user, setUser] = useState(userInfo);
  // console.log("userDetails+++++++++", user);
 
 
@@ -59,6 +63,69 @@ function App() {
        <h1>Favorite courses</h1>
        <BrowserRouter>
          <Routes>
+           { userObjRole === 'admin' ?
+              <>
+               <Route path="/register_page" element={<Navigate replace to="/admin-dashboard" />} />
+               <Route path="/register_student" element={<Navigate replace to="/admin-dashboard" />} />
+               <Route path="/instructor-dashboard" element={<Navigate replace to="/admin-dashboard" />} />
+               <Route path="/student-dashboard" element={<Navigate replace to="/admin-dashboard" />} />
+               <Route path="/wait-verification" element={<Navigate replace to="/admin-dashboard" />} />
+               <Route path="*" element={<Navigate replace to="/admin-dashboard" />} /> 
+              </>
+              :
+              userObjRole === 'student' ?
+               <>
+               <Route path="/register_page" element={<Navigate replace to="/student-dashboard" />} />
+               <Route path="/register_student" element={<Navigate replace to="/student-dashboard" />} />
+               <Route path="/admin-dashboard" element={<Navigate replace to="/student-dashboard" />} /> 
+               <Route path="/wait-verification" element={<Navigate replace to="/student-dashboard" />} />
+               <Route path="/instructor-dashboard" element={<Navigate replace to="/student-dashboard" />} />
+               <Route path="/studentsByCourse/:id" element={<Navigate replace to="/student-dashboard" />} />
+               <Route path="/courses/new" element={<Navigate replace to="/student-dashboard" />} />
+               <Route path="/students/new" element={<Navigate replace to="/student-dashboard" />} />
+               <Route path="/instructors/new" element={<Navigate replace to="/student-dashboard" />} />
+               <Route path="/courses/edit/:id"element={<Navigate replace to="/student-dashboard" />}/>
+               <Route path="/students/edit/:id" element={<Navigate replace to="/student-dashboard" />}/>
+               <Route path="/instructors/edit/:id" element={<Navigate replace to="/student-dashboard" />}/>
+               <Route path="/students/:id" element={<Navigate replace to="/student-dashboard" />}/>
+               <Route path="/instructors/:id" element={<Navigate replace to="/student-dashboard" />}/>
+               <Route path="*" element={<Navigate replace to="/student-dashboard" />} />
+               </>
+              :
+              userObjRole === 'instructor' ?
+                userObjIsInstructor === 'true' ?
+                <>
+                 <Route path="/register_page" element={<Navigate replace to="/instructor-dashboard" />} />
+                 <Route path="/register_student" element={<Navigate replace to="/instructor-dashboard" />} />
+                 <Route path="/admin-dashboard" element={<Navigate replace to="/instructor-dashboard" />} /> 
+                 <Route path="/student-dashboard" element={<Navigate replace to="/instructor-dashboard" />} />
+                 <Route path="/instructorByCourse/:id" element={<Navigate replace to="/instructor-dashboard" />} />
+                 <Route path="/students/new" element={<Navigate replace to="/instructor-dashboard" />} />
+                 <Route path="/instructors/new" element={<Navigate replace to="/instructor-dashboard" />} />
+                 <Route path="/students/:id" element={<Navigate replace to="/instructor-dashboard" />}/>
+                 <Route path="/instructors/:id" element={<Navigate replace to="/instructor-dashboard" />}/>
+                 <Route path="/wait-verification" element={<Navigate replace to="/instructor-dashboard" />} />
+                 <Route path="*" element={<Navigate replace to="/instructor-dashboard" />} />
+                </>
+                 : 
+                userObjIsInstructor === 'false' ?
+                 <>
+                 <Route path="/register_page" element={<Navigate replace to="/wait-verification/wait-verification" />} />
+                 <Route path="/register_student" element={<Navigate replace to="/wait-verification" />} />
+                 <Route path="/admin-dashboard" element={<Navigate replace to="/wait-verification" />} /> 
+                 <Route path="/student-dashboard" element={<Navigate replace to="/wait-verification" />} />
+                 <Route path="/instructor-dashboard" element={<Navigate replace to="/wait-verification" />} />
+                 <Route path="/instructorByCourse/:id" element={<Navigate replace to="/wait-verification" />} />
+                 <Route path="/students/new" element={<Navigate replace to="/wait-verification" />} />
+                 <Route path="/instructors/new" element={<Navigate replace to="/wait-verification" />} />
+                 <Route path="/students/:id" element={<Navigate replace to="/wait-verification" />}/>
+                 <Route path="/instructors/:id" element={<Navigate replace to="/wait-verification" />}/>
+                 <Route path="*" element={<Navigate replace to="/wait-verification" />} />
+                 </>
+                 : null
+                
+               : null
+              }
            <Route path="/" element={<Navigate replace to="/register_page"  />} />  {/* redirection */}
            <Route path="/register_page" element={<Register />} />
            <Route path="/register_student" element={<RegisterStudent />} />
@@ -78,26 +145,6 @@ function App() {
            <Route path="/courses/:id" element={<DetailsPage />}/>
            <Route path="/students/:id" element={<DetailsPageStudent />}/>
            <Route path="/instructors/:id" element={<DetailsPageInsructor />}/>
-           {/* {!user ?
-             <Route path="/register_page" element={<Register />} /> :
-             <Route path="/register_page" element={<Navigate replace to="/courses"  />} />
-           }
-           {!user ?
-             <Route path="/login_page" element={<Login />} /> :
-             <Route path="/login_page" element={<Navigate replace to="/courses"  />} />
-           }
-           {user ?
-             <Route path="/courses" element={<HomePage />} /> :
-             <Route path="/courses" element={<Navigate replace to="/login_page"  />} />
-           }
-           {user ?
-             <Route path="/courses/new" element={<CreatePage />} /> :
-             <Route path="/courses/new" element={<Navigate replace to="/login_page"  />} />
-           }
-           {user ?
-             <Route path="/courses/edit/:id" element={<UpdatePage />}/> :
-             <Route path="/courses/edit/:id" element={<Navigate replace to="/login_page"  />} />
-           } */}
          </Routes>
        </BrowserRouter>
     </div>

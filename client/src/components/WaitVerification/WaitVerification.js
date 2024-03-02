@@ -10,6 +10,13 @@ const WaitVerification = () => {
   const navigate = useNavigate();
   const cookies = new Cookies();
 
+ /* const userObjs = cookies.get("USER_OBJ");
+  const userObjRole = cookies.get("USER_OBJ")?.role || '';
+  const userObjIsInstructor = cookies.get("USER_OBJ")?.isInstructor || '';
+  console.log("userObjRole+++++++++", userObjRole);
+  console.log("userObjIsInstructor+++++++++", userObjIsInstructor); */
+  
+
 
 /**
  * IMPORTANT : MAINTENANT QUE NOUS UTILISONS DES COOKIES 

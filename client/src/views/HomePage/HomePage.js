@@ -19,6 +19,7 @@ const HomePage = () => {
   const [allInstructors, setAllInstructors] = useState([]);
   const navigate = useNavigate();
   const cookies = new Cookies();
+  const userObjRole = cookies.get("USER_OBJ").role;
 
 
 /**
@@ -47,7 +48,8 @@ const HomePage = () => {
       try {
         const response = await axios.get("http://localhost:8000/api/courses", { withCredentials: true });
         const courses = response.data.allDaCourses;
-
+       // console.log('response', response);
+        
         // Call the new function to update statuses
         const updatedCourses = updateCourseStatuses(courses); 
 

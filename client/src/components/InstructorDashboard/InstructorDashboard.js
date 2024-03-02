@@ -11,7 +11,7 @@ const InstructorDashboard = () => {
   const [allCourses, setAllCourses] = useState([]);
   const navigate = useNavigate();
   const cookies = new Cookies();
-  const userObjsId = cookies.get("USER_OBJ")._id;
+  const userObjsId = cookies.get("USER_OBJ")._id || '';
 
 /**
  * IMPORTANT : MAINTENANT QUE NOUS UTILISONS DES COOKIES 

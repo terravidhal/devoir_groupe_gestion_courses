@@ -6,7 +6,7 @@ import Cookies from "universal-cookie";
 
 const StudentsByCourse = () => {
   const cookies = new Cookies();
-  const userObjsRole = cookies.get("USER_OBJ").role;
+  const userObjsRole = cookies.get("USER_OBJ").role || '';
 
   const [StudByCourse, setStudByCourse] = useState([]);
   const {id} = useParams(); 

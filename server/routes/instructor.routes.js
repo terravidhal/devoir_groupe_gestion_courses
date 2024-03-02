@@ -23,8 +23,8 @@ const {
   //4) importing checkPermissions methods
   const { checkPermissions } = require('../config/jwt.config');
   
-  //4) importing verifyRole methods
-  const { verifyRole } = require('../config/jwt.config');
+
+  
   
   module.exports = app => {
       app.post("/api/registerInstructor", register);  
@@ -33,13 +33,13 @@ const {
       //  app.get("/api/instructors/instructors",authenticate, verifyRole(["admin", "instructor"]), findAllInstructorsByRoleInstructor);
       // app.post("/api/instructors",authenticate, verifyRole(["admin"]), createInstructor); // si je creer une page pr ça
 
-      app.post("/api/instructors",authenticate, createInstructor); // si je creer une page pr ça
-      app.get("/api/instructors",authenticate, findAllInstructors);
-      app.get('/api/instructors/:id',authenticate, findOneSingleInstructor);
-      app.get('/api/instructorOruser/:id',authenticate, findSingleEntity);
+      app.post("/api/instructors",authenticate,checkPermissions('admin'), createInstructor); // si je creer une page pr ça
+      app.get("/api/instructors",authenticate, checkPermissions('admin'), findAllInstructors);
+      app.get('/api/instructors/:id',authenticate, checkPermissions('admin'), findOneSingleInstructor);
+      app.get('/api/instructorOruser/:id',authenticate, checkPermissions('admin','instructor','student'), findSingleEntity);
       //app.get('/api/instructorsMany/:id',authenticate, findInstructorsByManyId);
-      app.patch("/api/instructors/:id",authenticate, updateExistingInstructor);//
-      app.delete("/api/instructors/:id",authenticate,  deleteOneSpecificInstructor);//
+      app.patch("/api/instructors/:id",authenticate, checkPermissions('admin'), updateExistingInstructor);//
+      app.delete("/api/instructors/:id",authenticate, checkPermissions('admin'),  deleteOneSpecificInstructor);//
   }
   
   

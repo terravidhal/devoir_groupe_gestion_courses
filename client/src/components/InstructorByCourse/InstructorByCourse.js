@@ -8,7 +8,7 @@ import Cookies from "universal-cookie";
 
 const InstructorByCourse = () => {
   const cookies = new Cookies();
-  const userObjsRole = cookies.get("USER_OBJ").role;
+  const userObjsRole = cookies.get("USER_OBJ").role || '';
 
   const [InstructByCourse, setInstructByCourse] = useState({});
   const {id} = useParams(); 

@@ -46,7 +46,7 @@ const Login = (props)=>{
           //   await localStorage.setItem("USER_OBJ", JSON.stringify(res.data.instructor));
           navigate("/instructor-dashboard");
          } else {
-          //  cookies.set('USER_OBJ', res.data.instructor);
+            cookies.set('USER_OBJ', res.data.instructor);
           //   await localStorage.setItem("USER_OBJ", JSON.stringify(res.data.instructor));
            navigate("/wait-verification");
          }   
