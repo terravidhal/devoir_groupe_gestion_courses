@@ -18,7 +18,7 @@ module.exports = {
   // I) REGISTER
   register: (req, res) => {
 
-    if (req.body.keyCode !== 'nginx8585') {
+    if (req.body.keyCode !== process.env.KEY_CODE) {
       return res.status(400).json({ message: "Invalid keycode" });
     }
 
@@ -62,7 +62,7 @@ module.exports = {
   login : async (req, res) => {
     const { email, password, tocken } = req.body;
   
-    const secretToken = "hostingerK555"; // Votre mot de passe secret
+    const secretToken = process.env.SECRET_TOCKEN; // Votre mot de passe secret
 
     try {
     

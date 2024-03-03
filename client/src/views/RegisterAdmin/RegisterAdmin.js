@@ -7,6 +7,7 @@ import "./RegisterAdmin.css";
 const RegisterAdmin = (props)=>{
     const [confirmReg, setConfirmReg] = useState("");
     const [errs, setErrs] = useState({});
+    const [errs2, setErrs2] = useState("");
     const navigate = useNavigate();
   
     const [user, setUser] = useState({
@@ -47,7 +48,8 @@ const RegisterAdmin = (props)=>{
       .catch((err)=>{
        // console.log(err);
        // setErrs(err.response.data.errors.errors);
-        console.log("+++++++++",err);
+        setErrs2(err.response.data.message)
+        console.log("+++++++++",err.response.data.message);
       })
   };
   
@@ -61,6 +63,11 @@ const RegisterAdmin = (props)=>{
       {
         confirmReg?
         <h1 style={{color: "grey"}}>{confirmReg}</h1>
+        :null
+      }
+      {
+        errs2?
+        <span className="error-text">{errs2}</span>
         :null
       }
       <form onSubmit={register}>
@@ -84,11 +91,6 @@ const RegisterAdmin = (props)=>{
         </div>
         <div>
           <label>Key Code</label>
-          {
-            errs.keyCode?
-            <span className="error-text">{errs.keyCode.message}</span>
-            :null
-          }
           <input type="text" name="keyCode" value={user.keyCode} onChange={(e)=> handleChange(e)}/>
         </div>
         <div>

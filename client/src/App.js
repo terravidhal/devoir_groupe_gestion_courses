@@ -56,7 +56,6 @@ function App() {
            { userObjRole === 'admin' ?
               <>
                <Route path="/register_instructor" element={<Navigate replace to="/admin-dashboard" />} />
-               <Route path="/route/regist/loaded25" element={<Navigate replace to="/admin-dashboard" />} />
                <Route path="/register_student" element={<Navigate replace to="/admin-dashboard" />} />
                <Route path="/instructor-dashboard" element={<Navigate replace to="/admin-dashboard" />} />
                <Route path="/student-dashboard" element={<Navigate replace to="/admin-dashboard" />} />

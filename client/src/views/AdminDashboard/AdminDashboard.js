@@ -163,7 +163,7 @@ const AdminDashboard = () => {
           
           console.log("deconnexion",res.data.message);
           cookies.remove("USER_OBJ");
-           navigate("//route/log/loaded25");
+           navigate("/route/log/loaded25");
 
       } else{
         console.error("Unexpected response:", res.data);
