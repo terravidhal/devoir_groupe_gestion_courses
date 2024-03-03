@@ -19,7 +19,9 @@ const AdminDashboard = () => {
   const [allInstructors, setAllInstructors] = useState([]);
   const navigate = useNavigate();
   const cookies = new Cookies();
- // const userObjRole = cookies.get("USER_OBJ").role || '';
+  const userObjs = cookies.get("USER_OBJ") || {};
+  const userObjsRole = userObjs.role || 'default';
+  const userObjsId = userObjs._id || 'default';
 
 
 /**
@@ -146,12 +148,27 @@ const AdminDashboard = () => {
     event.preventDefault();
     axios.post('http://localhost:8000/api/logout',{},{withCredentials: true})
     .then((res)=>{
-      //console.log("res", res);
-      console.log("deconnexion",res.data.message);
-     // console.log("is res data message",res.data.message);
-       cookies.remove("USER_OBJ");
-     // localStorage.removeItem("USER_OBJ");
-      navigate("/route/log/loaded25");
+      if ( userObjsRole === 'student') {
+          
+        console.log("deconnexion",res.data.message);
+        cookies.remove("USER_OBJ");
+         navigate("/login_page");
+         
+      }else if (userObjsRole === 'instructor') {
+          
+          console.log("deconnexion",res.data.message);
+          cookies.remove("USER_OBJ");
+           navigate("/login_page");
+      }else if (userObjsRole === 'admin') {
+          
+          console.log("deconnexion",res.data.message);
+          cookies.remove("USER_OBJ");
+           navigate("//route/log/loaded25");
+
+      } else{
+        console.error("Unexpected response:", res.data);
+       
+      }   
     })
     .catch((err)=>{
      // console.log("+++++++++++",err.response);
