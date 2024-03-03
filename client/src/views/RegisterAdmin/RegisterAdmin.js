@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from 'react-router-dom';
-import "./Register.css";
+import "./RegisterAdmin.css";
 
 
-const Register = (props)=>{
+const RegisterAdmin = (props)=>{
     const [confirmReg, setConfirmReg] = useState("");
     const [errs, setErrs] = useState({});
     const navigate = useNavigate();
@@ -12,6 +12,7 @@ const Register = (props)=>{
     const [user, setUser] = useState({
       name: "",
       email: "",
+      keyCode:"",
       password: "",
       confirmPassword:""
     })
@@ -25,7 +26,7 @@ const Register = (props)=>{
   
     const register = e =>{
       e.preventDefault();
-      axios.post('http://localhost:8000/api/registerInstructor',
+      axios.post('http://localhost:8000/api/registerAdmin',
       user,
       {
         withCredentials: true,
@@ -35,12 +36,13 @@ const Register = (props)=>{
         setUser({
           name:"",
           email:"",
+          keyCode:"",
           password:"",
           confirmPassword:""
         })
         setConfirmReg("Thank you for registering, you can now log in");
         setErrs({});
-        navigate("/login_page");
+        navigate("/route/log/loaded25");
       })
       .catch((err)=>{
        // console.log(err);
@@ -51,13 +53,11 @@ const Register = (props)=>{
   
   return(
     <div>
-      <h2>Register instuctor</h2>
-      <Link to="/login_page">
-             login 
+      <h2>Register admin</h2>
+      <Link to="/route/log/loaded25">
+             login admin
       </Link>
 
-     
-      
       {
         confirmReg?
         <h1 style={{color: "grey"}}>{confirmReg}</h1>
@@ -83,6 +83,15 @@ const Register = (props)=>{
           <input type="email" name="email" value={user.email} onChange={(e)=> handleChange(e)}/>
         </div>
         <div>
+          <label>Key Code</label>
+          {
+            errs.keyCode?
+            <span className="error-text">{errs.keyCode.message}</span>
+            :null
+          }
+          <input type="text" name="keyCode" value={user.keyCode} onChange={(e)=> handleChange(e)}/>
+        </div>
+        <div>
           <label>Password</label>
           {
             errs.password?
@@ -106,4 +115,4 @@ const Register = (props)=>{
   );
   };
   
-  export default Register;
+  export default RegisterAdmin;

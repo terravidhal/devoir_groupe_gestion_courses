@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import './UpdatePage.css';
+import './UpdatePageCourse.css';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import CourseForm from '../../components/CourseForm/CourseForm';
@@ -8,7 +8,7 @@ import Cookies from "universal-cookie";
 
 
 
-const UpdatePage = (props) => {
+const UpdatePageCourse = (props) => {
   const cookies = new Cookies();
   const userObjsId = cookies.get("USER_OBJ")._id;
   const userObjsRole = cookies.get("USER_OBJ").role;
@@ -66,7 +66,7 @@ const UpdatePage = (props) => {
 
 
   return (
-    <div className="UpdatePage">
+    <div className="UpdatePageCourse">
       <div className="page-top">
         <h1>Speedy courses</h1>
          {/* <Link to={"/courses/" + id}>
@@ -120,4 +120,4 @@ const UpdatePage = (props) => {
 };
 
 
-export default UpdatePage;
+export default UpdatePageCourse;

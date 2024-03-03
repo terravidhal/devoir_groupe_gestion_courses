@@ -54,7 +54,7 @@ app.post("/api/courses", hasPermission("create:courses"), (req, res) => {
 
 // 2) Exporting a function for checking authentication
 module.exports = {
-  authenticate1: (req, res, next) => {
+ /* authenticate1: (req, res, next) => {
     jwt.verify(
       req.cookies.usertoken,
       process.env.JWT_SECRET,
@@ -67,7 +67,7 @@ module.exports = {
         }
       }
     );
-  },
+  }, */
 
   authenticate: (req, res, next) => {
     jwt.verify( req.cookies.usertoken, process.env.JWT_SECRET, async(err, decodedToken) => {
@@ -109,7 +109,6 @@ module.exports = {
   checkPermissions: (...role) => {
     return (req, res, next) =>{
       if (!role.includes(req.role)) {
-        //const error = res.status(401).json({ verified: false, message : 'you do not have permission to perform this action' });
         const error =  res.status(401).json({ verified: false, message : 'you do not have permission to perform this action' });
         next(error);
        //next('route');
@@ -120,7 +119,24 @@ module.exports = {
     }
   },
 
+  // Middleware pour vérifier le jeton d'accès
+  /*
+ checkAdminToken : (req, res, next) => {
+  const { tocken } = req.query;
+  const secretToken = "hostingerK555"; // Votre mot de passe secret
 
+  if (tocken === secretToken) {
+      // Jeton valide, autorisez l'accès
+      next();
+  } else {
+      const error =  res.status(401).json({ verified: false, message : 'you do not have permission to perform this action' });
+      next(error);
+  }
+} , */
+
+
+
+/*
   authenticate2: (req, res, next) => {
     const tokenNames = ['studenttoken', 'instructortoken', 'usertoken'];
     const validToken = tokenNames.find((tokenName) => req.cookies[tokenName]);
@@ -145,7 +161,7 @@ module.exports = {
         }
       }
     );
-  },
+  }, */
 
  /**
   * Dans le middleware modifié que vous avez fourni, la ligne req.user = payload;répond à deux objectifs principaux : 

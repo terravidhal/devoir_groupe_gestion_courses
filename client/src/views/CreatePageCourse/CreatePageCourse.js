@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import './CreatePage.css';
+import './CreatePageCourse.css';
 import CourseForm from '../../components/CourseForm/CourseForm';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
@@ -8,10 +8,11 @@ import Cookies from "universal-cookie";
 
 
 
-const CreatePage = () => {
+const CreatePageCourse = () => {
   const cookies = new Cookies();
-  const userObjsId = cookies.get("USER_OBJ")._id;
-  const userObjsRole = cookies.get("USER_OBJ").role;
+  const userObjs = cookies.get("USER_OBJ") || {};
+  const userObjsId = userObjs._id || 'default';
+  const userObjsRole = userObjs.role || 'default';
  
   const [errors, setErrors] = useState({}); 
   const [errors2, setErrors2] = useState({}); 
@@ -43,7 +44,7 @@ const CreatePage = () => {
   };
 
   return (
-    <div className="CreatePage">
+    <div className="CreatePageCourse">
        <div className="page-top">
         <h1>create courses</h1>
         {
@@ -92,4 +93,4 @@ const CreatePage = () => {
 };
 
 
-export default CreatePage;
+export default CreatePageCourse;

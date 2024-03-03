@@ -1,26 +1,26 @@
-.DetailsPage {
+.DetailsPageCourse {
     margin: 50px auto;
     width: 70%;
 }
-.DetailsPage .page-top{
+.DetailsPageCourse .page-top{
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.DetailsPage .page-top h1{
+.DetailsPageCourse .page-top h1{
   
 }
-.DetailsPage .page-top a{
+.DetailsPageCourse .page-top a{
   
 }
-.DetailsPage h4{
+.DetailsPageCourse h4{
   color: gray;
 }
-.DetailsPage .page-content{
+.DetailsPageCourse .page-content{
     border: 1px solid;
     margin-top: 20px;
     padding: 20px;
 }
-.DetailsPage span.infos{
+.DetailsPageCourse span.infos{
     font-weight: bold;
  }

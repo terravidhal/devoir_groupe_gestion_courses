@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from "universal-cookie";
 import './InstructorDashboard.css';
-import CourseTableInstructor from '../CourseTableInstructor/CourseTableInstructor';
+import CourseTableInstructor from '../../components/CourseTableInstructor/CourseTableInstructor';
 
 
 
@@ -11,8 +11,10 @@ const InstructorDashboard = () => {
   const [allCourses, setAllCourses] = useState([]);
   const navigate = useNavigate();
   const cookies = new Cookies();
-  const userObjsId = cookies.get("USER_OBJ")._id || '';
-
+  const userObjs = cookies.get("USER_OBJ") || {};
+  const userObjsRole = userObjs.role || 'default';
+  const userObjsId = userObjs._id || 'default';
+  
 /**
  * IMPORTANT : MAINTENANT QUE NOUS UTILISONS DES COOKIES 
  * POUR L'AUTHENTIFICATION ET L'AUTORISATION, NOUS ASSURERONS 

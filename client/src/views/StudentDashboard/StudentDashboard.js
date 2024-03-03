@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from "universal-cookie";
 import './StudentDashboard.css';
-import CourseTableStudent from '../CourseTableStudent/CourseTableStudent';
+import CourseTableStudent from '../../components/CourseTableStudent/CourseTableStudent';
 
 
 

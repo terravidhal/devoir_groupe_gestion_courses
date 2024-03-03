@@ -10,7 +10,8 @@ import Cookies from "universal-cookie";
 
 const CourseTable = (props) => {
   const cookies = new Cookies();
-  const userObjsId = cookies.get("USER_OBJ")._id;
+  const userObjs = cookies.get("USER_OBJ") || {};
+  const userObjsId = userObjs._id || 'default';
 
   const { allCourses, deleteCourse } = props;
  

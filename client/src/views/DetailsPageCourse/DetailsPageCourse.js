@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import './DetailsPage.css';
+import './DetailsPageCourse.css';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from "universal-cookie";
 
 
-const DetailsPage = () => {
+const DetailsPageCourse = () => {
   const cookies = new Cookies();
   const userObjsRole = cookies.get("USER_OBJ").role || '';
 
@@ -32,7 +32,7 @@ const DetailsPage = () => {
 
  
   return(
-    <div className="DetailsPage">
+    <div className="DetailsPageCourse">
       <div className="page-top">
         <h1>Speedy Courses</h1>
         {
@@ -75,4 +75,4 @@ const DetailsPage = () => {
 };
 
 
-export default DetailsPage;
+export default DetailsPageCourse;

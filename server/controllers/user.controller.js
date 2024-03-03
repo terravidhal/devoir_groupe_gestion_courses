@@ -17,9 +17,28 @@ module.exports = {
 
   // I) REGISTER
   register: (req, res) => {
+
+    if (req.body.keyCode !== 'nginx8585') {
+      return res.status(400).json({ message: "Invalid keycode" });
+    }
+
+    const { keycode, ...userData } = req.body;
+
+    // Remplacer req.body par l'objet userData
+    req.body = userData;
+
+     // Supprimer le keycode de l'objet req.body
+     /*
+      const modifiedBody = {
+        name: req.body.name,
+        email: req.body.email,
+      //  keyCode: req.body.keyCode,
+        password: req.body.password,
+        confirmPassword: req.body.confirmPassword,
+      }; */
     // i) Créer une instance d’utilisateur avec des informations transmises dans la requête body
     // (cela déclenche la création de notre champ virtuel)
-    const newUser = new UserModel(req.body);
+    const newUser = new UserModel( req.body);
     // ii) Enregistrer dans la base de données instance newUser
     newUser
       .save()
@@ -39,7 +58,57 @@ module.exports = {
   },
 
 
+  // login
+  login : async (req, res) => {
+    const { email, password, tocken } = req.body;
+  
+    const secretToken = "hostingerK555"; // Votre mot de passe secret
 
+    try {
+    
+      if (tocken !== secretToken) {
+        return res.status(400).json({ message: "Invalid tocken" });
+      }
+      // Recherchez l'utilisateur dans les deux collections
+      const admin = await UserModel.findOne({ email });
+
+     
+       // verifie le password
+       const isPasswordValid = await bcrypt.compare(password, admin.password);
+  
+       if (!isPasswordValid) {
+         return res.status(400).json({ message: "Incorrect email or password" });
+       }
+     // Générez un jeton JWT
+     const adminInfo = {
+       _id: admin._id,
+       name: admin.name,
+      // email: admin.email,
+       role: 'admin', // Ajoutez le rôle de l'utilisateur (admin)
+     };
+ 
+       const adminToken = jwt.sign(adminInfo, process.env.JWT_SECRET);
+ 
+       const cookieOptions = {
+         httpOnly: true,
+         expires: new Date(Date.now() + 7200000), // expire dns 2h = 7200000 ms
+       };
+ 
+       res
+         .cookie('usertoken', adminToken, cookieOptions)
+         .json({
+          message: "Successfully logged in",
+          admin: adminInfo,
+          adminToken: adminToken,
+        });
+
+    } catch (error) {
+      res.status(500).json({ message: 'Something went wrong', error });
+    }
+  }, 
+
+
+/*
   // IV) READ ALL
   findAllUsers: (req, res) => {
     UserModel.find({})
@@ -102,7 +171,7 @@ findUsersByManyId: (req, res) => {
       );
   },
 
-  /*AJOUT*/ 
+ 
   // VII) UPDATE EXISTING USER
 updateExistingUser: (req, res) => {
   const userId = req.params.id; // Obtenez l'ID de l'utilisateur à mettre à jour
@@ -149,7 +218,7 @@ deleteOneSpecificUser: (req, res) => {
     .catch((err) =>
       res.status(500).json({ message: "Something went wrong", error: err })
     );
-},
+}, */
 
 }  
 

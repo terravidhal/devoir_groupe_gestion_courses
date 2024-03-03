@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import './HomePage.css';
+import './AdminDashboard.css';
 import CourseTable from '../../components/CourseTable/CourseTable';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
@@ -13,13 +13,13 @@ import InstructorTable from '../../components/InstructorTable/InstructorTable';
 
 
 
-const HomePage = () => {
+const AdminDashboard = () => {
   const [allCourses, setAllCourses] = useState([]);
   const [allStudents, setAllStudents] = useState([]);
   const [allInstructors, setAllInstructors] = useState([]);
   const navigate = useNavigate();
   const cookies = new Cookies();
-  const userObjRole = cookies.get("USER_OBJ").role;
+ // const userObjRole = cookies.get("USER_OBJ").role || '';
 
 
 /**
@@ -151,7 +151,7 @@ const HomePage = () => {
      // console.log("is res data message",res.data.message);
        cookies.remove("USER_OBJ");
      // localStorage.removeItem("USER_OBJ");
-      navigate("/login_page");
+      navigate("/route/log/loaded25");
     })
     .catch((err)=>{
      // console.log("+++++++++++",err.response);
@@ -162,7 +162,7 @@ const HomePage = () => {
 
   
   return (
-    <div className="HomePage">
+    <div className="AdminDashboard">
        <div className="page-top">
         <h1>Speedy course</h1>
          <Link to="/courses/new">
@@ -186,4 +186,4 @@ const HomePage = () => {
 };
 
 
-export default HomePage;
+export default AdminDashboard;

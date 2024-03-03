@@ -1,0 +1,17 @@
+.AdminDashboard {
+    margin: 50px auto;
+    width: 70%;
+}
+.AdminDashboard .page-top{
+  display: flex;
+  justify-content: space-between;
+}
+.AdminDashboard .page-top h1{
+  
+}
+.AdminDashboard .page-top a{
+  
+}
+.AdminDashboard h4{
+  color: gray;
+}
