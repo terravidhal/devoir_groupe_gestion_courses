@@ -78,23 +78,97 @@ const AdminDashboard = () => {
   }, []); 
 
   //update courses
-  const updateCourseStatuses = (courses) => {
+  const updateCourseStatuses2 = (courses) => {
     return courses.map((course) => {
-      const currentDate = new Date(); // Get current day of the week
-      const courseDate = new Date(course.dayOfWeek); // Get day of the week from course
-   
-      console.log('currentDate',new Date());
-      console.log('courseDate',new Date(course.dayOfWeek));
-      console.log('courseDate',course.dayOfWeek);
+      const currentDate = new Date().getDate(); // Get current day of the week
+      const courseDate = new Date(course.dayOfWeek).getDate(); // Get day of the week from course
+
+
+      const date = new Date();
+      const hours = date.getHours(); // 11
+      const minutes = date.getMinutes(); // 1
+      const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+      console.log('formattedTime',formattedTime); // 11:01
+      const currentTime = new Date(0, 0, 0, parseInt(formattedTime.split(":")[0]), parseInt(formattedTime.split(":")[1]));
+
+     const startTIME = new Date(0, 0, 0, parseInt(course.startTime.split(":")[0]), parseInt(course.startTime.split(":")[1]));
+     const endTIME = new Date(0, 0, 0, parseInt(course.endTime.split(":")[0]), parseInt(course.endTime.split(":")[1]));
+     
+     console.log('course.startTime', course.startTime);
+     console.log('course.endTime', course.endTime);
+     console.log('currentTime', currentTime);
+     console.log('currentDate', currentDate);
+     console.log('courseDate', courseDate);
+
+     // console.log('new Date() === new Date("2024-03-03")',Date.parse(new Date()) === Date.parse("2024-03-03"));
+     // console.log('new Date() === new Date("2024-03-03")', new Date().getDate() === new Date("2024-03-03").getDate());
 
       // Update status if current date is past the course's day
-      if (currentDate > courseDate) {
+    /*  if (currentDate > courseDate) {
         course.status = 'resolved';
+      } */
+
+      if (currentDate > courseDate &&  currentTime > endTIME) {
+          course.status = 'resolved';
       }
-  
+     
       return course;
     });
   }
+
+
+
+  const updateCourseStatuses = (courses) => {
+    return courses.map((course) => {
+      const currentDate = new Date().getDate(); // Get current day of the week
+      const courseDate = new Date(course.dayOfWeek).getDate(); // Get day of the week from course
+  
+      const date = new Date();
+      const hours = date.getHours(); // 11
+      const minutes = date.getMinutes(); // 1
+      const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+      const currentTime = new Date(
+        0,
+        0,
+        0,
+        parseInt(formattedTime.split(":")[0]),
+        parseInt(formattedTime.split(":")[1])
+      );
+  
+      const startTIME = new Date(
+        0,
+        0,
+        0,
+        parseInt(course.startTime.split(":")[0]),
+        parseInt(course.startTime.split(":")[1])
+      );
+      const endTIME = new Date(
+        0,
+        0,
+        0,
+        parseInt(course.endTime.split(":")[0]),
+        parseInt(course.endTime.split(":")[1])
+      );
+
+     // console.log('currentDate > courseDate // currentTime > endTIME',currentDate > courseDate,currentTime > endTIME);
+     // console.log('currentTime , endTIME',currentTime , endTIME);
+
+      // Update status if current date is past the course's day and current time is past the course's end time
+      if (currentDate > courseDate ) {
+        course.status = "resolved";
+      } else if (currentDate === courseDate && currentTime > endTIME) {
+        course.status = "resolved";
+      } else {
+         console.log('pending');
+      }
+       
+  
+      return course;
+    });
+  };
+
+  
+
 
 
   // get all students
