@@ -3,16 +3,28 @@ import './CreatePageCourse.css';
 import CourseForm from '../../components/CourseForm/CourseForm';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import Cookies from "universal-cookie";
+//import Cookies from "universal-cookie";
 
 
 
 
 const CreatePageCourse = () => {
+
+  /*
   const cookies = new Cookies();
   const userObjs = cookies.get("USER_OBJ") || {};
   const userObjsId = userObjs._id || 'default';
+  const userObjsRole = userObjs.role || 'default'; */
+
+
+  const userObjs = JSON.parse(localStorage.getItem('USER_OBJ')) || {};
   const userObjsRole = userObjs.role || 'default';
+  const userObjsId = userObjs._id || 'default';
+  
+  console.log("userObjRole+++++++++", userObjsRole);
+  console.log("userObjsId+++++++++", userObjsId);
+
+
  
   const [errors, setErrors] = useState({}); 
   const [errors2, setErrors2] = useState({}); 

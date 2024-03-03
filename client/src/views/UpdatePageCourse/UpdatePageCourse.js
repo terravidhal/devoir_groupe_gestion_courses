@@ -3,15 +3,25 @@ import './UpdatePageCourse.css';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import CourseForm from '../../components/CourseForm/CourseForm';
-import Cookies from "universal-cookie";
+//import Cookies from "universal-cookie";
 
 
 
 
 const UpdatePageCourse = (props) => {
+  /*
   const cookies = new Cookies();
   const userObjsId = cookies.get("USER_OBJ")._id;
-  const userObjsRole = cookies.get("USER_OBJ").role;
+  const userObjsRole = cookies.get("USER_OBJ").role; */
+
+  const userObjs = JSON.parse(localStorage.getItem('USER_OBJ')) || {};
+  const userObjsRole = userObjs.role || 'default';
+  const userObjsId = userObjs._id || 'default';
+  
+  console.log("userObjRole+++++++++", userObjsRole);
+  console.log("userObjsId+++++++++", userObjsId);
+
+
 
   const { id } = useParams();
   const [coursObj, setCoursObj] = useState({});

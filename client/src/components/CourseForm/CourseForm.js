@@ -105,7 +105,7 @@ useEffect(() => {
       setIsActive(false);
     } else if (parseInt(duration) < 30 || parseInt(duration) > 240) {
       setIsActive(false);
-    } else if (new Date(dayOfWeek).getDay() < new Date().getDay() || dayOfWeek === '' ) {
+    } else if (new Date(dayOfWeek) < new Date() || dayOfWeek === '' ) {
       setIsActive(false);
     } else if (new Date(0, 0, 0, parseInt(startTime.split(":")[0]), parseInt(startTime.split(":")[1]))  < new Date(0, 0, 0, parseInt("08:00".split(":")[0]), parseInt("08:00".split(":")[1])) || startTime === '') {
       setIsActive(false);  
@@ -179,7 +179,7 @@ useEffect(() => {
     const currentDate = new Date();
     const selectedDate = new Date(e.target.value); 
    
-   if (selectedDate.getDay() < currentDate.getDay()) {
+   if (selectedDate < currentDate) {
       setErrors({...errors,dayOfWeek:{ message: "La date doit être supérieure ou égale à la date actuelle" }});
    } 
    else  {

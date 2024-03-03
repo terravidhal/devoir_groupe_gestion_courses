@@ -80,9 +80,13 @@ const AdminDashboard = () => {
   //update courses
   const updateCourseStatuses = (courses) => {
     return courses.map((course) => {
-      const currentDate = new Date().getDay(); // Get current day of the week
-      const courseDate = new Date(course.dayOfWeek).getDay(); // Get day of the week from course
-  
+      const currentDate = new Date(); // Get current day of the week
+      const courseDate = new Date(course.dayOfWeek); // Get day of the week from course
+   
+      console.log('currentDate',new Date());
+      console.log('courseDate',new Date(course.dayOfWeek));
+      console.log('courseDate',course.dayOfWeek);
+
       // Update status if current date is past the course's day
       if (currentDate > courseDate) {
         course.status = 'resolved';
