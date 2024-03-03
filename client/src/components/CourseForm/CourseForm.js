@@ -210,12 +210,13 @@ useEffect(() => {
     setEndTime(e.target.value); 
     const heure1 = "18:00";
     const heure2 = e.target.value;
+  //  const heure13 = "08:00";
     const currentTime = new Date(0, 0, 0, parseInt(heure1.split(":")[0]), parseInt(heure1.split(":")[1]));
     const selectedTime = new Date(0, 0, 0, parseInt(heure2.split(":")[0]), parseInt(heure2.split(":")[1]));
 
  
    
-   if (selectedTime > currentTime) {
+   if (selectedTime > currentTime ) {
       setErrors({...errors,endTime:{ message: "endTime doit être inférieure ou égale à 18:00" }});
    } 
    else  {

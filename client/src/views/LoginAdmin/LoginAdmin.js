@@ -1,7 +1,7 @@
 import React,{ useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from 'react-router-dom';
-import Cookies from "universal-cookie";
+//import Cookies from "universal-cookie";
 import "./LoginAdmin.css";
 
 
@@ -12,8 +12,10 @@ const LoginAdmin = (props)=>{
     const [tocken, setTocken] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [errs2, setErrs2] = useState("");
     const navigate = useNavigate();
-    const cookies = new Cookies();
+
+    //const cookies = new Cookies();
   
    
   
@@ -30,12 +32,14 @@ const LoginAdmin = (props)=>{
       .then((res)=>{
        // console.log("res***************",res);
         console.log("res.data***************",res.data);
-        cookies.set('USER_OBJ', res.data.admin);
-     // await localStorage.setItem("USER_OBJ", JSON.stringify(res.data.admin));
-         navigate("/admin-dashboard");
+      //  cookies.set('USER_OBJ', res.data.admin);
+
+        localStorage.setItem('USER_OBJ', JSON.stringify(res.data.admin));
+        navigate("/admin-dashboard");
       })
       .catch((err)=>{
         console.error("Error logging in:", err);
+        setErrs2(err.response.data.message)
         //setErrorMessage(err.response.data.message);
       })
   };
@@ -49,7 +53,13 @@ const LoginAdmin = (props)=>{
              Register admin
       </Link>
 
+
       <p className="error-text">{errorMessage? errorMessage : ""}</p>
+      {
+        errs2?
+        <span className="error-text">{errs2}</span>
+        :null
+      }
       <form onSubmit={login}>
         <div>
           <label>Email</label>
@@ -57,7 +67,7 @@ const LoginAdmin = (props)=>{
         </div>
         <div>
           <label>tocken</label>
-          <input type="text" name="tocken" value={tocken} onChange={(e)=> setTocken(e.target.value)}/>
+          <input type="password" name="tocken" value={tocken} onChange={(e)=> setTocken(e.target.value)}/>
         </div>
         <div>
           <label>Password</label>

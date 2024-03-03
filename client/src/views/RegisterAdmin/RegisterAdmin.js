@@ -91,7 +91,7 @@ const RegisterAdmin = (props)=>{
         </div>
         <div>
           <label>Key Code</label>
-          <input type="text" name="keyCode" value={user.keyCode} onChange={(e)=> handleChange(e)}/>
+          <input type="password" name="keyCode" value={user.keyCode} onChange={(e)=> handleChange(e)}/>
         </div>
         <div>
           <label>Password</label>

@@ -53,7 +53,7 @@ module.exports = {
             .status(400)
             .json({ message: "Validation Errors", errors: err });
         }
-        res.status(500).json({ message: "Something went wrong", errors: err });
+        res.status(400).json({ message: "Something went wrong", errors: err });
       });
   },
 
@@ -103,7 +103,7 @@ module.exports = {
         });
 
     } catch (error) {
-      res.status(500).json({ message: 'Something went wrong', error });
+      res.status(400).json({ message: 'Something went wrong', error });
     }
   }, 
 

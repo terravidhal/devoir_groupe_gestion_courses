@@ -96,7 +96,7 @@ module.exports = {
         res.status(400).json({ message: "Incorrect email or password" });
       }
     } catch (error) {
-      res.status(500).json({ message: 'Something went wrong', error });
+      res.status(400).json({ message: 'Something went wrong', error });
     }
   },
 

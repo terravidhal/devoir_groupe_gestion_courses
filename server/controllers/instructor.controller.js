@@ -38,7 +38,7 @@ module.exports = {
             .status(400)
             .json({ message: "Validation Errors", errors: err });
         }
-        res.status(500).json({ message: "Something went wrong", errors: err });
+        res.status(400).json({ message: "Something went wrong", errors: err });
       });
   },
 
@@ -62,7 +62,7 @@ createInstructor: (req, res) => {
             .status(400)
             .json({ message: "Validation Errors", errors: err });
         }
-        res.status(500).json({ message: "Something went wrong", errors: err });
+        res.status(400).json({ message: "Something went wrong", errors: err });
       });
 },
 
@@ -96,7 +96,7 @@ updateExistingInstructor: async(req, res) => {
             .status(400)
             .json({ message: "Validation Errors", errors: err });
         }
-         res.status(500).json({ message: "Une erreur s'est produite", errors: err });
+         res.status(400).json({ message: "Une erreur s'est produite", errors: err });
       });
 },
 
@@ -108,7 +108,7 @@ updateExistingInstructor: async(req, res) => {
     InstructorModel.find({})
       .then((allInstructors) => res.status(200).json(allInstructors))
       .catch((err) =>
-        res.status(500).json({ message: "Something went wrong", error: err })
+        res.status(400).json({ message: "Something went wrong", error: err })
       );
   },
 
@@ -236,7 +236,7 @@ findInstructorsByManyId: (req, res) => {
     InstructorModel.deleteMany({})
       .then((result) => res.status(200).json({ result }))
       .catch((err) =>
-        res.status(500).json({ message: "Something went wrong", error: err })
+        res.status(400).json({ message: "Something went wrong", error: err })
       );
   },
 

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import Cookies from "universal-cookie";
+//import Cookies from "universal-cookie";
 import './StudentDashboard.css';
 import CourseTableStudent from '../../components/CourseTableStudent/CourseTableStudent';
 
@@ -10,8 +10,17 @@ import CourseTableStudent from '../../components/CourseTableStudent/CourseTableS
 const StudentDashboard = () => {
   const [allCourses, setAllCourses] = useState([]);
   const navigate = useNavigate();
-  const cookies = new Cookies();
-  const userObjsId = cookies.get("USER_OBJ")._id || '';
+
+ /* const cookies = new Cookies();
+  const userObjsId = cookies.get("USER_OBJ")._id || ''; */
+
+
+  const userObjs = JSON.parse(localStorage.getItem('USER_OBJ')) || {};
+  const userObjsRole = userObjs.role || 'default';
+  const userObjsId = userObjs._id || 'default';
+  
+  console.log("userObjRole+++++++++", userObjsRole);
+  console.log("userObjsId+++++++++", userObjsId);
 
 /**
  * IMPORTANT : MAINTENANT QUE NOUS UTILISONS DES COOKIES 
@@ -82,8 +91,8 @@ const StudentDashboard = () => {
       //console.log("res", res);
       console.log("deconnexion",res.data.message);
      // console.log("is res data message",res.data.message);
-       cookies.remove("USER_OBJ");
-     // localStorage.removeItem("USER_OBJ");
+      // cookies.remove("USER_OBJ");
+       localStorage.removeItem('USER_OBJ');
       navigate("/login_page");
     })
     .catch((err)=>{

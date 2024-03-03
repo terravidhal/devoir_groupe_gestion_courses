@@ -38,7 +38,7 @@ module.exports = {
             .status(400)
             .json({ message: "Validation Errors", errors: err });
         }
-        res.status(500).json({ message: "Something went wrong", errors: err });
+        res.status(400).json({ message: "Something went wrong", errors: err });
       });
   },
 
@@ -62,7 +62,7 @@ module.exports = {
             .status(400)
             .json({ message: "Validation Errors", errors: err });
         }
-        res.status(500).json({ message: "Something went wrong", errors: err });
+        res.status(400).json({ message: "Something went wrong", errors: err });
       });
   },
 
@@ -126,7 +126,7 @@ module.exports = {
               .status(400)
               .json({ message: "Validation Errors", errors: err });
           }
-           res.status(500).json({ message: "Une erreur s'est produite", errors: err });
+           res.status(400).json({ message: "Une erreur s'est produite", errors: err });
         });
   },
 
@@ -231,7 +231,7 @@ updateExistingStudent44 : async (req, res) => {
     StudentModel.find({})
       .then((allStudents) => res.status(200).json(allStudents))
       .catch((err) =>
-        res.status(500).json({ message: "Something went wrong", error: err })
+        res.status(400).json({ message: "Something went wrong", error: err })
       );
   },
 
@@ -302,7 +302,7 @@ deleteOneSpecificStudent: (req, res) => {
       res.status(200).json({ message: "Student deleted successfully" });
     })
     .catch((err) =>
-      res.status(500).json({ message: "Something went wrong", error: err })
+      res.status(400).json({ message: "Something went wrong", error: err })
     );
 },
 

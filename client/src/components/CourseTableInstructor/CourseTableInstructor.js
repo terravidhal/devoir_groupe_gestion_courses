@@ -5,14 +5,25 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Table } from 'reactstrap';
 import axios from "axios";
 import Button from '../../components/Button/Button';
-import Cookies from "universal-cookie";
+//import Cookies from "universal-cookie";
 
 
 const CourseTableInstructor = (props) => {
+  /*
   const cookies = new Cookies();
   const userObjs = cookies.get("USER_OBJ") || {};
   const userObjsRole = userObjs.role || 'default';
+  const userObjsId = userObjs._id || 'default'; */
+
+
+  const userObjs = JSON.parse(localStorage.getItem('USER_OBJ')) || {};
+  const userObjsRole = userObjs.role || 'default';
+  const userObjIsInstructor = userObjs.isInstructor || '';
   const userObjsId = userObjs._id || 'default';
+  
+  console.log("userObjRole+++++++++", userObjsRole);
+  console.log("userObjIsInstructor+++++++++", userObjIsInstructor);
+  console.log("userObjsId+++++++++", userObjsId);
 
   const { allCourses, deleteCourse } = props;
  

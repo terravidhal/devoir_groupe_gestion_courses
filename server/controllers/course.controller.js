@@ -124,7 +124,7 @@ module.exports.createNewCourseWithMatchingStudents = async (req, res) => {
       message: "Error creating course",
       error: error.message || "An unexpected error occurred"
     }); */
-    res.status(500).json({ error: error.message })
+    res.status(400).json({ error: error.message })
   }
 };
 

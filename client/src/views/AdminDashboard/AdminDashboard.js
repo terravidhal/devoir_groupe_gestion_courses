@@ -3,7 +3,7 @@ import './AdminDashboard.css';
 import CourseTable from '../../components/CourseTable/CourseTable';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import Cookies from "universal-cookie";
+//import Cookies from "universal-cookie";
 import StudentTable from '../../components/StudentTable/StudentTable';
 import InstructorTable from '../../components/InstructorTable/InstructorTable';
 
@@ -18,11 +18,24 @@ const AdminDashboard = () => {
   const [allStudents, setAllStudents] = useState([]);
   const [allInstructors, setAllInstructors] = useState([]);
   const navigate = useNavigate();
-  const cookies = new Cookies();
+
+ /* const cookies = new Cookies();
+
   const userObjs = cookies.get("USER_OBJ") || {};
   const userObjsRole = userObjs.role || 'default';
-  const userObjsId = userObjs._id || 'default';
+  const userObjsId = userObjs._id || 'default'; */
+  
+/*  const userObjs = cookies.get("USER_OBJ") ;
+  const userObjsRole = userObjs.role ;
+  const userObjsId = userObjs._id ; */
 
+  
+  const userObjs = JSON.parse(localStorage.getItem('USER_OBJ')) || {};
+  const userObjsRole = userObjs.role || 'default';
+  const userObjsId = userObjs._id || 'default';
+  
+  console.log("userObjRole+++++++++", userObjsRole);
+  console.log("userObjsId+++++++++", userObjsId);
 
 /**
  * IMPORTANT : MAINTENANT QUE NOUS UTILISONS DES COOKIES 
@@ -63,8 +76,6 @@ const AdminDashboard = () => {
 
     GetAllCourses();
   }, []); 
-
-
 
   //update courses
   const updateCourseStatuses = (courses) => {
@@ -151,18 +162,21 @@ const AdminDashboard = () => {
       if ( userObjsRole === 'student') {
           
         console.log("deconnexion",res.data.message);
-        cookies.remove("USER_OBJ");
+      //  cookies.remove("USER_OBJ");
+        localStorage.removeItem('USER_OBJ');
          navigate("/login_page");
          
       }else if (userObjsRole === 'instructor') {
           
           console.log("deconnexion",res.data.message);
-          cookies.remove("USER_OBJ");
+         // cookies.remove("USER_OBJ");
+          localStorage.removeItem('USER_OBJ');
            navigate("/login_page");
       }else if (userObjsRole === 'admin') {
           
           console.log("deconnexion",res.data.message);
-          cookies.remove("USER_OBJ");
+        //  cookies.remove("USER_OBJ");
+          localStorage.removeItem('USER_OBJ');
            navigate("/route/log/loaded25");
 
       } else{
