@@ -1,14 +1,22 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import Cookies from "universal-cookie";
+//import Cookies from "universal-cookie";
 import './WaitVerification.css';
 
 
 
 const WaitVerification = () => {
   const navigate = useNavigate();
-  const cookies = new Cookies();
+ // const cookies = new Cookies(); 
+
+  const userObjs = JSON.parse(localStorage.getItem('USER_OBJ')) || {};
+  const userObjsRole = userObjs.role || 'default';
+  const userObjsId = userObjs._id || 'default';
+  
+  console.log("userObjRole+++++++++", userObjsRole);
+  console.log("userObjsId+++++++++", userObjsId);
+
 
  /* const userObjs = cookies.get("USER_OBJ");
   const userObjRole = cookies.get("USER_OBJ")?.role || '';
@@ -33,13 +41,10 @@ const WaitVerification = () => {
     .then((res)=>{
       //console.log("res", res);
       console.log("deconnexion",res.data.message);
-     // console.log("is res data message",res.data.message);
-       cookies.remove("USER_OBJ");
-     // localStorage.removeItem("USER_OBJ");
+      localStorage.removeItem("USER_OBJ");
       navigate("/login_page");
     })
     .catch((err)=>{
-     // console.log("+++++++++++",err.response);
       console.log("Erreur de déconnexion +++++++++++",err);
     })
 };

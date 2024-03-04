@@ -19,6 +19,7 @@ module.exports = {
 
 
   // I) REGISTER
+  /*
   register: (req, res) => {
     // i) Créer une instance d’utilisateur avec des informations transmises dans la requête body
     // (cela déclenche la création de notre champ virtuel)
@@ -31,6 +32,50 @@ module.exports = {
         res
           .status(201)
           .json({ message: "Instructor successfully created", instructor: newInstructor });
+      })
+      .catch((err) => {
+        if (err.name === "ValidationError") {
+          return res
+            .status(400)
+            .json({ message: "Validation Errors", errors: err });
+        }
+        res.status(400).json({ message: "Something went wrong", errors: err });
+      });
+  }, */
+
+  register: (req, res) => {
+    // i) Créer une instance d’utilisateur avec des informations transmises dans la requête body
+    // (cela déclenche la création de notre champ virtuel)
+    const newInstructor = new InstructorModel(req.body);
+
+    // ii) Enregistrer dans la base de données instance newInstructor
+    newInstructor
+      .save()
+      .then((newInstruct) => {
+
+          // Générez un jeton JWT
+         const instructorInfo = {
+           _id: newInstruct._id,
+           name: newInstruct.name,
+           role: 'instructor', 
+           isInstructor: newInstruct.isInstructor,
+         };
+   
+         const instructorToken = jwt.sign(instructorInfo, process.env.JWT_SECRET);
+   
+         const cookieOptions = {
+           httpOnly: true,
+           expires: new Date(Date.now() + 7200000),
+         };
+   
+         // Redirigez vers /instructor-dashboard avec le jeton dans le cookie
+         res
+           .cookie('usertoken', instructorToken, cookieOptions)
+           .json({
+            message: "Successfully logged in",
+            instructor: instructorInfo,
+           // instructorToken: instructorToken
+          });
       })
       .catch((err) => {
         if (err.name === "ValidationError") {

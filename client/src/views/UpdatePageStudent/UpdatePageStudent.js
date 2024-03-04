@@ -155,7 +155,7 @@ const UpdatePageStudent = (props) => {
       <span className="error-text">{errs.password.message}</span>
       :null
     }
-    <input type="password" name="password" value={user.password} onChange={(e)=> handleChange(e)}/>
+    <input type="text" name="password" value={user.password} onChange={(e)=> handleChange(e)}/>
   </div>
   <div>
     <label>Confirm Password</label>
@@ -164,7 +164,7 @@ const UpdatePageStudent = (props) => {
       <span className="error-text">{errs.confirmPassword.message}</span>
       :null
     }
-    <input type="password" name="confirmPassword" value={user.confirmPassword} onChange={(e)=> handleChange(e)}/>
+    <input type="text" name="confirmPassword" value={user.confirmPassword} onChange={(e)=> handleChange(e)}/>
   </div>
   <button type="submit">Update</button>
 </form> 

@@ -1,7 +1,7 @@
 import React,{ useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from 'react-router-dom';
-import Cookies from "universal-cookie";
+//import Cookies from "universal-cookie";
 import "./Login.css";
 
 
@@ -12,7 +12,7 @@ const Login = (props)=>{
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
-    const cookies = new Cookies();
+
   
    
   
@@ -28,22 +28,17 @@ const Login = (props)=>{
       .then((res)=>{
        // console.log("res***************",res);
         console.log("res.data***************",res.data);
-       // console.log("res.data2***************",res.data.instructor.isInstructor);
        if ( res.data.student) {
-          
-          cookies.set('USER_OBJ', res.data.student);
-        //  await localStorage.setItem("USER_OBJ", JSON.stringify(res.data.student));
+           localStorage.setItem('USER_OBJ', JSON.stringify(res.data.student));
            navigate("/student-dashboard");
 
         }else if (res.data.instructor) {
          if (res.data.instructor.isInstructor === "true") {
-              cookies.set('USER_OBJ', res.data.instructor);
-          //   await localStorage.setItem("USER_OBJ", JSON.stringify(res.data.instructor));
-          navigate("/instructor-dashboard");
+            localStorage.setItem('USER_OBJ', JSON.stringify(res.data.instructor));
+            navigate("/instructor-dashboard");
          } else {
-            cookies.set('USER_OBJ', res.data.instructor);
-          //   await localStorage.setItem("USER_OBJ", JSON.stringify(res.data.instructor));
-           navigate("/wait-verification");
+            localStorage.setItem('USER_OBJ', JSON.stringify(res.data.instructor));
+            navigate("/wait-verification");
          }   
 
         } else{
@@ -109,7 +104,7 @@ const Login = (props)=>{
   return(
     <div>
       <h2>Login</h2>
-      <Link to="/register_page">
+      <Link to="/register_instructor">
              Register instructor
       </Link>
       <Link to="/register_student">

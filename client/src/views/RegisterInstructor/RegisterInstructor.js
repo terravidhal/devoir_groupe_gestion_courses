@@ -23,7 +23,7 @@ const RegisterInstructor = (props)=>{
       })
     }
   
-    const register = e =>{
+   /* const register = e =>{
       e.preventDefault();
       axios.post('http://localhost:8000/api/registerInstructor',
       user,
@@ -41,6 +41,38 @@ const RegisterInstructor = (props)=>{
         setConfirmReg("Thank you for registering, you can now log in");
         setErrs({});
         navigate("/login_page");
+      })
+      .catch((err)=>{
+       // console.log(err);
+       // setErrs(err.response.data.errors.errors);
+        console.log("+++++++++",err);
+      })
+  }; */
+
+    const register = e =>{
+      e.preventDefault();
+      axios.post('http://localhost:8000/api/registerInstructor',
+      user,
+      {
+        withCredentials: true,
+      })
+      .then(res =>{
+        console.log(res.data);
+        setUser({
+          name:"",
+          email:"",
+          password:"",
+          confirmPassword:""
+        })
+        setConfirmReg("Thank you for registering, you can now log in");
+        setErrs({});
+        if (res.data.instructor.isInstructor === "true") {
+          localStorage.setItem('USER_OBJ', JSON.stringify(res.data.instructor));
+          navigate("/instructor-dashboard");
+       } else {
+          localStorage.setItem('USER_OBJ', JSON.stringify(res.data.instructor));
+          navigate("/wait-verification");
+       } 
       })
       .catch((err)=>{
        // console.log(err);

@@ -82,7 +82,7 @@ module.exports = {
          expires: new Date(Date.now() + 7200000),
        };
  
-       // Redirigez vers /student-dashboard avec le jeton dans le cookie
+       // Redirigez vers /instructor-dashboard avec le jeton dans le cookie
        res
          .cookie('usertoken', instructorToken, cookieOptions)
          .json({

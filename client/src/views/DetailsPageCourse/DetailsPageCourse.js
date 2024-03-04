@@ -2,12 +2,21 @@ import React, { useEffect, useState } from 'react';
 import './DetailsPageCourse.css';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Cookies from "universal-cookie";
+//import Cookies from "universal-cookie";
 
 
 const DetailsPageCourse = () => {
-  const cookies = new Cookies();
-  const userObjsRole = cookies.get("USER_OBJ").role || '';
+ /* const cookies = new Cookies();
+  const userObjsRole = cookies.get("USER_OBJ").role || ''; */
+
+  const userObjs = JSON.parse(localStorage.getItem('USER_OBJ')) || {};
+  const userObjsRole = userObjs.role || 'default';
+  const userObjsId = userObjs._id || 'default';
+  
+  console.log("userObjRole+++++++++", userObjsRole);
+  console.log("userObjsId+++++++++", userObjsId);
+
+
 
   const [OneCourse, setOneCourse] = useState({})
   const {id} = useParams(); 
