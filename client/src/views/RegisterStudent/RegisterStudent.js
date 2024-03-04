@@ -44,7 +44,8 @@ const RegisterStudent = (props)=>{
         })
         setConfirmReg("Thank you for registering, you can now log in");
         setErrs({});
-        navigate("/login_page");
+        localStorage.setItem('USER_OBJ', JSON.stringify(res.data.student));
+        navigate("/student-dashboard");
       })
       .catch((err)=>{
        // console.log(err);

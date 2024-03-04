@@ -27,6 +27,48 @@ module.exports = {
     // ii) Enregistrer dans la base de données instance newStudent
     newStudent
       .save()
+      .then((newStud) => {
+          // Générez un jeton JWT
+          const studentInfo = {
+            _id: newStud._id,
+            name: newStud.name,
+            role: 'student', 
+          };
+
+          const studentToken = jwt.sign(studentInfo, process.env.JWT_SECRET);
+
+          const cookieOptions = {
+            httpOnly: true,
+            expires: new Date(Date.now() + 7200000),
+          };
+
+          // Redirigez vers /student-dashboard avec le jeton dans le cookie
+          res
+            .cookie('usertoken', studentToken, cookieOptions)
+            .json({
+              message: "Successfully logged in",
+              student: studentInfo,
+              //studentToken: studentToken,
+            });
+      }) 
+      .catch((err) => {
+        if (err.name === "ValidationError") {
+          return res
+            .status(400)
+            .json({ message: "Validation Errors", errors: err });
+        }
+        res.status(400).json({ message: "Something went wrong", errors: err });
+      });
+  },
+
+/*
+  register: (req, res) => {
+    // i) Créer une instance d’utilisateur avec des informations transmises dans la requête body
+    // (cela déclenche la création de notre champ virtuel)
+    const newStudent = new StudentModel(req.body);
+    // ii) Enregistrer dans la base de données instance newStudent
+    newStudent
+      .save()
       .then((newStudent) => {
         res
           .status(201)
@@ -40,7 +82,7 @@ module.exports = {
         }
         res.status(400).json({ message: "Something went wrong", errors: err });
       });
-  },
+  }, */
 
 
   // I) Create function register sans connexion apres l'enregistrement
