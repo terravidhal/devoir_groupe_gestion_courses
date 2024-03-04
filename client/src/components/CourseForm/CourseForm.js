@@ -107,9 +107,11 @@ useEffect(() => {
       setIsActive(false);
     } else if (new Date(dayOfWeek).getDate() < new Date().getDate() || dayOfWeek === '' ) {
       setIsActive(false);
-    } else if (new Date(0, 0, 0, parseInt(startTime.split(":")[0]), parseInt(startTime.split(":")[1]))  < new Date(0, 0, 0, parseInt("08:00".split(":")[0]), parseInt("08:00".split(":")[1])) || startTime === '') {
+    } else if (new Date(0, 0, 0, parseInt(startTime.split(":")[0]), parseInt(startTime.split(":")[1]))  < new Date(0, 0, 0, parseInt("08:00".split(":")[0]), parseInt("08:00".split(":")[1])) ||
+               new Date(0, 0, 0, parseInt(startTime.split(":")[0]), parseInt(startTime.split(":")[1]))  >= new Date(0, 0, 0, parseInt(endTime.split(":")[0]), parseInt(endTime.split(":")[1])) || startTime === '') {
       setIsActive(false);  
-    } else if (new Date(0, 0, 0, parseInt(endTime.split(":")[0]), parseInt(endTime.split(":")[1]))  > new Date(0, 0, 0, parseInt("18:00".split(":")[0]), parseInt("18:00".split(":")[1])) || endTime === '') {
+    } else if (new Date(0, 0, 0, parseInt(endTime.split(":")[0]), parseInt(endTime.split(":")[1])) <= new Date(0, 0, 0, parseInt("08:00".split(":")[0]), parseInt("08:00".split(":")[1]))  ||
+               new Date(0, 0, 0, parseInt(endTime.split(":")[0]), parseInt(endTime.split(":")[1]))  > new Date(0, 0, 0, parseInt("18:00".split(":")[0]), parseInt("18:00".split(":")[1]))  || endTime === '') {
       setIsActive(false);  
     } else {
       setIsActive(true);
@@ -194,14 +196,17 @@ useEffect(() => {
 
     const heure1 = "08:00";
     const heure2 = e.target.value;
+    const heure3 = endTime;
     const currentTime = new Date(0, 0, 0, parseInt(heure1.split(":")[0]), parseInt(heure1.split(":")[1]));
+    const currentTime2 = new Date(0, 0, 0, parseInt(heure3.split(":")[0]), parseInt(heure3.split(":")[1]));
     const selectedTime = new Date(0, 0, 0, parseInt(heure2.split(":")[0]), parseInt(heure2.split(":")[1]));
 
   //  const currentTime = Date.parse("08:00");
    // const selectedTime = Date.parse(e.target.value);
+   console.log('endTime',endTime);
    
-   if (selectedTime < currentTime) {
-      setErrors({...errors,startTime:{ message: "startTime doit être supérieure ou égale à 08:00" }});
+   if (selectedTime < currentTime || selectedTime >= currentTime2 ) {
+      setErrors({...errors,startTime:{ message: "startTime doit être supérieure ou égale à 08:00 et doit être inférieure au endTime" }});
    } 
    else  {
       setErrors({...errors,startTime:{ message: "" }});
@@ -212,14 +217,16 @@ useEffect(() => {
     setEndTime(e.target.value); 
     const heure1 = "18:00";
     const heure2 = e.target.value;
-  //  const heure13 = "08:00";
+   // const heure3 = "08:00";
+    const heure3 = startTime;
     const currentTime = new Date(0, 0, 0, parseInt(heure1.split(":")[0]), parseInt(heure1.split(":")[1]));
+    const currentTime2 = new Date(0, 0, 0, parseInt(heure3.split(":")[0]), parseInt(heure3.split(":")[1]));
     const selectedTime = new Date(0, 0, 0, parseInt(heure2.split(":")[0]), parseInt(heure2.split(":")[1]));
 
  
    
-   if (selectedTime > currentTime ) {
-      setErrors({...errors,endTime:{ message: "endTime doit être inférieure ou égale à 18:00" }});
+   if (selectedTime <= currentTime2 || selectedTime > currentTime ) {
+      setErrors({...errors,endTime:{ message: "endTime doit être supérieure à startime et inférieure ou égale à 18:00" }});
    } 
    else  {
       setErrors({...errors,endTime:{ message: "" }});
